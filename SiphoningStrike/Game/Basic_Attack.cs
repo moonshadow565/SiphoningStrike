@@ -11,6 +11,8 @@ namespace SiphoningStrike.Game
     public sealed class Basic_Attack : GamePacket // 0x00D
     {
         public override GamePacketID ID => GamePacketID.Basic_Attack;
+
+        public BasicAttackData BasicAttackData { get; set; } = new BasicAttackData();
         public Basic_Attack() {}
         public Basic_Attack(byte[] data)
         {
@@ -19,7 +21,7 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.BasicAttackData = new BasicAttackData(reader);
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +32,7 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            this.BasicAttackData.Write(writer);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

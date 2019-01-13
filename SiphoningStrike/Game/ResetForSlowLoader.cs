@@ -19,8 +19,6 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
-
             this.BytesLeft = reader.ReadBytesLeft();
         }
         public override byte[] GetBytes()
@@ -29,8 +27,6 @@ namespace SiphoningStrike.Game
             
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();
