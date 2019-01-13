@@ -11,6 +11,9 @@ namespace SiphoningStrike.Game
     public sealed class NPC_Hero_Die : GamePacket // 0x061
     {
         public override GamePacketID ID => GamePacketID.NPC_Hero_Die;
+
+        public DeathData DeathData { get; set; } = new DeathData();
+
         public NPC_Hero_Die() {}
         public NPC_Hero_Die(byte[] data)
         {
@@ -19,7 +22,7 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.DeathData = reader.ReadDeathData();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +33,7 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteDeathData(this.DeathData);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

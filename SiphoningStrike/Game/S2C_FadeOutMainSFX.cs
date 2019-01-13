@@ -11,6 +11,9 @@ namespace SiphoningStrike.Game
     public sealed class S2C_FadeOutMainSFX : GamePacket // 0x062
     {
         public override GamePacketID ID => GamePacketID.S2C_FadeOutMainSFX;
+
+        public float FadeTime { get; set; }
+
         public S2C_FadeOutMainSFX() {}
         public S2C_FadeOutMainSFX(byte[] data)
         {
@@ -19,7 +22,7 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.FadeTime = reader.ReadFloat();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +33,7 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteFloat(this.FadeTime);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

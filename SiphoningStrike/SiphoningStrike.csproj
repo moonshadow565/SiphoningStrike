@@ -299,6 +299,7 @@
     <Compile Include="Game\Common\Talent.cs" />
     <Compile Include="Game\Common\NavFlagCricle.cs" />
     <Compile Include="Game\Common\PlayerLoadInfo.cs" />
+    <Compile Include="Game\Common\DeathData.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Game\" />
