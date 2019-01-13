@@ -11,6 +11,9 @@ namespace SiphoningStrike.Game
     public sealed class RemovePerceptionBubble : GamePacket // 0x038
     {
         public override GamePacketID ID => GamePacketID.RemovePerceptionBubble;
+
+        public uint BubbleID { get; set; }
+
         public RemovePerceptionBubble() {}
         public RemovePerceptionBubble(byte[] data)
         {
@@ -19,7 +22,7 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.BubbleID = reader.ReadUInt32();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +33,7 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteUInt32(this.BubbleID);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

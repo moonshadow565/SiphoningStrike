@@ -43,7 +43,12 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteUInt32(this.PerceptionBubbleType);
+            writer.WriteUInt32(this.ClientNetID);
+            writer.WriteFloat(this.Radius);
+            writer.WriteUInt32(this.UnitNetID);
+            writer.WriteFloat(this.TimeToLive);
+            writer.WriteUInt32(this.Flags);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

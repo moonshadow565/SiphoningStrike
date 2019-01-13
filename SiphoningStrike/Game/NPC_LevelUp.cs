@@ -11,6 +11,10 @@ namespace SiphoningStrike.Game
     public sealed class NPC_LevelUp : GamePacket // 0x045
     {
         public override GamePacketID ID => GamePacketID.NPC_LevelUp;
+
+        public byte Level { get; set; }
+        public byte AveliablePoints { get; set; }
+
         public NPC_LevelUp() {}
         public NPC_LevelUp(byte[] data)
         {
@@ -19,7 +23,8 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.Level = reader.ReadByte();
+            this.AveliablePoints = reader.ReadByte();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +35,8 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteByte(this.Level);
+            writer.WriteByte(this.AveliablePoints);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

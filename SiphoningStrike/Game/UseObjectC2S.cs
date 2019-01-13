@@ -11,6 +11,9 @@ namespace SiphoningStrike.Game
     public sealed class UseObjectC2S : GamePacket // 0x03F
     {
         public override GamePacketID ID => GamePacketID.UseObjectC2S;
+
+        public uint TargetNetID { get; set; }
+
         public UseObjectC2S() {}
         public UseObjectC2S(byte[] data)
         {
@@ -19,7 +22,7 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.TargetNetID = reader.ReadUInt32();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +33,7 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteUInt32(this.TargetNetID);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

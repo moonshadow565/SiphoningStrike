@@ -11,6 +11,16 @@ namespace SiphoningStrike.Game
     public sealed class S2C_MapPing : GamePacket // 0x046
     {
         public override GamePacketID ID => GamePacketID.S2C_MapPing;
+
+        public Vector3 Position { get; set; }
+        public uint TargetNetID { get; set; }
+        public uint SourceNetID { get; set; }
+
+        public byte PingCategory { get; set; }
+        public bool PlayAudio { get; set; }
+        public bool ShowChat { get; set; }
+        public bool PingThrottled { get; set; }
+
         public S2C_MapPing() {}
         public S2C_MapPing(byte[] data)
         {
@@ -19,7 +29,15 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.Position = reader.ReadVector3();
+            this.TargetNetID = reader.ReadUInt32();
+            this.SourceNetID = reader.ReadUInt32();
+
+            byte bitfield = reader.ReadByte();
+            this.PingCategory = (byte)(bitfield & 0x0F);
+            this.PlayAudio = (bitfield & 0x10) != 0;
+            this.ShowChat = (bitfield & 0x20) != 0;
+            this.PingThrottled = (bitfield & 0x40) != 0;
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +48,19 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteVector3(this.Position);
+            writer.WriteUInt32(this.TargetNetID);
+            writer.WriteUInt32(this.SourceNetID);
+
+            byte bitfield = 0;
+            bitfield |= (byte)(this.PingCategory & 0x0F);
+            if (PlayAudio)
+                bitfield |= 0x10;
+            if (ShowChat)
+                bitfield |= 0x20;
+            if (PingThrottled)
+                bitfield |= 0x40;
+            writer.WriteByte(bitfield);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

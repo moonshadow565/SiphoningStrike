@@ -29,6 +29,10 @@ namespace SiphoningStrike.Game.Common
 
         public static void WriteBasicAttackData(this ByteWriter writer, BasicAttackData data)
         {
+            if(data == null)
+            {
+                data = new BasicAttackData();
+            }
             writer.WriteUInt32(data.TargetNetID);
             writer.WriteByte((byte)((int)(data.ExtraTime * 100.0f) + 128));
             writer.WriteUInt32(data.MissileNextID);

@@ -11,6 +11,9 @@ namespace SiphoningStrike.Game
     public sealed class SetFadeOut_Pop : GamePacket // 0x034
     {
         public override GamePacketID ID => GamePacketID.SetFadeOut_Pop;
+
+        public short StackID { get; set; }
+
         public SetFadeOut_Pop() {}
         public SetFadeOut_Pop(byte[] data)
         {
@@ -19,7 +22,7 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.StackID = reader.ReadInt16();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +33,7 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteInt16(this.StackID);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

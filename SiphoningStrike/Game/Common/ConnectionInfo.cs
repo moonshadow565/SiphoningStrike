@@ -37,6 +37,11 @@ namespace SiphoningStrike.Game.Common
 
         public static void WriteConnectionInfo(this ByteWriter writer, ConnectionInfo data)
         {
+            if (data == null)
+            {
+                data = new ConnectionInfo();
+            }
+
             writer.WriteUInt32(data.ClientID);
             writer.WriteUInt64(data.PlayerID);
             writer.WriteFloat(data.Percentage);

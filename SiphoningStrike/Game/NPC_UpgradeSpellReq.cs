@@ -11,6 +11,9 @@ namespace SiphoningStrike.Game
     public sealed class NPC_UpgradeSpellReq : GamePacket // 0x03E
     {
         public override GamePacketID ID => GamePacketID.NPC_UpgradeSpellReq;
+
+        public byte Slot { get; set; }
+
         public NPC_UpgradeSpellReq() {}
         public NPC_UpgradeSpellReq(byte[] data)
         {
@@ -19,7 +22,7 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.Slot = reader.ReadByte();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +33,7 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteByte(this.Slot);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

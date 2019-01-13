@@ -11,6 +11,9 @@ namespace SiphoningStrike.Game
     public sealed class FX_Kill : GamePacket // 0x03D
     {
         public override GamePacketID ID => GamePacketID.FX_Kill;
+
+        public uint UnknownNetID { get; set; }
+
         public FX_Kill() {}
         public FX_Kill(byte[] data)
         {
@@ -19,7 +22,7 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.UnknownNetID = reader.ReadUInt32();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +33,7 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteUInt32(this.UnknownNetID);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

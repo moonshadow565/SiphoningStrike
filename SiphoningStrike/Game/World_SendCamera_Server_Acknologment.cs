@@ -11,6 +11,8 @@ namespace SiphoningStrike.Game
     public sealed class World_SendCamera_Server_Acknologment : GamePacket // 0x02E
     {
         public override GamePacketID ID => GamePacketID.World_SendCamera_Server_Acknologment;
+        public SByte SyncID { get; set; }
+
         public World_SendCamera_Server_Acknologment() {}
         public World_SendCamera_Server_Acknologment(byte[] data)
         {
@@ -19,7 +21,7 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.SyncID = reader.ReadSByte();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +32,7 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteSByte(this.SyncID);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

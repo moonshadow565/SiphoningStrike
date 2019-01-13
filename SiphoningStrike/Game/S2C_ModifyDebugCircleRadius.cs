@@ -11,6 +11,10 @@ namespace SiphoningStrike.Game
     public sealed class S2C_ModifyDebugCircleRadius : GamePacket // 0x02F
     {
         public override GamePacketID ID => GamePacketID.S2C_ModifyDebugCircleRadius;
+
+        public uint CircleID { get; set; }
+        public float Radius { get; set; }
+
         public S2C_ModifyDebugCircleRadius() {}
         public S2C_ModifyDebugCircleRadius(byte[] data)
         {
@@ -19,7 +23,8 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.CircleID = reader.ReadUInt32();
+            this.Radius = reader.ReadFloat();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +35,8 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteUInt32(this.CircleID);
+            writer.WriteFloat(this.Radius);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

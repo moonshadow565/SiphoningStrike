@@ -11,6 +11,9 @@ namespace SiphoningStrike.Game
     public sealed class C2S_PlayEmote : GamePacket // 0x04C
     {
         public override GamePacketID ID => GamePacketID.C2S_PlayEmote;
+
+        public uint EmoteID { get; set; }
+
         public C2S_PlayEmote() {}
         public C2S_PlayEmote(byte[] data)
         {
@@ -19,7 +22,7 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.EmoteID = reader.ReadUInt32();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +33,7 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteUInt32(this.EmoteID);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

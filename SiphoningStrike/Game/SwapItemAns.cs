@@ -11,7 +11,10 @@ namespace SiphoningStrike.Game
     public sealed class SwapItemAns : GamePacket // 0x044
     {
         public override GamePacketID ID => GamePacketID.SwapItemAns;
-        public SwapItemAns() {}
+
+        public byte Source { get; set; }
+        public byte Destination { get; set; }
+
         public SwapItemAns(byte[] data)
         {
             var reader = new ByteReader(data);
@@ -19,7 +22,8 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.Source = reader.ReadByte();
+            this.Destination = reader.ReadByte();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +34,8 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteByte(this.Source);
+            writer.WriteByte(this.Destination);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

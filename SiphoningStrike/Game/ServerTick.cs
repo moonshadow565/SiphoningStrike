@@ -11,6 +11,9 @@ namespace SiphoningStrike.Game
     public sealed class ServerTick : GamePacket // 0x02A
     {
         public override GamePacketID ID => GamePacketID.ServerTick;
+
+        public float Delta { get; set; }
+
         public ServerTick() {}
         public ServerTick(byte[] data)
         {
@@ -19,7 +22,7 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.Delta = reader.ReadFloat();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +33,7 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteFloat(this.Delta);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

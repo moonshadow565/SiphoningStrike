@@ -296,6 +296,9 @@
     <Compile Include="Game\World_SendCamera_Server_Acknologment.cs" />
     <Compile Include="Game\World_SendGameNumber.cs" />
     <Compile Include="Game\Common\ConnectionInfo.cs" />
+    <Compile Include="Game\Common\Talent.cs" />
+    <Compile Include="Game\Common\NavFlagCricle.cs" />
+    <Compile Include="Game\Common\PlayerLoadInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Game\" />

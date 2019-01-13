@@ -11,6 +11,9 @@ namespace SiphoningStrike.Game
     public sealed class S2C_CreateUnitHighlight : GamePacket // 0x05C
     {
         public override GamePacketID ID => GamePacketID.S2C_CreateUnitHighlight;
+
+        public uint UnitNetID { get; set; }
+
         public S2C_CreateUnitHighlight() {}
         public S2C_CreateUnitHighlight(byte[] data)
         {
@@ -19,7 +22,7 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.UnitNetID = reader.ReadUInt32();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +33,7 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteUInt32(this.UnitNetID);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

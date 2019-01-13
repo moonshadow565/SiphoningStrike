@@ -11,6 +11,11 @@ namespace SiphoningStrike.Game
     public sealed class Pause : GamePacket // 0x033
     {
         public override GamePacketID ID => GamePacketID.Pause;
+
+        public uint ClientID { get; set; }
+        public int PauseTimeRemaining { get; set; }
+        public bool IsTournamentPause { get; set; }
+
         public Pause() {}
         public Pause(byte[] data)
         {
@@ -19,7 +24,11 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.ClientID = reader.ReadUInt32();
+            this.PauseTimeRemaining = reader.ReadInt32();
+
+            byte bitfield = reader.ReadByte();
+            this.IsTournamentPause = (bitfield & 0x01) != 0;
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +39,13 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteUInt32(this.ClientID);
+            writer.WriteInt32(this.PauseTimeRemaining);
+
+            byte bitfield = 0;
+            if (this.IsTournamentPause)
+                bitfield |= 0x01;
+            writer.WriteByte(bitfield);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();
