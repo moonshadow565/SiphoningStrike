@@ -11,6 +11,11 @@ namespace SiphoningStrike.Game
     public sealed class ChangeSlotSpellName : GamePacket // 0x035
     {
         public override GamePacketID ID => GamePacketID.ChangeSlotSpellName;
+
+        public byte Slot { get; set; }
+        public bool IsSummonerSpell { get; set; }
+        public string SpellName { get; set; } = "";
+
         public ChangeSlotSpellName() {}
         public ChangeSlotSpellName(byte[] data)
         {
@@ -19,7 +24,11 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            byte bitfield = reader.ReadByte();
+            this.Slot = (byte)(bitfield & 0x7F);
+            this.IsSummonerSpell = (bitfield & 0x80) != 0;
+
+            this.SpellName = reader.ReadFixedStringLast(64);
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +39,13 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            byte bitfield = 0;
+            bitfield |= (byte)(this.Slot & 0x7F);
+            if (this.IsSummonerSpell)
+                bitfield |= 0x80;
+            writer.WriteByte(bitfield);
+
+            writer.WriteFixedStringLast(this.SpellName, 64);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

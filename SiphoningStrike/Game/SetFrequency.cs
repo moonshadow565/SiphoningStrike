@@ -11,6 +11,8 @@ namespace SiphoningStrike.Game
     public sealed class SetFrequency : GamePacket // 0x013
     {
         public override GamePacketID ID => GamePacketID.SetFrequency;
+        public float NewFrequency { get; set; }
+
         public SetFrequency() {}
         public SetFrequency(byte[] data)
         {
@@ -19,7 +21,7 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.NewFrequency = reader.ReadFloat();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +32,7 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteFloat(this.NewFrequency);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

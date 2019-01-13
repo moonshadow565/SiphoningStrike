@@ -11,6 +11,10 @@ namespace SiphoningStrike.Game
     public sealed class UnitAddEXP : GamePacket // 0x011
     {
         public override GamePacketID ID => GamePacketID.UnitAddEXP;
+        public uint TargetNetID { get; set; }
+        public float ExpAmmount { get; set; }
+
+
         public UnitAddEXP() {}
         public UnitAddEXP(byte[] data)
         {
@@ -19,7 +23,8 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.TargetNetID = reader.ReadUInt32();
+            this.ExpAmmount = reader.ReadFloat();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +35,8 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteUInt32(this.TargetNetID);
+            writer.WriteFloat(this.ExpAmmount);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

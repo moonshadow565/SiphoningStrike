@@ -11,6 +11,11 @@ namespace SiphoningStrike.Game
     public sealed class UnitAddGold : GamePacket // 0x025
     {
         public override GamePacketID ID => GamePacketID.UnitAddGold;
+
+        public uint TargetNetID { get; set; }
+        public uint SourceNetID { get; set; }
+        public float GoldAmmount { get; set; }
+
         public UnitAddGold() {}
         public UnitAddGold(byte[] data)
         {
@@ -19,7 +24,9 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.TargetNetID = reader.ReadUInt32();
+            this.SourceNetID = reader.ReadUInt32();
+            this.GoldAmmount = reader.ReadFloat();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +37,9 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteUInt32(this.TargetNetID);
+            writer.WriteUInt32(this.SourceNetID);
+            writer.WriteFloat(this.GoldAmmount);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

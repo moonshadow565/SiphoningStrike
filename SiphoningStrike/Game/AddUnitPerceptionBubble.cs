@@ -11,6 +11,14 @@ namespace SiphoningStrike.Game
     public sealed class AddUnitPerceptionBubble : GamePacket // 0x026
     {
         public override GamePacketID ID => GamePacketID.AddUnitPerceptionBubble;
+
+        public uint PerceptionBubbleType { get; set; }
+        public uint ClientNetID { get; set; }
+        public float Radius { get; set; }
+        public uint UnitNetID { get; set; }
+        public float TimeToLive { get; set; }
+        public uint Flags { get; set; }
+
         public AddUnitPerceptionBubble() {}
         public AddUnitPerceptionBubble(byte[] data)
         {
@@ -19,7 +27,12 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.PerceptionBubbleType = reader.ReadUInt32();
+            this.ClientNetID = reader.ReadUInt32();
+            this.Radius = reader.ReadFloat();
+            this.UnitNetID = reader.ReadUInt32();
+            this.TimeToLive = reader.ReadFloat();
+            this.Flags = reader.ReadUInt32();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }

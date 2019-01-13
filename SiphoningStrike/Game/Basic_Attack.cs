@@ -21,7 +21,7 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            this.BasicAttackData = new BasicAttackData(reader);
+            this.BasicAttackData = reader.ReadBasicAttackData();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -32,7 +32,7 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            this.BasicAttackData.Write(writer);
+            writer.WriteBasicAttackData(this.BasicAttackData);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

@@ -11,6 +11,10 @@ namespace SiphoningStrike.Game
     public sealed class CHAR_CancelTargetingReticle : GamePacket // 0x08B
     {
         public override GamePacketID ID => GamePacketID.CHAR_CancelTargetingReticle;
+
+        public byte Slot { get; set; }
+        public bool IsSummonerSpell { get; set; }
+
         public CHAR_CancelTargetingReticle() {}
         public CHAR_CancelTargetingReticle(byte[] data)
         {
@@ -19,7 +23,9 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            byte bitfield = reader.ReadByte();
+            this.Slot = (byte)(bitfield & 0x7F);
+            this.IsSummonerSpell = (bitfield & 0x80) != 0;
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +36,11 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            byte bitfield = 0;
+            bitfield |= (byte)(this.Slot & 0x7F);
+            if (this.IsSummonerSpell)
+                bitfield |= 0x80;
+            writer.WriteByte(bitfield);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

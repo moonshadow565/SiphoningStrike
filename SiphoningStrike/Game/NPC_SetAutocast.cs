@@ -11,6 +11,8 @@ namespace SiphoningStrike.Game
     public sealed class NPC_SetAutocast : GamePacket // 0x022
     {
         public override GamePacketID ID => GamePacketID.NPC_SetAutocast;
+        public byte Slot { get; set; }
+
         public NPC_SetAutocast() {}
         public NPC_SetAutocast(byte[] data)
         {
@@ -19,7 +21,7 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.Slot = reader.ReadByte();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +32,7 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteByte(this.Slot);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

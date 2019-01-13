@@ -11,6 +11,13 @@ namespace SiphoningStrike.Game
     public sealed class NPC_BuffUpdateCount : GamePacket // 0x01F
     {
         public override GamePacketID ID => GamePacketID.NPC_BuffUpdateCount;
+
+        public byte BuffSlot { get; set; }
+        public byte Count { get; set; }
+        public float Duration { get; set; }
+        public float RunningTime { get; set; }
+        public uint CasterNetID { get; set; }
+
         public NPC_BuffUpdateCount() {}
         public NPC_BuffUpdateCount(byte[] data)
         {
@@ -19,7 +26,11 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.BuffSlot = reader.ReadByte();
+            this.Count = reader.ReadByte();
+            this.Duration = reader.ReadFloat();
+            this.RunningTime = reader.ReadFloat();
+            this.CasterNetID = reader.ReadUInt32();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +41,11 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteByte(this.BuffSlot);
+            writer.WriteByte(this.Count);
+            writer.WriteFloat(this.Duration);
+            writer.WriteFloat(this.RunningTime);
+            writer.WriteUInt32(this.CasterNetID);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

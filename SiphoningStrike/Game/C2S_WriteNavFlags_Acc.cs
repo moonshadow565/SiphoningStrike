@@ -11,6 +11,9 @@ namespace SiphoningStrike.Game
     public sealed class C2S_WriteNavFlags_Acc : GamePacket // 0x020
     {
         public override GamePacketID ID => GamePacketID.C2S_WriteNavFlags_Acc;
+
+        public int SyncID { get; set; }
+
         public C2S_WriteNavFlags_Acc() {}
         public C2S_WriteNavFlags_Acc(byte[] data)
         {
@@ -19,7 +22,7 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.SyncID = reader.ReadInt32();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +33,7 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteInt32(this.SyncID);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();
