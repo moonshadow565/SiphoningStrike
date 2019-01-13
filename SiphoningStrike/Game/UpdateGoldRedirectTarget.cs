@@ -11,6 +11,8 @@ namespace SiphoningStrike.Game
     public sealed class UpdateGoldRedirectTarget : GamePacket // 0x007
     {
         public override GamePacketID ID => GamePacketID.UpdateGoldRedirectTarget;
+        public uint TargetNetID { get; set; }
+
         public UpdateGoldRedirectTarget() {}
         public UpdateGoldRedirectTarget(byte[] data)
         {
@@ -19,7 +21,7 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.TargetNetID = reader.ReadUInt32();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +32,7 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteUInt32(this.TargetNetID);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

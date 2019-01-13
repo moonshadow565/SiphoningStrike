@@ -13,7 +13,7 @@ namespace SiphoningStrike.LoadScreen
 
         public ulong PlayerID { get; set; }
         public uint SkinID { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; } = "";
 
         public RequestRename() { }
         public RequestRename(byte[] data)

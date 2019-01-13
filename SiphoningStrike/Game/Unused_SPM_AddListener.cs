@@ -8,11 +8,11 @@ using SiphoningStrike.Game.Common;
 
 namespace SiphoningStrike.Game
 {
-    public sealed class Unused_EC : GamePacket, IUnusedPacket // 0x0EC
+    public sealed class Unused_SPM_AddListener : GamePacket, IUnusedPacket // 0x097
     {
-        public override GamePacketID ID => GamePacketID.Unused_EC;
-        public Unused_EC() {}
-        public Unused_EC(byte[] data)
+        public override GamePacketID ID => GamePacketID.Unused_SPM_AddListener;
+        public Unused_SPM_AddListener() {}
+        public Unused_SPM_AddListener(byte[] data)
         {
             var reader = new ByteReader(data);
             

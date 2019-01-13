@@ -11,6 +11,9 @@ namespace SiphoningStrike.Game
     public sealed class SynchSimTimeC2S : GamePacket // 0x008
     {
         public override GamePacketID ID => GamePacketID.SynchSimTimeC2S;
+        public float TimeLastServer { get; set; }
+        public float TimeLastClient { get; set; }
+
         public SynchSimTimeC2S() {}
         public SynchSimTimeC2S(byte[] data)
         {
@@ -19,7 +22,8 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.TimeLastServer = reader.ReadFloat();
+            this.TimeLastClient = reader.ReadFloat();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +34,8 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteFloat(this.TimeLastServer);
+            writer.WriteFloat(this.TimeLastClient);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

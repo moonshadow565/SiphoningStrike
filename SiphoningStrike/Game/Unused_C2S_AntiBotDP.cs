@@ -8,17 +8,17 @@ using SiphoningStrike.Game.Common;
 
 namespace SiphoningStrike.Game
 {
-    public sealed class Unused_8F : GamePacket, IUnusedPacket // 0x08F
+    public sealed class Unused_C2S_AntiBotDP : GamePacket, IUnusedPacket // 0x0EC
     {
-        public override GamePacketID ID => GamePacketID.Unused_8F;
-        public Unused_8F() {}
-        public Unused_8F(byte[] data)
+        public override GamePacketID ID => GamePacketID.Unused_C2S_AntiBotDP;
+        public Unused_C2S_AntiBotDP() {}
+        public Unused_C2S_AntiBotDP(byte[] data)
         {
             var reader = new ByteReader(data);
             
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
-
+            
             //Unused
 
             this.BytesLeft = reader.ReadBytesLeft();

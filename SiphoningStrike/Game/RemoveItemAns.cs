@@ -11,6 +11,10 @@ namespace SiphoningStrike.Game
     public sealed class RemoveItemAns : GamePacket // 0x00B
     {
         public override GamePacketID ID => GamePacketID.RemoveItemAns;
+
+        public byte Slot { get; set; }
+        public byte ItemsInSlot { get; set; }
+
         public RemoveItemAns() {}
         public RemoveItemAns(byte[] data)
         {
@@ -19,7 +23,8 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.Slot = reader.ReadByte();
+            this.ItemsInSlot = reader.ReadByte();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +35,8 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteByte(Slot);
+            writer.WriteByte(ItemsInSlot);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

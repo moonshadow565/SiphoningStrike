@@ -11,6 +11,8 @@ namespace SiphoningStrike.Game
     public sealed class C2S_TutorialAudioEventFinished : GamePacket // 0x005
     {
         public override GamePacketID ID => GamePacketID.C2S_TutorialAudioEventFinished;
+        public uint AudioEventNetID { get; set; }
+
         public C2S_TutorialAudioEventFinished() {}
         public C2S_TutorialAudioEventFinished(byte[] data)
         {
@@ -19,7 +21,7 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.AudioEventNetID = reader.ReadUInt32();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +32,7 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteUInt32(this.AudioEventNetID);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

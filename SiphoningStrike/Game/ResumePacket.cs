@@ -11,6 +11,10 @@ namespace SiphoningStrike.Game
     public sealed class ResumePacket : GamePacket // 0x00A
     {
         public override GamePacketID ID => GamePacketID.ResumePacket;
+
+        public uint ClientID { get; set; }
+        public bool Delayed { get; set; }
+
         public ResumePacket() {}
         public ResumePacket(byte[] data)
         {
@@ -19,7 +23,10 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.ClientID = reader.ReadUInt32();
+
+            byte bitfield = reader.ReadByte();
+            this.Delayed = (bitfield & 0x01) != 0;
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +37,12 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteUInt32(this.ClientID);
+
+            byte bitfield = 0;
+            if (Delayed)
+                bitfield |= 0x01;
+            writer.WriteByte(bitfield);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();
