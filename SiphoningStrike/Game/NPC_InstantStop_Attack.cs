@@ -26,7 +26,6 @@ namespace SiphoningStrike.Game
             this.ForceStop = (bitfield & 0x04) != 0;
             this.AvatarSpell = (bitfield & 0x08) != 0;
             this.DestroyMissile = (bitfield & 0x10) != 0;
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -42,7 +41,6 @@ namespace SiphoningStrike.Game
             if (this.DestroyMissile)
                 bitfield |= 0x10;
             writer.WriteByte(bitfield);
-
         }
     }
 }

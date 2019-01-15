@@ -29,7 +29,6 @@ namespace SiphoningStrike.Game
             {
                 this.States[i] = reader.ReadFixedString(64);
             }
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -41,7 +40,6 @@ namespace SiphoningStrike.Game
             {
                 writer.WriteFixedString(this.States[i], 64);
             }
-
         }
     }
 }

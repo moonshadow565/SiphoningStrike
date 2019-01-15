@@ -51,7 +51,6 @@ namespace SiphoningStrike.Game
 
             this.AIscript = reader.ReadFixedStringLast(32);
             this.ShowMinimapIcon = reader.ReadBool();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -77,7 +76,6 @@ namespace SiphoningStrike.Game
 
             writer.WriteFixedStringLast(this.AIscript, 32);
             writer.WriteBool(this.ShowMinimapIcon);
-
         }
     }
 }

@@ -21,14 +21,12 @@ namespace SiphoningStrike.Game
             this.RunningTime = reader.ReadFloat();
             this.Duration = reader.ReadFloat();
             this.NumInGroup = reader.ReadByte();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
             writer.WriteFloat(this.RunningTime);
             writer.WriteFloat(this.Duration);
             writer.WriteByte(this.NumInGroup);
-
         }
     }
 }

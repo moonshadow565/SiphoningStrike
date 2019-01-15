@@ -25,7 +25,6 @@ namespace SiphoningStrike.Game
             this.TipImagePath = reader.ReadFixedString(128);
             this.TipCommand = reader.ReadByte();
             this.TipID = reader.ReadUInt32();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -34,7 +33,6 @@ namespace SiphoningStrike.Game
             writer.WriteFixedString(this.TipImagePath, 128);
             writer.WriteByte(this.TipCommand);
             writer.WriteUInt32(this.TipID);
-
         }
     }
 }

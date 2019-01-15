@@ -20,7 +20,6 @@ namespace SiphoningStrike.Game
             ushort bitfield = reader.ReadUInt16();
             this.Duration = (ushort)(bitfield & 0x7FFF);
             this.State = (bitfield & 0x8000) != 0;
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -29,7 +28,6 @@ namespace SiphoningStrike.Game
             if (this.State)
                 bitfield |= 0x8000;
             writer.WriteUInt16(bitfield);
-
         }
     }
 }

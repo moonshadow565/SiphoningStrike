@@ -21,7 +21,6 @@ namespace SiphoningStrike.Game
             {
                 this.TargetNetIDs.Add(reader.ReadUInt32());
             }
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -35,7 +34,6 @@ namespace SiphoningStrike.Game
             {
                 writer.WriteUInt32(this.TargetNetIDs[i]);
             }
-
         }
     }
 }

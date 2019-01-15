@@ -17,12 +17,10 @@ namespace SiphoningStrike.Game
         internal override void ReadBody(ByteReader reader)
         {
             this.Pause = reader.ReadBool();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
             writer.WriteBool(this.Pause);
-
         }
     }
 }

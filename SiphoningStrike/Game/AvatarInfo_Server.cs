@@ -37,7 +37,6 @@ namespace SiphoningStrike.Game
                 this.Talents[i] = reader.ReadTalent();
             }
             this.Level = reader.ReadByte();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -54,7 +53,6 @@ namespace SiphoningStrike.Game
                 writer.WriteTalent(this.Talents[i]);
             }
             writer.WriteByte(this.Level);
-
         }
     }
 }

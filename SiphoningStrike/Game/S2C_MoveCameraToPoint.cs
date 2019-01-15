@@ -24,7 +24,6 @@ namespace SiphoningStrike.Game
             this.StartPosition = reader.ReadVector3();
             this.TargetPosition = reader.ReadVector3();
             this.TravelTime = reader.ReadFloat();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -36,7 +35,6 @@ namespace SiphoningStrike.Game
             writer.WriteVector3(this.StartPosition);
             writer.WriteVector3(this.TargetPosition);
             writer.WriteFloat(this.TravelTime);
-
         }
     }
 }

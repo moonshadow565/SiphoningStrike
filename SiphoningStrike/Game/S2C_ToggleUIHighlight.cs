@@ -26,7 +26,6 @@ namespace SiphoningStrike.Game
             this.ElementSubCategory = reader.ReadByte();
             byte bitfield = reader.ReadByte();
             this.Enabled = (bitfield & 1) != 0;
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -38,7 +37,6 @@ namespace SiphoningStrike.Game
             if (this.Enabled)
                 bitfield |= 1;
             writer.WriteByte(bitfield);
-
         }
     }
 }

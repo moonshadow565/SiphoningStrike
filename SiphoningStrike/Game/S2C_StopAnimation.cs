@@ -22,7 +22,6 @@ namespace SiphoningStrike.Game
             this.Fade = (flags & 1) != 0;
             this.IgnoreLock = (flags & 2) != 0;
             this.StopAll = (flags & 4) != 0;
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -34,7 +33,6 @@ namespace SiphoningStrike.Game
             if (StopAll)
                 flags |= 4;
             writer.WriteByte(flags);
-
         }
     }
 }

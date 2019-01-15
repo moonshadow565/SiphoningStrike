@@ -17,12 +17,10 @@ namespace SiphoningStrike.Game
         internal override void ReadBody(ByteReader reader)
         {
             this.Direction = reader.ReadVector3();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
             writer.WriteVector3(Direction);
-
         }
     }
 }

@@ -21,14 +21,12 @@ namespace SiphoningStrike.Game
             this.UnitNetID = reader.ReadUInt32();
             this.SpellNameHash = reader.ReadUInt32();
             this.SpellSlot = reader.ReadByte();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
             writer.WriteUInt32(this.UnitNetID);
             writer.WriteUInt32(this.SpellNameHash);
             writer.WriteByte(this.SpellSlot);
-
         }
     }
 }

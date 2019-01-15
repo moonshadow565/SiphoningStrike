@@ -17,12 +17,10 @@ namespace SiphoningStrike.Game
         internal override void ReadBody(ByteReader reader)
         {
             this.DebugID = reader.ReadInt32();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
             writer.WriteInt32(this.DebugID);
-
         }
     }
 }

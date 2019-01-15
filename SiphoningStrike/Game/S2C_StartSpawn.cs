@@ -19,13 +19,11 @@ namespace SiphoningStrike.Game
         {
             this.BotCountOrder = reader.ReadByte();
             this.BotCountChaos = reader.ReadByte();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
             writer.WriteByte(BotCountOrder);
             writer.WriteByte(BotCountChaos);
-
         }
     }
 }

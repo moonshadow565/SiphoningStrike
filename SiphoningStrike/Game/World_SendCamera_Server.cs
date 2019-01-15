@@ -23,7 +23,6 @@ namespace SiphoningStrike.Game
             this.CameraDirection = reader.ReadVector3();
             this.ClientID = reader.ReadUInt32();
             this.SyncID = reader.ReadSByte();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -31,7 +30,6 @@ namespace SiphoningStrike.Game
             writer.WriteVector3(this.CameraDirection);
             writer.WriteUInt32(this.ClientID);
             writer.WriteSByte(this.SyncID);
-
         }
     }
 }

@@ -16,12 +16,10 @@ namespace SiphoningStrike.Game
         internal override void ReadBody(ByteReader reader)
         {
             this.ConnectionInfo = reader.ReadConnectionInfo();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
             writer.WriteConnectionInfo(this.ConnectionInfo);
-
         }
     }
 }

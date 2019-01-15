@@ -19,13 +19,11 @@ namespace SiphoningStrike.Game
         {
             this.CircleID = reader.ReadUInt32();
             this.Radius = reader.ReadFloat();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
             writer.WriteUInt32(this.CircleID);
             writer.WriteFloat(this.Radius);
-
         }
     }
 }

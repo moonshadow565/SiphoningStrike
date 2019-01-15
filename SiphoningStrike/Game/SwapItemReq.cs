@@ -19,13 +19,11 @@ namespace SiphoningStrike.Game
         {
             this.Source = reader.ReadByte();
             this.Destination = reader.ReadByte();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
             writer.WriteByte(this.Source);
             writer.WriteByte(this.Destination);
-
         }
     }
 }

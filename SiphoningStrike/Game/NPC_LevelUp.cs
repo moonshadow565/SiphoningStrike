@@ -19,13 +19,11 @@ namespace SiphoningStrike.Game
         {
             this.Level = reader.ReadByte();
             this.AveliablePoints = reader.ReadByte();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
             writer.WriteByte(this.Level);
             writer.WriteByte(this.AveliablePoints);
-
         }
     }
 }

@@ -19,13 +19,11 @@ namespace SiphoningStrike.Game
         {
             this.TipCommand = reader.ReadByte();
             this.TipID = reader.ReadUInt32();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
             writer.WriteByte(this.TipCommand);
             writer.WriteUInt32(this.TipID);
-
         }
     }
 }

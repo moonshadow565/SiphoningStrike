@@ -37,7 +37,6 @@ namespace SiphoningStrike.Game
             this.SkinID = reader.ReadUInt32();
             this.Name = reader.ReadFixedString(40);
             this.Skin = reader.ReadFixedString(40);
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -52,7 +51,6 @@ namespace SiphoningStrike.Game
             writer.WriteUInt32(this.SkinID);
             writer.WriteFixedString(this.Name, 40);
             writer.WriteFixedString(this.Skin, 40);
-
         }
     }
 }

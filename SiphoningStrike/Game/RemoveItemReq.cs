@@ -20,7 +20,6 @@ namespace SiphoningStrike.Game
             byte bitfield = reader.ReadByte();
             this.Slot = (byte)(bitfield & 0x7F);
             this.Sell = (bitfield & 0x80) != 0;
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -29,7 +28,6 @@ namespace SiphoningStrike.Game
             if (Sell)
                 bitfield |= 0x80;
             writer.WriteByte(bitfield);
-
         }
     }
 }

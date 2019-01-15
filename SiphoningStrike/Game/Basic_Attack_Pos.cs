@@ -19,13 +19,11 @@ namespace SiphoningStrike.Game
         {
             this.BasicAttackData = reader.ReadBasicAttackData();
             this.Position = reader.ReadVector2();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
             writer.WriteBasicAttackData(this.BasicAttackData);
             writer.WriteVector2(this.Position);
-
         }
     }
 }

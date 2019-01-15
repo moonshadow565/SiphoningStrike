@@ -21,14 +21,12 @@ namespace SiphoningStrike.Game
             this.Slot = reader.ReadByte();
             this.SpellLevel = reader.ReadByte();
             this.SkillPoints = reader.ReadByte();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
             writer.WriteByte(this.Slot);
             writer.WriteByte(this.SpellLevel);
             writer.WriteByte(this.SkillPoints);
-
         }
     }
 }

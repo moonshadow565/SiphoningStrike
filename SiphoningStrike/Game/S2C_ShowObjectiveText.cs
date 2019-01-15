@@ -17,12 +17,10 @@ namespace SiphoningStrike.Game
         internal override void ReadBody(ByteReader reader)
         {
             this.TextID = reader.ReadFixedStringLast(128);
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
             writer.WriteFixedStringLast(this.TextID, 128);
-
         }
     }
 }

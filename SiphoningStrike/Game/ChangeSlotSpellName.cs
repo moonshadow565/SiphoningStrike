@@ -23,7 +23,6 @@ namespace SiphoningStrike.Game
             this.IsSummonerSpell = (bitfield & 0x80) != 0;
 
             this.SpellName = reader.ReadFixedStringLast(64);
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -34,7 +33,6 @@ namespace SiphoningStrike.Game
             writer.WriteByte(bitfield);
 
             writer.WriteFixedStringLast(this.SpellName, 64);
-
         }
     }
 }

@@ -23,7 +23,6 @@ namespace SiphoningStrike.Game
             this.ItemID = reader.ReadUInt32();
             this.ItemsInSlot = reader.ReadByte();
             this.SpellCharges = reader.ReadByte();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -31,7 +30,6 @@ namespace SiphoningStrike.Game
             writer.WriteUInt32(this.ItemID);
             writer.WriteByte(this.ItemsInSlot);
             writer.WriteByte(this.SpellCharges);
-
         }
     }
 }

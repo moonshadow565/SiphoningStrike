@@ -23,7 +23,6 @@ namespace SiphoningStrike.Game
                 var toAnim = reader.ReadSizedString();
                 this.AnimationOverrides[fromAnim] = toAnim;
             }
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -37,7 +36,6 @@ namespace SiphoningStrike.Game
                 writer.WriteSizedString(kvp.Key);
                 writer.WriteSizedString(kvp.Value);
             }
-
         }
     }
 }

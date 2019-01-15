@@ -21,7 +21,6 @@ namespace SiphoningStrike.Game
 
             byte bitfield = reader.ReadByte();
             this.Delayed = (bitfield & 0x01) != 0;
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -31,7 +30,6 @@ namespace SiphoningStrike.Game
             if (Delayed)
                 bitfield |= 0x01;
             writer.WriteByte(bitfield);
-
         }
     }
 }

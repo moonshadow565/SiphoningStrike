@@ -16,12 +16,10 @@ namespace SiphoningStrike.Game
         internal override void ReadBody(ByteReader reader)
         {
             this.BasicAttackData = reader.ReadBasicAttackData();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
             writer.WriteBasicAttackData(this.BasicAttackData);
-
         }
     }
 }

@@ -47,7 +47,6 @@ namespace SiphoningStrike.Game
 
             byte bitfield = 0;
             this.BehaviorTree = (bitfield & 0x01) != 0;
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -70,7 +69,6 @@ namespace SiphoningStrike.Game
             if (this.BehaviorTree)
                 bitfield |= 0x01;
             writer.WriteByte(bitfield);
-
         }
     }
 }

@@ -25,7 +25,6 @@ namespace SiphoningStrike.Game
             this.StopShieldFade = (bitfield & 4) != 0;
 
             this.Ammount = reader.ReadFloat();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -39,7 +38,6 @@ namespace SiphoningStrike.Game
             writer.WriteByte(bitfield);
 
             writer.WriteFloat(this.Ammount);
-
         }
     }
 }

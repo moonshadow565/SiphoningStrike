@@ -32,7 +32,6 @@ namespace SiphoningStrike.Game
             this.PlayAudio = (bitfield & 0x10) != 0;
             this.ShowChat = (bitfield & 0x20) != 0;
             this.PingThrottled = (bitfield & 0x40) != 0;
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -49,7 +48,6 @@ namespace SiphoningStrike.Game
             if (PingThrottled)
                 bitfield |= 0x40;
             writer.WriteByte(bitfield);
-
         }
     }
 }

@@ -27,7 +27,6 @@ namespace SiphoningStrike.Game
             this.MinionType = reader.ReadByte();
             this.DamageBonus = reader.ReadInt16();
             this.HealthBonus = reader.ReadInt16();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -37,7 +36,6 @@ namespace SiphoningStrike.Game
             writer.WriteByte(this.MinionType);
             writer.WriteInt16(this.DamageBonus);
             writer.WriteInt16(this.HealthBonus);
-
         }
     }
 }

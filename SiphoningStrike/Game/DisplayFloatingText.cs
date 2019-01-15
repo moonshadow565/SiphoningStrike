@@ -23,7 +23,6 @@ namespace SiphoningStrike.Game
             this.FloatingTextType = reader.ReadByte();
             this.Param = reader.ReadInt32();
             this.Message = reader.ReadFixedStringLast(128);
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -31,7 +30,6 @@ namespace SiphoningStrike.Game
             writer.WriteByte(this.FloatingTextType);
             writer.WriteInt32(this.Param);
             writer.WriteFixedStringLast(this.Message, 128);
-
         }
     }
 }

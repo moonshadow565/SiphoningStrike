@@ -20,14 +20,12 @@ namespace SiphoningStrike.Game
             this.Center = reader.ReadVector3();
             this.Radius = reader.ReadFloat();
             this.RestrictCamera = reader.ReadBool();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
             writer.WriteVector3(this.Center);
             writer.WriteFloat(this.Radius);
             writer.WriteBool(this.RestrictCamera);
-
         }
     }
 }

@@ -17,12 +17,10 @@ namespace SiphoningStrike.Game
         internal override void ReadBody(ByteReader reader)
         {
             this.FadeTime = reader.ReadFloat();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
             writer.WriteFloat(this.FadeTime);
-
         }
     }
 }

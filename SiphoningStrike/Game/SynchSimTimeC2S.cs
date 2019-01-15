@@ -18,13 +18,11 @@ namespace SiphoningStrike.Game
         {
             this.TimeLastServer = reader.ReadFloat();
             this.TimeLastClient = reader.ReadFloat();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
             writer.WriteFloat(this.TimeLastServer);
             writer.WriteFloat(this.TimeLastClient);
-
         }
     }
 }

@@ -25,7 +25,6 @@ namespace SiphoningStrike.Game
             this.Duration = reader.ReadFloat();
             this.RunningTime = reader.ReadFloat();
             this.CasterNetID = reader.ReadUInt32();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -34,7 +33,6 @@ namespace SiphoningStrike.Game
             writer.WriteFloat(this.Duration);
             writer.WriteFloat(this.RunningTime);
             writer.WriteUInt32(this.CasterNetID);
-
         }
     }
 }

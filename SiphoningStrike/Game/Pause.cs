@@ -23,7 +23,6 @@ namespace SiphoningStrike.Game
 
             byte bitfield = reader.ReadByte();
             this.IsTournamentPause = (bitfield & 0x01) != 0;
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -34,7 +33,6 @@ namespace SiphoningStrike.Game
             if (this.IsTournamentPause)
                 bitfield |= 0x01;
             writer.WriteByte(bitfield);
-
         }
     }
 }

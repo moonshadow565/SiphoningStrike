@@ -27,7 +27,6 @@ namespace SiphoningStrike.Game
             this.UnitNetID = reader.ReadUInt32();
             this.TimeToLive = reader.ReadFloat();
             this.Flags = reader.ReadUInt32();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -37,7 +36,6 @@ namespace SiphoningStrike.Game
             writer.WriteUInt32(this.UnitNetID);
             writer.WriteFloat(this.TimeToLive);
             writer.WriteUInt32(this.Flags);
-
         }
     }
 }

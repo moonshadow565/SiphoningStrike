@@ -23,7 +23,6 @@ namespace SiphoningStrike.Game
             {
                 this.NavFlagCricles.Add(reader.ReadNavFlagCricle());
             }
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -37,7 +36,6 @@ namespace SiphoningStrike.Game
             {
                 writer.WriteNavFlagCricle(this.NavFlagCricles[i]);
             }
-
         }
     }
 }

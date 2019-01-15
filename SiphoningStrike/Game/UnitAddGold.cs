@@ -21,14 +21,12 @@ namespace SiphoningStrike.Game
             this.TargetNetID = reader.ReadUInt32();
             this.SourceNetID = reader.ReadUInt32();
             this.GoldAmmount = reader.ReadFloat();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
             writer.WriteUInt32(this.TargetNetID);
             writer.WriteUInt32(this.SourceNetID);
             writer.WriteFloat(this.GoldAmmount);
-
         }
     }
 }

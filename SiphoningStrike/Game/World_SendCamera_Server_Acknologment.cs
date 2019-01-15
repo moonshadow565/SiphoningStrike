@@ -16,12 +16,10 @@ namespace SiphoningStrike.Game
         internal override void ReadBody(ByteReader reader)
         {
             this.SyncID = reader.ReadSByte();
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
             writer.WriteSByte(this.SyncID);
-
         }
     }
 }

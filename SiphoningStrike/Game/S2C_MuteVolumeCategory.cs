@@ -20,7 +20,6 @@ namespace SiphoningStrike.Game
             this.VolumeCategory = reader.ReadByte();
             byte bitfield = reader.ReadByte();
             this.Mute = (bitfield & 0x01u) != 0;
-
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -29,7 +28,6 @@ namespace SiphoningStrike.Game
             if (Mute)
                 bitfield |= 0x01;
             writer.WriteByte(bitfield);
-
         }
     }
 }
