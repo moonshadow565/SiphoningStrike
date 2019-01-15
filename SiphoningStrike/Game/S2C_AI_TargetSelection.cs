@@ -16,35 +16,21 @@ namespace SiphoningStrike.Game
 
         public uint[] TargetNetIDs => _targetNetIds;
 
-        public S2C_AI_TargetSelection() {}
-        public S2C_AI_TargetSelection(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             for (var i = 0; i < this.TargetNetIDs.Length; i++)
             {
                 this.TargetNetIDs[i] = reader.ReadUInt32();
             }
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             for (var i = 0; i < this.TargetNetIDs.Length; i++)
             {
                 writer.WriteUInt32(this.TargetNetIDs[i]);
             }
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

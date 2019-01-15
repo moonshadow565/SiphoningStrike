@@ -15,32 +15,18 @@ namespace SiphoningStrike.Game
         public byte Source { get; set; }
         public byte Destination { get; set; }
 
-        public SwapItemAns() {}
 
-        public SwapItemAns(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             this.Source = reader.ReadByte();
             this.Destination = reader.ReadByte();
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             writer.WriteByte(this.Source);
             writer.WriteByte(this.Destination);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

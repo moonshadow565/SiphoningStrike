@@ -28,14 +28,8 @@ namespace SiphoningStrike.Game
         public int GroupNumber { get; set; }
         public bool BehaviorTree { get; set; }
 
-        public S2C_CreateNeutral() {}
-        public S2C_CreateNeutral(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             this.UnitNetID = reader.ReadUInt32();
             this.UnitNetNodeID = reader.ReadByte();
             this.Position = reader.ReadVector3();
@@ -54,15 +48,9 @@ namespace SiphoningStrike.Game
             byte bitfield = 0;
             this.BehaviorTree = (bitfield & 0x01) != 0;
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             writer.WriteUInt32(this.UnitNetID);
             writer.WriteByte(this.UnitNetNodeID);
             writer.WriteVector3(this.Position);
@@ -83,8 +71,6 @@ namespace SiphoningStrike.Game
                 bitfield |= 0x01;
             writer.WriteByte(bitfield);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

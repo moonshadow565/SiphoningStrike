@@ -17,14 +17,8 @@ namespace SiphoningStrike.Game
         public bool StopShieldFade { get; set; }
         public float Ammount { get; set; }
 
-        public ModifyShield() {}
-        public ModifyShield(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             byte bitfield = reader.ReadByte();
             this.Physical = (bitfield & 1) != 0;
             this.Magical = (bitfield & 2) != 0;
@@ -32,15 +26,9 @@ namespace SiphoningStrike.Game
 
             this.Ammount = reader.ReadFloat();
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             byte bitfield = 0;
             if (this.Physical)
                 bitfield |= 1;
@@ -52,8 +40,6 @@ namespace SiphoningStrike.Game
 
             writer.WriteFloat(this.Ammount);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

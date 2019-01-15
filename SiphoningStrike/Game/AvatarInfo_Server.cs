@@ -22,14 +22,8 @@ namespace SiphoningStrike.Game
         public Talent[] Talents => _talents;
         public byte Level { get; set; }
 
-        public AvatarInfo_Server() {}
-        public AvatarInfo_Server(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             for (var i = 0; i < this.ItemIDs.Length; i++)
             {
                 this.ItemIDs[i] = reader.ReadUInt32();
@@ -44,15 +38,9 @@ namespace SiphoningStrike.Game
             }
             this.Level = reader.ReadByte();
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             for (var i = 0; i < this.ItemIDs.Length; i++)
             {
                 writer.WriteUInt32(this.ItemIDs[i]);
@@ -67,8 +55,6 @@ namespace SiphoningStrike.Game
             }
             writer.WriteByte(this.Level);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

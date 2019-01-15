@@ -15,31 +15,17 @@ namespace SiphoningStrike.Game
         public BasicAttackData BasicAttackData { get; set; } = new BasicAttackData();
         public Vector2 Position { get; set; }
 
-        public Basic_Attack_Pos() {}
-        public Basic_Attack_Pos(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             this.BasicAttackData = reader.ReadBasicAttackData();
             this.Position = reader.ReadVector2();
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             writer.WriteBasicAttackData(this.BasicAttackData);
             writer.WriteVector2(this.Position);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

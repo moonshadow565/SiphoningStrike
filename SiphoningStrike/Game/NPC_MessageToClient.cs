@@ -19,14 +19,8 @@ namespace SiphoningStrike.Game
         public byte ColorIndex { get; set; }
         public string Message { get; set; } = "";
 
-        public NPC_MessageToClient() {}
-        public NPC_MessageToClient(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             this.TargetNetID = reader.ReadUInt32();
             this.BubbleDelay = reader.ReadFloat();
             this.SlotNumber = reader.ReadInt32();
@@ -34,15 +28,9 @@ namespace SiphoningStrike.Game
             this.ColorIndex = reader.ReadByte();
             this.Message = reader.ReadFixedStringLast(1024);
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             writer.WriteUInt32(this.TargetNetID);
             writer.WriteFloat(this.BubbleDelay);
             writer.WriteInt32(this.SlotNumber);
@@ -50,8 +38,6 @@ namespace SiphoningStrike.Game
             writer.WriteByte(this.ColorIndex);
             writer.WriteFixedStringLast(this.Message, 1024);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

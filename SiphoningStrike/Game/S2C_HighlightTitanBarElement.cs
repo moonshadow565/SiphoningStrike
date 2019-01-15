@@ -13,29 +13,15 @@ namespace SiphoningStrike.Game
         public override GamePacketID ID => GamePacketID.S2C_HighlightTitanBarElement;
         public byte ElementType { get; set; }
 
-        public S2C_HighlightTitanBarElement() {}
-        public S2C_HighlightTitanBarElement(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             this.ElementType = reader.ReadByte();
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             writer.WriteByte(this.ElementType);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

@@ -14,33 +14,19 @@ namespace SiphoningStrike.Game
 
         public bool TournamentPauseEnabled { get; set; }
 
-        public S2C_StartGame() {}
-        public S2C_StartGame(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             byte bitfield = reader.ReadByte();
             this.TournamentPauseEnabled |= (bitfield & 1) != 0;
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             byte bitfield = 0;
             if (this.TournamentPauseEnabled)
                 bitfield |= 1;
             writer.WriteByte(bitfield);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

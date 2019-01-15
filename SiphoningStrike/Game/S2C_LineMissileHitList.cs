@@ -14,29 +14,17 @@ namespace SiphoningStrike.Game
 
         public List<uint> TargetNetIDs { get; set; } = new List<uint>();
 
-        public S2C_LineMissileHitList() {}
-        public S2C_LineMissileHitList(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             int size = reader.ReadInt16();
             for (int i = 0; i < size; i++)
             {
                 this.TargetNetIDs.Add(reader.ReadUInt32());
             }
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             int size = this.TargetNetIDs.Count;
             if (size > 0x7FFF)
             {
@@ -48,8 +36,6 @@ namespace SiphoningStrike.Game
                 writer.WriteUInt32(this.TargetNetIDs[i]);
             }
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

@@ -19,14 +19,8 @@ namespace SiphoningStrike.Game
         public short DamageBonus { get; set; }
         public short HealthBonus { get; set; }
 
-        public Barrack_SpawnUnit() {}
-        public Barrack_SpawnUnit(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             this.UnitNetID = reader.ReadUInt32();
             this.UnitNetNodeID = reader.ReadByte();
             this.WaveCount = reader.ReadByte();
@@ -34,15 +28,9 @@ namespace SiphoningStrike.Game
             this.DamageBonus = reader.ReadInt16();
             this.HealthBonus = reader.ReadInt16();
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             writer.WriteUInt32(this.UnitNetID);
             writer.WriteByte(this.UnitNetNodeID);
             writer.WriteByte(this.WaveCount);
@@ -50,8 +38,6 @@ namespace SiphoningStrike.Game
             writer.WriteInt16(this.DamageBonus);
             writer.WriteInt16(this.HealthBonus);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

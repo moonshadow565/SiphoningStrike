@@ -11,25 +11,11 @@ namespace SiphoningStrike.Game
     public sealed class C2S_ClientConnect_NamedPipe : GamePacket // 0x09A
     {
         public override GamePacketID ID => GamePacketID.C2S_ClientConnect_NamedPipe;
-        public C2S_ClientConnect_NamedPipe() {}
-        public C2S_ClientConnect_NamedPipe(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

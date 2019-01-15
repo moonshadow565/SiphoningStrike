@@ -14,31 +14,17 @@ namespace SiphoningStrike.Game
         public float TimeLastServer { get; set; }
         public float TimeLastClient { get; set; }
 
-        public SynchSimTimeC2S() {}
-        public SynchSimTimeC2S(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             this.TimeLastServer = reader.ReadFloat();
             this.TimeLastClient = reader.ReadFloat();
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             writer.WriteFloat(this.TimeLastServer);
             writer.WriteFloat(this.TimeLastClient);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

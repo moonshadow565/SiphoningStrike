@@ -15,31 +15,17 @@ namespace SiphoningStrike.Game
         public byte ElementType { get; set; }
         public byte ElementNumber { get; set; }
 
-        public S2C_HighlightHUDElement() {}
-        public S2C_HighlightHUDElement(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             this.ElementType = reader.ReadByte();
             this.ElementNumber = reader.ReadByte();
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             writer.WriteByte(this.ElementType);
             writer.WriteByte(this.ElementNumber);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

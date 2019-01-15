@@ -11,29 +11,11 @@ namespace SiphoningStrike.Game
     public sealed class OnEnterVisiblityClient : GamePacket // 0x0C2
     {
         public override GamePacketID ID => GamePacketID.OnEnterVisiblityClient;
-        public OnEnterVisiblityClient() {}
-        public OnEnterVisiblityClient(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

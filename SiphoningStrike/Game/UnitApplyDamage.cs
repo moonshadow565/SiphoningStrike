@@ -18,14 +18,8 @@ namespace SiphoningStrike.Game
         public uint SourceNetID { get; set; }
         public float Damage { get; set; }
 
-        public UnitApplyDamage() {}
-        public UnitApplyDamage(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             byte bitfield = reader.ReadByte();
             this.DamageResultType = (byte)(bitfield & 0x7F);
             this.HasAttackSound = (bitfield & 0x80) != 0;
@@ -34,15 +28,9 @@ namespace SiphoningStrike.Game
             this.SourceNetID = reader.ReadUInt32();
             this.Damage = reader.ReadFloat();
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             byte bitfield = 0;
             bitfield |= (byte)(bitfield & 0x7F);
             if (this.HasAttackSound)
@@ -53,8 +41,6 @@ namespace SiphoningStrike.Game
             writer.WriteUInt32(this.SourceNetID);
             writer.WriteFloat(this.Damage);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

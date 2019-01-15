@@ -21,14 +21,8 @@ namespace SiphoningStrike.Game
         public bool ShowChat { get; set; }
         public bool PingThrottled { get; set; }
 
-        public S2C_MapPing() {}
-        public S2C_MapPing(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             this.Position = reader.ReadVector3();
             this.TargetNetID = reader.ReadUInt32();
             this.SourceNetID = reader.ReadUInt32();
@@ -39,15 +33,9 @@ namespace SiphoningStrike.Game
             this.ShowChat = (bitfield & 0x20) != 0;
             this.PingThrottled = (bitfield & 0x40) != 0;
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             writer.WriteVector3(this.Position);
             writer.WriteUInt32(this.TargetNetID);
             writer.WriteUInt32(this.SourceNetID);
@@ -62,8 +50,6 @@ namespace SiphoningStrike.Game
                 bitfield |= 0x40;
             writer.WriteByte(bitfield);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

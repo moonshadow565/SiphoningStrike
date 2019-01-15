@@ -14,14 +14,8 @@ namespace SiphoningStrike.Game
 
         public Dictionary<string, string> AnimationOverrides { get; set; } = new Dictionary<string, string>();
 
-        public S2C_SetAnimStates() {}
-        public S2C_SetAnimStates(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             int number = reader.ReadByte();
             for (int i = 0; i < number; i++)
             {
@@ -30,15 +24,9 @@ namespace SiphoningStrike.Game
                 this.AnimationOverrides[fromAnim] = toAnim;
             }
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             int number = this.AnimationOverrides.Count;
             if (number > 0xFF)
             {
@@ -50,8 +38,6 @@ namespace SiphoningStrike.Game
                 writer.WriteSizedString(kvp.Value);
             }
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

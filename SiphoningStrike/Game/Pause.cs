@@ -16,29 +16,17 @@ namespace SiphoningStrike.Game
         public int PauseTimeRemaining { get; set; }
         public bool IsTournamentPause { get; set; }
 
-        public Pause() {}
-        public Pause(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             this.ClientID = reader.ReadUInt32();
             this.PauseTimeRemaining = reader.ReadInt32();
 
             byte bitfield = reader.ReadByte();
             this.IsTournamentPause = (bitfield & 0x01) != 0;
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             writer.WriteUInt32(this.ClientID);
             writer.WriteInt32(this.PauseTimeRemaining);
 
@@ -47,8 +35,6 @@ namespace SiphoningStrike.Game
                 bitfield |= 0x01;
             writer.WriteByte(bitfield);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

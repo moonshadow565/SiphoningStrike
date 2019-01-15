@@ -16,14 +16,8 @@ namespace SiphoningStrike.Game
         public Vector3 TargetPosition { get; set; }
         public float TravelTime { get; set; }
 
-        public S2C_MoveCameraToPoint() {}
-        public S2C_MoveCameraToPoint(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             byte bitfield = reader.ReadByte();
             this.StartFromCurrentPosition = (bitfield & 0x01) != 0;
 
@@ -31,15 +25,9 @@ namespace SiphoningStrike.Game
             this.TargetPosition = reader.ReadVector3();
             this.TravelTime = reader.ReadFloat();
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             byte bitfield = 0;
             if (StartFromCurrentPosition)
                 bitfield |= 0x01;
@@ -49,8 +37,6 @@ namespace SiphoningStrike.Game
             writer.WriteVector3(this.TargetPosition);
             writer.WriteFloat(this.TravelTime);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

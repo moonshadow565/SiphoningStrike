@@ -13,29 +13,15 @@ namespace SiphoningStrike.Game
         public override GamePacketID ID => GamePacketID.Basic_Attack;
 
         public BasicAttackData BasicAttackData { get; set; } = new BasicAttackData();
-        public Basic_Attack() {}
-        public Basic_Attack(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             this.BasicAttackData = reader.ReadBasicAttackData();
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             writer.WriteBasicAttackData(this.BasicAttackData);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

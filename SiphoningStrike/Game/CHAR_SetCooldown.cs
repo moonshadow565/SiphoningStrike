@@ -16,29 +16,17 @@ namespace SiphoningStrike.Game
         public bool IsSummonerSpell { get; set; }
         public float Cooldown { get; set; }
 
-        public CHAR_SetCooldown() {}
-        public CHAR_SetCooldown(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             byte bitfield = reader.ReadByte();
             this.Slot = (byte)(bitfield & 0x7F);
             this.IsSummonerSpell = (bitfield & 0x80) != 0;
 
             this.Cooldown = reader.ReadFloat();
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             byte bitfield = 0;
             bitfield |= (byte)(this.Slot & 0x7F);
             if (this.IsSummonerSpell)
@@ -47,8 +35,6 @@ namespace SiphoningStrike.Game
 
             writer.WriteFloat(this.Cooldown);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

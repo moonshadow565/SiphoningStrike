@@ -16,33 +16,19 @@ namespace SiphoningStrike.Game
         public uint SourceNetID { get; set; }
         public float GoldAmmount { get; set; }
 
-        public UnitAddGold() {}
-        public UnitAddGold(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             this.TargetNetID = reader.ReadUInt32();
             this.SourceNetID = reader.ReadUInt32();
             this.GoldAmmount = reader.ReadFloat();
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             writer.WriteUInt32(this.TargetNetID);
             writer.WriteUInt32(this.SourceNetID);
             writer.WriteFloat(this.GoldAmmount);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

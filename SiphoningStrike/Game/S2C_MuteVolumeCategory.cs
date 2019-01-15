@@ -15,35 +15,21 @@ namespace SiphoningStrike.Game
         public byte VolumeCategory { get; set; }
         public bool Mute { get; set; }
 
-        public S2C_MuteVolumeCategory() {}
-        public S2C_MuteVolumeCategory(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             this.VolumeCategory = reader.ReadByte();
             byte bitfield = reader.ReadByte();
             this.Mute = (bitfield & 0x01u) != 0;
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             writer.WriteByte(VolumeCategory);
             byte bitfield = 0;
             if (Mute)
                 bitfield |= 0x01;
             writer.WriteByte(bitfield);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

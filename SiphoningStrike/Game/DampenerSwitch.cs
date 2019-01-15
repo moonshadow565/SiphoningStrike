@@ -15,35 +15,21 @@ namespace SiphoningStrike.Game
         public ushort Duration { get; set; }
         public bool State { get; set; }
 
-        public DampenerSwitch() {}
-        public DampenerSwitch(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             ushort bitfield = reader.ReadUInt16();
             this.Duration = (ushort)(bitfield & 0x7FFF);
             this.State = (bitfield & 0x8000) != 0;
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             ushort bitfield = 0;
             bitfield |= (ushort)(this.Duration & 0x7FFF);
             if (this.State)
                 bitfield |= 0x8000;
             writer.WriteUInt16(bitfield);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

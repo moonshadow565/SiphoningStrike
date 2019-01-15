@@ -16,28 +16,16 @@ namespace SiphoningStrike.Game
         public bool IgnoreLock { get; set; }
         public bool StopAll { get; set; }
 
-        public S2C_StopAnimation() {}
-        public S2C_StopAnimation(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             byte flags = reader.ReadByte();
             this.Fade = (flags & 1) != 0;
             this.IgnoreLock = (flags & 2) != 0;
             this.StopAll = (flags & 4) != 0;
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             byte flags = 0;
             if (Fade)
                 flags |= 1;
@@ -47,8 +35,6 @@ namespace SiphoningStrike.Game
                 flags |= 4;
             writer.WriteByte(flags);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

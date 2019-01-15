@@ -19,14 +19,8 @@ namespace SiphoningStrike.Game
         public string AITask { get; set; } = "";
         public string[] States => _states;
 
-        public S2C_BotAI() {}
-        public S2C_BotAI(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             this.AIName = reader.ReadFixedString(64);
             this.AIStrategy = reader.ReadFixedString(64);
             this.AIBehaviour = reader.ReadFixedString(64);
@@ -36,15 +30,9 @@ namespace SiphoningStrike.Game
                 this.States[i] = reader.ReadFixedString(64);
             }
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             writer.WriteFixedString(this.AIName, 64);
             writer.WriteFixedString(this.AIStrategy, 64);
             writer.WriteFixedString(this.AIBehaviour, 64);
@@ -54,8 +42,6 @@ namespace SiphoningStrike.Game
                 writer.WriteFixedString(this.States[i], 64);
             }
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

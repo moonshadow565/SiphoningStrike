@@ -15,14 +15,8 @@ namespace SiphoningStrike.Game
         public int SyncID { get; set; }
         public List<NavFlagCricle> NavFlagCricles { get; set; } = new List<NavFlagCricle>();
 
-        public S2C_WriteNavFlags() {}
-        public S2C_WriteNavFlags(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             this.SyncID = reader.ReadInt32();
             int size = reader.ReadInt16();
             for (var i = 0; i < size; i += 16)
@@ -30,15 +24,9 @@ namespace SiphoningStrike.Game
                 this.NavFlagCricles.Add(reader.ReadNavFlagCricle());
             }
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             writer.WriteInt32(this.SyncID);
             int size = NavFlagCricles.Count * 16;
             if (size > 0xFFFF)
@@ -50,8 +38,6 @@ namespace SiphoningStrike.Game
                 writer.WriteNavFlagCricle(this.NavFlagCricles[i]);
             }
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

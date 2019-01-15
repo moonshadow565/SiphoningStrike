@@ -17,35 +17,21 @@ namespace SiphoningStrike.Game
         public byte ItemsInSlot { get; set; }
         public byte SpellCharges { get; set; }
 
-        public SetItem() {}
-        public SetItem(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             this.Slot = reader.ReadByte();
             this.ItemID = reader.ReadUInt32();
             this.ItemsInSlot = reader.ReadByte();
             this.SpellCharges = reader.ReadByte();
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             writer.WriteByte(this.Slot);
             writer.WriteUInt32(this.ItemID);
             writer.WriteByte(this.ItemsInSlot);
             writer.WriteByte(this.SpellCharges);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

@@ -15,31 +15,17 @@ namespace SiphoningStrike.Game
         public byte TipCommand { get; set; }
         public uint TipID { get; set; }
 
-        public C2S_OnTipEvent() {}
-        public C2S_OnTipEvent(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             this.TipCommand = reader.ReadByte();
             this.TipID = reader.ReadUInt32();
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             writer.WriteByte(this.TipCommand);
             writer.WriteUInt32(this.TipID);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

@@ -18,37 +18,23 @@ namespace SiphoningStrike.Game
         public byte TipCommand { get; set; }
         public uint TipID { get; set; }
 
-        public S2C_HandleTipUpdate() {}
-        public S2C_HandleTipUpdate(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             this.TipName = reader.ReadFixedString(128);
             this.TipOther = reader.ReadFixedString(128);
             this.TipImagePath = reader.ReadFixedString(128);
             this.TipCommand = reader.ReadByte();
             this.TipID = reader.ReadUInt32();
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             writer.WriteFixedString(this.TipName, 128);
             writer.WriteFixedString(this.TipOther, 128);
             writer.WriteFixedString(this.TipImagePath, 128);
             writer.WriteByte(this.TipCommand);
             writer.WriteUInt32(this.TipID);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

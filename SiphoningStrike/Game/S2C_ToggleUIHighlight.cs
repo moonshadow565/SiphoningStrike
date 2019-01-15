@@ -18,14 +18,8 @@ namespace SiphoningStrike.Game
         public byte ElementSubCategory { get; set; }
         public bool Enabled { get; set; }
 
-        public S2C_ToggleUIHighlight() {}
-        public S2C_ToggleUIHighlight(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             this.ElementID = reader.ReadByte();
             this.ElementType = reader.ReadByte();
             this.ElementNumber = reader.ReadByte();
@@ -33,15 +27,9 @@ namespace SiphoningStrike.Game
             byte bitfield = reader.ReadByte();
             this.Enabled = (bitfield & 1) != 0;
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             writer.WriteByte(this.ElementID);
             writer.WriteByte(this.ElementType);
             writer.WriteByte(this.ElementNumber);
@@ -51,8 +39,6 @@ namespace SiphoningStrike.Game
                 bitfield |= 1;
             writer.WriteByte(bitfield);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

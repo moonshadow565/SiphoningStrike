@@ -24,14 +24,8 @@ namespace SiphoningStrike.Game
         public string Name { get; set; } = "";
         public string Skin { get; set; } = "";
 
-        public S2C_CreateHero() {}
-        public S2C_CreateHero(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             this.UnitNetID = reader.ReadUInt32();
             this.ClientID = reader.ReadUInt32();
             this.NetNodeID = reader.ReadByte();
@@ -44,15 +38,9 @@ namespace SiphoningStrike.Game
             this.Name = reader.ReadFixedString(40);
             this.Skin = reader.ReadFixedString(40);
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             writer.WriteUInt32(this.UnitNetID);
             writer.WriteUInt32(this.ClientID);
             writer.WriteByte(this.NetNodeID);
@@ -65,8 +53,6 @@ namespace SiphoningStrike.Game
             writer.WriteFixedString(this.Name, 40);
             writer.WriteFixedString(this.Skin, 40);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

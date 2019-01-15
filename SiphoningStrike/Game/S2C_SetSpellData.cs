@@ -16,33 +16,19 @@ namespace SiphoningStrike.Game
         public uint SpellNameHash { get; set; }
         public byte SpellSlot { get; set; }
 
-        public S2C_SetSpellData() {}
-        public S2C_SetSpellData(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             this.UnitNetID = reader.ReadUInt32();
             this.SpellNameHash = reader.ReadUInt32();
             this.SpellSlot = reader.ReadByte();
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             writer.WriteUInt32(this.UnitNetID);
             writer.WriteUInt32(this.SpellNameHash);
             writer.WriteByte(this.SpellSlot);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

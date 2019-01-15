@@ -16,33 +16,19 @@ namespace SiphoningStrike.Game
         public byte SpellLevel { get; set; }
         public byte SkillPoints { get; set; }
 
-        public NPC_UpgradeSpellAns() {}
-        public NPC_UpgradeSpellAns(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             this.Slot = reader.ReadByte();
             this.SpellLevel = reader.ReadByte();
             this.SkillPoints = reader.ReadByte();
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             writer.WriteByte(this.Slot);
             writer.WriteByte(this.SpellLevel);
             writer.WriteByte(this.SkillPoints);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

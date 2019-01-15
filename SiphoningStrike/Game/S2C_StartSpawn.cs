@@ -15,31 +15,17 @@ namespace SiphoningStrike.Game
         public byte BotCountOrder { get; set; }
         public byte BotCountChaos { get; set; }
 
-        public S2C_StartSpawn() {}
-        public S2C_StartSpawn(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             this.BotCountOrder = reader.ReadByte();
             this.BotCountChaos = reader.ReadByte();
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             writer.WriteByte(BotCountOrder);
             writer.WriteByte(BotCountChaos);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

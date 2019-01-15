@@ -18,37 +18,23 @@ namespace SiphoningStrike.Game
         public float RunningTime { get; set; }
         public uint CasterNetID { get; set; }
 
-        public NPC_BuffUpdateCount() {}
-        public NPC_BuffUpdateCount(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             this.BuffSlot = reader.ReadByte();
             this.Count = reader.ReadByte();
             this.Duration = reader.ReadFloat();
             this.RunningTime = reader.ReadFloat();
             this.CasterNetID = reader.ReadUInt32();
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             writer.WriteByte(this.BuffSlot);
             writer.WriteByte(this.Count);
             writer.WriteFloat(this.Duration);
             writer.WriteFloat(this.RunningTime);
             writer.WriteUInt32(this.CasterNetID);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

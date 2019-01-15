@@ -14,29 +14,15 @@ namespace SiphoningStrike.Game
 
         public string Message { get; set; } = "";
 
-        public S2C_DisplayLocalizedTutorialChatText() {}
-        public S2C_DisplayLocalizedTutorialChatText(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             this.Message = reader.ReadFixedStringLast(128);
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             writer.WriteFixedStringLast(this.Message, 128);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

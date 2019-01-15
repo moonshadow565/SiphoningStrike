@@ -11,25 +11,11 @@ namespace SiphoningStrike.Game
     public sealed class NPC_ForceDead : GamePacket // 0x01E
     {
         public override GamePacketID ID => GamePacketID.NPC_ForceDead;
-        public NPC_ForceDead() {}
-        public NPC_ForceDead(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

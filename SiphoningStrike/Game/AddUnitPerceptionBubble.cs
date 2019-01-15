@@ -19,14 +19,8 @@ namespace SiphoningStrike.Game
         public float TimeToLive { get; set; }
         public uint Flags { get; set; }
 
-        public AddUnitPerceptionBubble() {}
-        public AddUnitPerceptionBubble(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             this.PerceptionBubbleType = reader.ReadUInt32();
             this.ClientNetID = reader.ReadUInt32();
             this.Radius = reader.ReadFloat();
@@ -34,15 +28,9 @@ namespace SiphoningStrike.Game
             this.TimeToLive = reader.ReadFloat();
             this.Flags = reader.ReadUInt32();
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             writer.WriteUInt32(this.PerceptionBubbleType);
             writer.WriteUInt32(this.ClientNetID);
             writer.WriteFloat(this.Radius);
@@ -50,8 +38,6 @@ namespace SiphoningStrike.Game
             writer.WriteFloat(this.TimeToLive);
             writer.WriteUInt32(this.Flags);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

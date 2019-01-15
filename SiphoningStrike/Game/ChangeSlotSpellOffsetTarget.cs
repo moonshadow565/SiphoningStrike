@@ -16,29 +16,17 @@ namespace SiphoningStrike.Game
         public bool IsSummonerSpell { get; set; }
         public uint TargetNetID { get; set; }
 
-        public ChangeSlotSpellOffsetTarget() {}
-        public ChangeSlotSpellOffsetTarget(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             byte bitfield = reader.ReadByte();
             this.Slot = (byte)(bitfield & 0x7F);
             this.IsSummonerSpell = (bitfield & 0x80) != 0;
 
             this.TargetNetID = reader.ReadUInt32();
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             byte bitfield = 0;
             bitfield |= (byte)(this.Slot & 0x7F);
             if (this.IsSummonerSpell)
@@ -47,8 +35,6 @@ namespace SiphoningStrike.Game
 
             writer.WriteUInt32(this.TargetNetID);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

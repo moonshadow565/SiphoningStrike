@@ -21,14 +21,8 @@ namespace SiphoningStrike.Game
         public string MapMode { get; set; }
 
 
-        public SynchVersionS2C() {}
-        public SynchVersionS2C(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
             this.IsVersionOK = reader.ReadBool();
             this.MapToLoad = reader.ReadInt32();
             for (var i = 0; i < this.PlayerInfo.Length; i++)
@@ -38,15 +32,9 @@ namespace SiphoningStrike.Game
             this.VersionString = reader.ReadFixedString(256);
             this.MapMode = reader.ReadFixedStringLast(128);
 
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             writer.WriteBool(this.IsVersionOK);
             writer.WriteInt32(this.MapToLoad);
             for (var i = 0; i < this.PlayerInfo.Length; i++)
@@ -56,8 +44,6 @@ namespace SiphoningStrike.Game
             writer.WriteFixedString(this.VersionString, 256);
             writer.WriteFixedStringLast(this.MapMode, 128);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }
