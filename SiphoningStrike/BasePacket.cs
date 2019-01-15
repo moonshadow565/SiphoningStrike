@@ -45,18 +45,18 @@ namespace SiphoningStrike
                         }
                         gameId = (GamePacketID)((ushort)(data[5]) | (ushort)(data[6] << 8));
                     }
-                    if (GamePacketLookup.Lookup.ContainsKey(gameId))
+                    if (GamePacket.Lookup.ContainsKey(gameId))
                     {
-                        return GamePacketLookup.Lookup[gameId]();
+                        return GamePacket.Lookup[gameId]();
                     }
                     return new UnknownPacket();
                 case ChannelID.Chat:
                     return new ChatPacket();
                 case ChannelID.LoadingScreen:
                     var loadScreenId = (LoadScreenPacketID)data[0];
-                    if (LoadScreenPacketLookup.Lookup.ContainsKey(loadScreenId))
+                    if (LoadScreenPacket.Lookup.ContainsKey(loadScreenId))
                     {
-                        return LoadScreenPacketLookup.Lookup[loadScreenId]();
+                        return LoadScreenPacket.Lookup[loadScreenId]();
                     }
                     return new UnknownPacket();
                 default:

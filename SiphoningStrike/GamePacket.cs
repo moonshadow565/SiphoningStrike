@@ -1,6 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
+
 namespace SiphoningStrike
 {
+
+    using GamePacketDict = Dictionary<GamePacketID, Func<GamePacket>>;
     public abstract class GamePacket : BasePacket
     {
         public abstract GamePacketID ID { get; }
@@ -41,5 +48,30 @@ namespace SiphoningStrike
 
             WriteBody(writer);
         }
+
+        internal static GamePacketDict GenerateLookup()
+        {
+            var lookup = new GamePacketDict();
+            foreach (Type type in Assembly.GetAssembly(typeof(GamePacket)).GetTypes())
+            {
+                if (!type.IsClass || type.IsAbstract && !type.IsSubclassOf(typeof(GamePacket)))
+                {
+                    continue;
+                }
+                var tmp = (GamePacket)Activator.CreateInstance(type);
+                var id = tmp.ID;
+                if(lookup.ContainsKey(id))
+                {
+                    throw new Exception("ID already in lookup map");
+                }
+                var lambda = Expression.Lambda<Func<GamePacket>>(
+                    Expression.New(type), 
+                    Array.Empty<ParameterExpression>()
+                ).Compile();
+                lookup.Add(id, lambda);
+            }
+            return lookup;
+        }
+        internal static readonly GamePacketDict Lookup = GenerateLookup();
     }
 }

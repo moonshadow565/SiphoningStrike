@@ -39,7 +39,6 @@
     <Compile Include="GamePacket.cs" />
     <Compile Include="IUnusedPacket.cs" />
     <Compile Include="GamePacketID.cs" />
-    <Compile Include="GamePacketLookup.cs" />
     <Compile Include="UnknownPacket.cs" />
     <Compile Include="ByteReader.cs" />
     <Compile Include="ChannelID.cs" />
@@ -50,7 +49,6 @@
     <Compile Include="LoadScreen\PKT_101_RequestReskin.cs" />
     <Compile Include="LoadScreen\PKT_102_RequestRename.cs" />
     <Compile Include="LoadScreen\PKT_103_TeamRosterUpdate.cs" />
-    <Compile Include="LoadScreenPacketLookup.cs" />
     <Compile Include="BatchGamePacket.cs" />
     <Compile Include="Game\AI_Command.cs" />
     <Compile Include="Game\AI_TargetHeroS2C.cs" />
