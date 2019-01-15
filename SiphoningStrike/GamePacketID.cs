@@ -251,6 +251,7 @@ namespace SiphoningStrike
         S2C_FX_OnLeaveTeamVisiblity              = 0x0F1, // 
         ReplayOnly_GoldEarned                    = 0x0F2, // 
 
+        ExtendedPacket                           = 0x0FE, //
         Batch                                    = 0x0FF, //
     }
 }

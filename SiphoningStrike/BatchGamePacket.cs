@@ -12,29 +12,16 @@ namespace SiphoningStrike
     {
         public List<GamePacket> Packets { get; set; }
 
-        public BatchGamePacket() { }
-
-        public BatchGamePacket(byte[] data)
+        internal override void ReadPacket(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-
             reader.ReadByte();
-
             throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
         }
 
-        public override byte[] GetBytes()
+        internal override void WritePacket(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-
             writer.WriteByte((byte)GamePacketID.Batch);
-
             throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

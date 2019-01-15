@@ -15,6 +15,8 @@ namespace SiphoningStrike.Game
         public byte Source { get; set; }
         public byte Destination { get; set; }
 
+        public SwapItemAns() {}
+
         public SwapItemAns(byte[] data)
         {
             var reader = new ByteReader(data);

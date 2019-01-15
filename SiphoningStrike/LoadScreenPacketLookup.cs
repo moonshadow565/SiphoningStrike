@@ -4,15 +4,15 @@ using SiphoningStrike.LoadScreen;
 
 namespace SiphoningStrike
 {
-    using LoadScreenDict = Dictionary<LoadScreenPacketID, Func<byte[], LoadScreenPacket>>;
+    using LoadScreenDict = Dictionary<LoadScreenPacketID, Func<LoadScreenPacket>>;
     public static class LoadScreenPacketLookup
     {
         public static readonly LoadScreenDict Lookup = new LoadScreenDict
         {
-            { LoadScreenPacketID.RequestJoinTeam, (d) => new RequestJoinTeam(d) },
-            { LoadScreenPacketID.RequestReskin, (d) => new RequestReskin(d) },
-            { LoadScreenPacketID.RequestRename, (d) => new RequestRename(d) },
-            { LoadScreenPacketID.TeamRosterUpdate, (d) => new TeamRosterUpdate(d) },
+            { LoadScreenPacketID.RequestJoinTeam, () => new RequestJoinTeam() },
+            { LoadScreenPacketID.RequestReskin, () => new RequestReskin() },
+            { LoadScreenPacketID.RequestRename, () => new RequestRename() },
+            { LoadScreenPacketID.TeamRosterUpdate, () => new TeamRosterUpdate() },
         };
     }
 }

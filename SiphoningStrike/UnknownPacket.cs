@@ -5,19 +5,8 @@ namespace SiphoningStrike
 {
     public sealed class UnknownPacket : BasePacket
     {
-        public UnknownPacket() { }
-        public UnknownPacket(byte[] data)
-        {
-            var reader = new ByteReader(data);
+        internal override void ReadPacket(ByteReader reader) { }
 
-            this.BytesLeft = reader.ReadBytesLeft();
-        }
-        public override byte[] GetBytes()
-        {
-            var writer = new ByteWriter();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
-        }
+        internal override void WritePacket(ByteWriter writer) { }
     }
 }
