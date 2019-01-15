@@ -11,11 +11,16 @@ namespace SiphoningStrike.Game
     public sealed class S2C_FX_OnEnterTeamVisiblity : GamePacket // 0x0F0
     {
         public override GamePacketID ID => GamePacketID.S2C_FX_OnEnterTeamVisiblity;
+
+        public byte VisiblityTeam { get; set; }
+
         internal override void ReadBody(ByteReader reader)
         {
+            this.VisiblityTeam = reader.ReadByte();
         }
         internal override void WriteBody(ByteWriter writer)
         {
+            writer.WriteByte(this.VisiblityTeam);
         }
     }
 }
