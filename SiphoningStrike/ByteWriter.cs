@@ -31,7 +31,7 @@ namespace SiphoningStrike
         }
 
         public void WriteBool(bool data) => _writer.Write(data);
-        public void WriteSByte(SByte data) => _writer.Write(data);
+        public void WriteSByte(sbyte data) => _writer.Write(data);
         public void WriteByte(byte data) => _writer.Write(data);
         public void WriteInt16(short data) => _writer.Write(data);
         public void WriteUInt16(ushort data) => _writer.Write(data);
@@ -42,6 +42,12 @@ namespace SiphoningStrike
         public void WriteFloat(float data) => _writer.Write(data);
         public void WriteDouble(double data) => _writer.Write(data);
         public void WriteF8(float value) => WriteByte((byte)(value * 100.0f + 128));
+
+        public void WriteBits8(Bits<byte> b) => WriteByte((byte)b._buffer);
+        public void WriteBits16(Bits<ushort> b) => WriteUInt16((ushort)b._buffer);
+        public void WriteBits32(Bits<uint> b) => WriteUInt32((uint)b._buffer);
+        public void WriteBits64(Bits<ulong> b) => WriteUInt64((ulong)b._buffer);
+
 
         public void WriteBytes(byte[] data) => _writer.Write(data);
         public void WritePad(int count) => _writer.Write(new byte[count]);

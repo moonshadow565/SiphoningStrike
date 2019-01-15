@@ -8,14 +8,16 @@ using SiphoningStrike.Game.Common;
 
 namespace SiphoningStrike.Game
 {
-    public sealed class ClientCheatDetectionSignal : GamePacket // 0x081
+    public sealed class Unused_ClientCheatDetectionSignal : GamePacket // 0x081
     {
-        public override GamePacketID ID => GamePacketID.ClientCheatDetectionSignal;
+        public override GamePacketID ID => GamePacketID.Unused_ClientCheatDetectionSignal;
         internal override void ReadBody(ByteReader reader)
         {
+            // Unused
         }
         internal override void WriteBody(ByteWriter writer)
         {
+            // Unused
         }
     }
 }

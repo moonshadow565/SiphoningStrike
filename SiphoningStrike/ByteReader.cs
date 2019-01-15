@@ -26,7 +26,7 @@ namespace SiphoningStrike
         public int BytesLeft => (int)(_stream.Length - _stream.Position);
 
         public bool ReadBool() => _reader.ReadBoolean();
-        public SByte ReadSByte() => _reader.ReadSByte();
+        public sbyte ReadSByte() => _reader.ReadSByte();
         public byte ReadByte() => _reader.ReadByte();
         public short ReadInt16() => _reader.ReadInt16();
         public ushort ReadUInt16() => _reader.ReadUInt16();
@@ -37,6 +37,11 @@ namespace SiphoningStrike
         public float ReadFloat() => _reader.ReadSingle();
         public double ReadDouble() => _reader.ReadDouble();
         public float ReadF8() => (ReadByte() - 128) / 100.0f;
+
+        public Bits<byte> ReadBits8() => new Bits<byte>(ReadByte());
+        public Bits<ushort> ReadBits16() => new Bits<ushort>(ReadUInt16());
+        public Bits<uint> ReadBits32() => new Bits<uint>(ReadUInt32());
+        public Bits<ulong> ReadBits64() => new Bits<ulong>(ReadUInt64());
 
         public byte[] ReadBytes(int count) 
         {
