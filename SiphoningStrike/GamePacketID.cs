@@ -123,7 +123,7 @@ namespace SiphoningStrike
         MissileReplication_ChainMissile          = 0x071, // 
         BuyItemAns                               = 0x072, // Done
         S2C_SetSpellData                         = 0x073, // Done
-        S2C_PauseAnimation                       = 0x074, // 
+        S2C_PauseAnimation                       = 0x074, // Done
         NPC_IssueOrderReq                        = 0x075, // 
         S2C_CameraBehavior                       = 0x076, // 
         S2C_AnimatedBuildingSetCurrentSkin       = 0x077, // 
