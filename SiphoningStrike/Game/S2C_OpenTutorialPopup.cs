@@ -11,11 +11,16 @@ namespace SiphoningStrike.Game
     public sealed class S2C_OpenTutorialPopup : GamePacket // 0x0BB
     {
         public override GamePacketID ID => GamePacketID.S2C_OpenTutorialPopup;
+
+        public string MessageBoxStringID { get; set; }
+
         internal override void ReadBody(ByteReader reader)
         {
+            this.MessageBoxStringID = reader.ReadFixedStringLast(128);
         }
         internal override void WriteBody(ByteWriter writer)
         {
+            writer.WriteFixedStringLast(this.MessageBoxStringID, 128);
         }
     }
 }

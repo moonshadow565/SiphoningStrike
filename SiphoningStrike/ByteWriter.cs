@@ -62,6 +62,9 @@ namespace SiphoningStrike
 
         public void WriteFixedStringLast(string str, int maxLength)
         {
+            WriteFixedString(str, maxLength);
+            return;
+            //FIXME: is this really needed?
             var data = string.IsNullOrEmpty(str) ? new byte[0] : Encoding.UTF8.GetBytes(str);
             var count = data.Length;
             if (count >= (maxLength - 1))
@@ -70,6 +73,15 @@ namespace SiphoningStrike
             }
             WriteBytes(data);
             WriteByte(0);
+        }
+
+        public void WriteSizedStringWithZero(string str)
+        {
+            var data = string.IsNullOrEmpty(str) ? new byte[0] : Encoding.UTF8.GetBytes(str);
+            var count = data.Length + 1;
+            WriteInt32(count);
+            WriteBytes(data);
+            WritePad(1);
         }
 
         public void WriteSizedString(string str)

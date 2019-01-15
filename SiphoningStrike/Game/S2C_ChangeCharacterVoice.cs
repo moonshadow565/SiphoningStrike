@@ -11,11 +11,19 @@ namespace SiphoningStrike.Game
     public sealed class S2C_ChangeCharacterVoice : GamePacket // 0x09E
     {
         public override GamePacketID ID => GamePacketID.S2C_ChangeCharacterVoice;
+
+        public bool IsReset { get; set; }
+        public string VoiceOverride { get; set; }
+
         internal override void ReadBody(ByteReader reader)
         {
+            this.IsReset = reader.ReadBool();
+            this.VoiceOverride = reader.ReadFixedStringLast(64);
         }
         internal override void WriteBody(ByteWriter writer)
         {
+            writer.WriteBool(this.IsReset);
+            writer.WriteFixedStringLast(this.VoiceOverride, 64);
         }
     }
 }

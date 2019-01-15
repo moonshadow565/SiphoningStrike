@@ -11,11 +11,16 @@ namespace SiphoningStrike.Game
     public sealed class S2C_SetFoWStatus : GamePacket // 0x0B4
     {
         public override GamePacketID ID => GamePacketID.S2C_SetFoWStatus;
+
+        public bool Enabled { get; set; }
+
         internal override void ReadBody(ByteReader reader)
         {
+            this.Enabled = reader.ReadBool();
         }
         internal override void WriteBody(ByteWriter writer)
         {
+            writer.WriteBool(this.Enabled);
         }
     }
 }

@@ -11,16 +11,14 @@ namespace SiphoningStrike
         {
             this.ClientID = reader.ReadUInt32();
             this.ChatType = reader.ReadUInt32();
-            reader.ReadUInt32(); // buffer length, ignored
-            this.Message = reader.ReadFixedStringLast(512);
+            this.Message = reader.ReadSizedStringWithZero();
         }
 
         internal override void WritePacket(ByteWriter writer)
         {
             writer.WriteUInt32(this.ClientID);
             writer.WriteUInt32(this.ChatType);
-            writer.WriteUInt32(0); // buffer length, ignored
-            writer.WriteFixedStringLast(this.Message, 512);
+            writer.WriteSizedStringWithZero(this.Message);
         }
     }
 }

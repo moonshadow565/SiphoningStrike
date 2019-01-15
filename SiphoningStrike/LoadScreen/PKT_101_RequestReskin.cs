@@ -20,16 +20,14 @@ namespace SiphoningStrike.LoadScreen
             reader.ReadPad(7);
             this.PlayerID = reader.ReadUInt64();
             this.SkinID = reader.ReadUInt32();
-            reader.ReadUInt32(); // buffer, length, ignored
-            this.Name = reader.ReadFixedStringLast(128);
+            this.Name = reader.ReadSizedStringWithZero();
         }
         internal override void WriteBody(ByteWriter writer)
         {
             writer.WritePad(7);
             writer.WriteUInt64(this.PlayerID);
             writer.WriteUInt32(this.SkinID);
-            writer.WriteUInt32(0); // buffer, length, ignored
-            writer.WriteFixedStringLast(this.Name, 128);;
+            writer.WriteSizedStringWithZero(this.Name);;
         }
     }
 }

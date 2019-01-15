@@ -11,11 +11,16 @@ namespace SiphoningStrike.Game
     public sealed class S2C_ShowAuxiliaryText : GamePacket // 0x0A8
     {
         public override GamePacketID ID => GamePacketID.S2C_ShowAuxiliaryText;
+
+        public string TextStringID { get; set; }
+
         internal override void ReadBody(ByteReader reader)
         {
+            this.TextStringID = reader.ReadFixedStringLast(128);
         }
         internal override void WriteBody(ByteWriter writer)
         {
+            writer.WriteFixedStringLast(this.TextStringID, 128);
         }
     }
 }

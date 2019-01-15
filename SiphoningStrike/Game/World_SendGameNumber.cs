@@ -11,11 +11,16 @@ namespace SiphoningStrike.Game
     public sealed class World_SendGameNumber : GamePacket // 0x098
     {
         public override GamePacketID ID => GamePacketID.World_SendGameNumber;
+
+        public ulong GameID { get; set; }
+
         internal override void ReadBody(ByteReader reader)
         {
+            this.GameID = reader.ReadUInt64();
         }
         internal override void WriteBody(ByteWriter writer)
         {
+            writer.WriteUInt64(this.GameID);
         }
     }
 }
