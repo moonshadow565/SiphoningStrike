@@ -11,6 +11,9 @@ namespace SiphoningStrike.Game
     public sealed class AI_TargetS2C : GamePacket // 0x06D
     {
         public override GamePacketID ID => GamePacketID.AI_TargetS2C;
+
+        public uint TargetNetID { get; set; }
+
         public AI_TargetS2C() {}
         public AI_TargetS2C(byte[] data)
         {
@@ -19,7 +22,7 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.TargetNetID = reader.ReadUInt32();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +33,7 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteUInt32(TargetNetID);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

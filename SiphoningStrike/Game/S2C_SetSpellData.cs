@@ -11,6 +11,11 @@ namespace SiphoningStrike.Game
     public sealed class S2C_SetSpellData : GamePacket // 0x073
     {
         public override GamePacketID ID => GamePacketID.S2C_SetSpellData;
+
+        public uint UnitNetID { get; set; }
+        public uint SpellNameHash { get; set; }
+        public byte SpellSlot { get; set; }
+
         public S2C_SetSpellData() {}
         public S2C_SetSpellData(byte[] data)
         {
@@ -19,7 +24,9 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.UnitNetID = reader.ReadUInt32();
+            this.SpellNameHash = reader.ReadUInt32();
+            this.SpellSlot = reader.ReadByte();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +37,9 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteUInt32(this.UnitNetID);
+            writer.WriteUInt32(this.SpellNameHash);
+            writer.WriteByte(this.SpellSlot);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();

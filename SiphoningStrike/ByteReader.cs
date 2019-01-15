@@ -97,5 +97,16 @@ namespace SiphoningStrike
             var strData = data.TakeWhile(c => c != 0).ToArray();
             return Encoding.UTF8.GetString(data);
         }
+
+        public string ReadSizedString()
+        {
+            var count = ReadInt32();
+            if (count <= 0)
+            {
+                return "";
+            }
+            var data = ReadBytes(count);
+            return Encoding.UTF8.GetString(data);
+        }
     }
 }

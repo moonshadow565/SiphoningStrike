@@ -70,6 +70,14 @@ namespace SiphoningStrike
             WriteByte(0);
         }
 
+        public void WriteSizedString(string str)
+        {
+            var data = string.IsNullOrEmpty(str) ? new byte[0] : Encoding.UTF8.GetBytes(str);
+            var count = data.Length;
+            WriteInt32(count);
+            WriteBytes(data);
+        }
+
         public void WriteVector2(Vector2 data)
         {
             WriteFloat(data.X);

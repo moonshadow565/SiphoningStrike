@@ -11,6 +11,10 @@ namespace SiphoningStrike.Game
     public sealed class C2S_OnTipEvent : GamePacket // 0x070
     {
         public override GamePacketID ID => GamePacketID.C2S_OnTipEvent;
+
+        public byte TipCommand { get; set; }
+        public uint TipID { get; set; }
+
         public C2S_OnTipEvent() {}
         public C2S_OnTipEvent(byte[] data)
         {
@@ -19,7 +23,8 @@ namespace SiphoningStrike.Game
             reader.ReadByte();
             this.SenderNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
+            this.TipCommand = reader.ReadByte();
+            this.TipID = reader.ReadUInt32();
 
             this.BytesLeft = reader.ReadBytesLeft();
         }
@@ -30,7 +35,8 @@ namespace SiphoningStrike.Game
             writer.WriteByte((byte)this.ID);
             writer.WriteUInt32(this.SenderNetID);
 
-            throw new NotImplementedException();
+            writer.WriteByte(this.TipCommand);
+            writer.WriteUInt32(this.TipID);
 
             writer.WriteBytes(this.BytesLeft);
             return writer.GetBytes();
