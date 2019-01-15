@@ -17,29 +17,11 @@ namespace SiphoningStrike.Game
         public Vector3 Position { get; set; }
         public uint SkinID { get; set; }
         public uint CloneNetID { get; set; }
-        private Bits<uint> _bitfield1;
-        public uint TeamID 
-        { 
-            get => _bitfield1.GetUInt32(0, 9);
-            set => _bitfield1.SetUInt32(0, 9, value); 
-        }
-        private Bits<byte> _bitfield2;
+        public uint TeamID { get; set; }
         public float VisibilitySize { get; set; }
-        public bool IgnoreCollision
-        {
-            get => _bitfield2.GetBool(0, 1);
-            set => _bitfield2.SetBool(0, 1, value);
-        }
-        public bool IsWard
-        {
-            get => _bitfield2.GetBool(1, 1);
-            set => _bitfield2.SetBool(1, 1, value);
-        }
-        public bool UseBehaviorTreeAI
-        {
-            get => _bitfield2.GetBool(2, 1);
-            set => _bitfield2.SetBool(2, 1, value);
-        }
+        public bool IgnoreCollision{ get; set; }
+        public bool IsWard{ get; set; }
+        public bool UseBehaviorTreeAI { get; set; }
         public string Name { get; set; }
         public string SkinName { get; set; }
 
@@ -50,9 +32,17 @@ namespace SiphoningStrike.Game
             this.Position = reader.ReadVector3();
             this.SkinID = reader.ReadUInt32();
             this.CloneNetID = reader.ReadUInt32();
-            this._bitfield1 = reader.ReadBits32();
+
+            uint bitfield1 = reader.ReadUInt32();
+            this.TeamID = (bitfield1 & 0x1FF);
+
             this.VisibilitySize = reader.ReadFloat();
-            this._bitfield2 = reader.ReadBits8();
+
+            byte bitfield2 = reader.ReadByte();
+            this.IgnoreCollision = (bitfield2 & 0x01) != 0;
+            this.IsWard = (bitfield2 & 0x02) != 0;
+            this.UseBehaviorTreeAI = (bitfield2 & 0x04) != 0;
+
             this.Name = reader.ReadFixedString(64);
             this.SkinName = reader.ReadFixedString(64);
         }
@@ -63,9 +53,22 @@ namespace SiphoningStrike.Game
             writer.WriteVector3(this.Position);
             writer.WriteUInt32(this.SkinID);
             writer.WriteUInt32(this.CloneNetID);
-            writer.WriteBits32(this._bitfield1);
+
+            uint bitfield1 = 0;
+            bitfield1 |= (this.TeamID & 0x1FFF);
+            writer.WriteUInt32(bitfield1);
+
             writer.WriteFloat(this.VisibilitySize);
-            writer.WriteBits8(this._bitfield2);
+
+            byte bitfield2 = 0;
+            if (this.IgnoreCollision)
+                bitfield2 |= 0x01;
+            if (this.IsWard)
+                bitfield2 |= 0x02;
+            if (this.UseBehaviorTreeAI)
+                bitfield2 |= 0x04;
+            writer.WriteByte(bitfield2);
+
             writer.WriteFixedString(this.Name, 64);
             writer.WriteFixedString(this.SkinName, 64);
         }

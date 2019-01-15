@@ -298,7 +298,8 @@
     <Compile Include="Game\Common\NavFlagCricle.cs" />
     <Compile Include="Game\Common\PlayerLoadInfo.cs" />
     <Compile Include="Game\Common\DeathData.cs" />
-    <Compile Include="Bits.cs" />
+    <Compile Include="BitsIO.cs" />
+    <Compile Include="BitReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Game\" />

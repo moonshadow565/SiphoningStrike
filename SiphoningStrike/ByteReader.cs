@@ -11,6 +11,7 @@ namespace SiphoningStrike
     {
         private BinaryReader _reader;
         private MemoryStream _stream;
+
         public ByteReader(byte[] data)
         {
             _stream = new MemoryStream(data);
@@ -37,11 +38,6 @@ namespace SiphoningStrike
         public float ReadFloat() => _reader.ReadSingle();
         public double ReadDouble() => _reader.ReadDouble();
         public float ReadF8() => (ReadByte() - 128) / 100.0f;
-
-        public Bits<byte> ReadBits8() => new Bits<byte>(ReadByte());
-        public Bits<ushort> ReadBits16() => new Bits<ushort>(ReadUInt16());
-        public Bits<uint> ReadBits32() => new Bits<uint>(ReadUInt32());
-        public Bits<ulong> ReadBits64() => new Bits<ulong>(ReadUInt64());
 
         public byte[] ReadBytes(int count) 
         {
