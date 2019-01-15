@@ -4,6 +4,7 @@ using System.Text;
 using System.Numerics;
 using System.Linq;
 using System.Collections.Generic;
+using SiphoningStrike.Game.Common;
 
 namespace SiphoningStrike
 {
@@ -98,6 +99,11 @@ namespace SiphoningStrike
             WriteFloat(data.Y);
             WriteFloat(data.Z);
             WriteFloat(data.W);
+        }
+
+        public void WriteColor(Color color)
+        {
+            WriteUInt32((uint)color);
         }
     }
 }

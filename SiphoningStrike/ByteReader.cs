@@ -4,6 +4,7 @@ using System.Text;
 using System.Numerics;
 using System.Linq;
 using System.Collections.Generic;
+using SiphoningStrike.Game.Common;
 
 namespace SiphoningStrike
 {
@@ -108,6 +109,11 @@ namespace SiphoningStrike
             }
             var data = ReadBytes(count);
             return Encoding.UTF8.GetString(data);
+        }
+
+        public Color ReadColor()
+        {
+            return (Color)ReadUInt32();
         }
     }
 }
