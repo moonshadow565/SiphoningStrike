@@ -22,6 +22,11 @@ namespace SiphoningStrike.Game
             this.Fade = (flags & 1) != 0;
             this.IgnoreLock = (flags & 2) != 0;
             this.StopAll = (flags & 4) != 0;
+            //FIXME: riot?
+            if(reader.BytesLeft == 3)
+            {
+                reader.ReadPad(3);
+            }
         }
         internal override void WriteBody(ByteWriter writer)
         {

@@ -20,7 +20,7 @@ namespace SiphoningStrike.Game
         public string Name { get; set; } = "";
         public string SkinName { get; set; } = "";
         public string UniqueName { get; set; } = "";
-        public string SpawnAnimationName { get; set; } = "";
+        public string MinimapIcon { get; set; } = "";
         public uint TeamID { get; set; }
         public int DamageBonus { get; set; }
         public int HealthBonus { get; set; }
@@ -38,14 +38,14 @@ namespace SiphoningStrike.Game
             this.Name = reader.ReadFixedString(64);
             this.SkinName = reader.ReadFixedString(64);
             this.UniqueName = reader.ReadFixedString(64);
-            this.SpawnAnimationName = reader.ReadFixedString(64);
+            this.MinimapIcon = reader.ReadFixedString(64);
             this.TeamID = reader.ReadUInt32();
             this.DamageBonus = reader.ReadInt32();
             this.HealthBonus = reader.ReadInt32();
             this.RoamState = reader.ReadInt32();
             this.GroupNumber = reader.ReadInt32();
 
-            byte bitfield = 0;
+            byte bitfield = reader.ReadByte();
             this.BehaviorTree = (bitfield & 0x01) != 0;
         }
         internal override void WriteBody(ByteWriter writer)
@@ -58,7 +58,7 @@ namespace SiphoningStrike.Game
             writer.WriteFixedString(this.Name, 64);
             writer.WriteFixedString(this.SkinName, 64);
             writer.WriteFixedString(this.UniqueName, 64);
-            writer.WriteFixedString(this.SpawnAnimationName, 64);
+            writer.WriteFixedString(this.MinimapIcon, 64);
             writer.WriteUInt32(this.TeamID);
             writer.WriteInt32(this.DamageBonus);
             writer.WriteInt32(this.HealthBonus);

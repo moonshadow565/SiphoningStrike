@@ -20,7 +20,7 @@ namespace SiphoningStrike.Game
 
         internal override void ReadBody(ByteReader reader)
         {
-            byte bitfield = 0;
+            byte bitfield = reader.ReadByte();
             this.KeepAnimating = (bitfield & 0x01) != 0;
             this.ForceSpellCast = (bitfield & 0x02) != 0;
             this.ForceStop = (bitfield & 0x04) != 0;
