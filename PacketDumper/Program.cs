@@ -60,16 +60,20 @@ namespace PacketDumper
         static void Main(string[] args)
         {
             var fileName = "test.rlp.json";
+            var extraA = "";
             if (args.Length > 0)
                 fileName = args[0];
-            Console.WriteLine("Reading file...");
+            if (args.Length > 1)
+                extraA = args[1];
+
+            Console.Error.WriteLine("Reading file...");
             var json = File.ReadAllText(fileName);
-            Console.WriteLine("Parsing json...");
+            Console.Error.WriteLine("Parsing json...");
             var rawPackets = JsonConvert.DeserializeObject<List<ENetPacket>>(json);
             var serializedPackets = new List<SerializedPacket>();
             var hardBadPackets = new List<BadPacket>();
             var softBadPackets = new List<BadPacket>();
-            Console.WriteLine("Processing raw packets...");
+            Console.Error.WriteLine("Processing raw packets...");
             var goodIDs = new List<int>();
             foreach (var rPacket in rawPackets)
             {
@@ -123,10 +127,24 @@ namespace PacketDumper
                 }
             }
 
+            if(extraA == "info")
+            {
+                var result = new Dictionary<string, List<int>>();
+                result.Add("soft", softBadPackets.Select(x => x.RawID).Distinct().ToList());
+                result.Add("hard", hardBadPackets.Select(x => x.RawID).ToList());
+                result.Add("good", goodIDs.Distinct().ToList());
+                Console.WriteLine(JsonConvert.SerializeObject(result));
+                return;
+            }
+
+
             Console.WriteLine($"Processed! Good: {serializedPackets.Count}, Soft Error: {softBadPackets.Count}, Hard Error: {hardBadPackets.Count}");
             Console.WriteLine($"Soft bad IDs:{string.Join(",", softBadPackets.Select(x => x.RawID.ToString()).Distinct())}");
             Console.WriteLine($"Hard bad IDs:{string.Join(",", hardBadPackets.Select(x => x.RawID.ToString()).Distinct())}");
             Console.WriteLine($"Good IDs:{string.Join(",", goodIDs.Select(x => x.ToString()).Distinct())}");
+
+            if (extraA == "dry")
+                return;
 
             Console.WriteLine("Writing hard bad to file .hardbad.json");
             SerializeToFile(hardBadPackets, fileName.Replace(".rlp.json", ".rlp.hardbad.json"));
@@ -134,8 +152,11 @@ namespace PacketDumper
             Console.WriteLine("Writing soft bad to file .softbad.json");
             SerializeToFile(softBadPackets, fileName.Replace(".rlp.json", ".rlp.softbad.json"));
 
-            Console.WriteLine("Writing serialized to .rlp.serialized.json...");
-            SerializeToFile(serializedPackets, fileName.Replace(".rlp.json", ".rlp.serialized.json"));
+            if(extraA != "bad")
+            {
+                Console.WriteLine("Writing serialized to .rlp.serialized.json...");
+                SerializeToFile(serializedPackets, fileName.Replace(".rlp.json", ".rlp.serialized.json")); 
+            }
 
             Console.WriteLine("Done!");
             return;

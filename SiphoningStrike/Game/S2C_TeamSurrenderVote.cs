@@ -18,6 +18,7 @@ namespace SiphoningStrike.Game
         public uint PlayerNetID { get; set; }
         public byte ForVote { get; set; }
         public byte AgainstVote { get; set; }
+        public byte NumPlayers { get; set; }
         public uint TeamID { get; set; }
         public float TimeOut { get; set; }
 
@@ -31,6 +32,7 @@ namespace SiphoningStrike.Game
             this.PlayerNetID = reader.ReadUInt32();
             this.ForVote = reader.ReadByte();
             this.AgainstVote = reader.ReadByte();
+            this.NumPlayers = reader.ReadByte();
             this.TeamID = reader.ReadUInt32();
             this.TimeOut = reader.ReadFloat();
         }
@@ -46,6 +48,7 @@ namespace SiphoningStrike.Game
             writer.WriteUInt32(this.PlayerNetID);
             writer.WriteByte(this.ForVote);
             writer.WriteByte(this.AgainstVote);
+            writer.WriteByte(this.NumPlayers);
             writer.WriteUInt32(this.TeamID);
             writer.WriteFloat(this.TimeOut);
         }

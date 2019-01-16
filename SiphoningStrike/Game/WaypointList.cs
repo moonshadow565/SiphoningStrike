@@ -13,16 +13,16 @@ namespace SiphoningStrike.Game
         public override GamePacketID ID => GamePacketID.WaypointList;
 
         public int SyncID { get; set; }
-        public List<Vector2> Waypoints { get; set; }
+        public List<Vector2> Waypoints { get; set; } = new List<Vector2>();
 
         internal override void ReadBody(ByteReader reader)
         {
             this.SyncID = reader.ReadInt32();
+            //FIXME: is this correct?
             while(reader.BytesLeft != 0)
             {
                 this.Waypoints.Add(reader.ReadVector2());
             }
-
         }
         internal override void WriteBody(ByteWriter writer)
         {

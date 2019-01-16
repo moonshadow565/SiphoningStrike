@@ -19,6 +19,7 @@ namespace SiphoningStrike.Game
 
         internal override void ReadBody(ByteReader reader)
         {
+            //FIXME: variable with "Enabled" ?
             this.UnitNetID = reader.ReadUInt32();
             this.Enabled = reader.ReadBool();
             this.BarColor = reader.ReadColor();

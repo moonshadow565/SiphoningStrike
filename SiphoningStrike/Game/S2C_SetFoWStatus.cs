@@ -16,7 +16,11 @@ namespace SiphoningStrike.Game
 
         internal override void ReadBody(ByteReader reader)
         {
-            this.Enabled = reader.ReadBool();
+            //FIXME: riot?
+            if(reader.BytesLeft > 0)
+            {
+                this.Enabled = reader.ReadBool();
+            }
         }
         internal override void WriteBody(ByteWriter writer)
         {
