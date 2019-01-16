@@ -11,13 +11,16 @@ namespace SiphoningStrike.Game
     public sealed class OnEnterLocalVisiblityClient : GamePacket // 0x0B5
     {
         public override GamePacketID ID => GamePacketID.OnEnterLocalVisiblityClient;
+
+        public LocalVisibilityData LocalVisiblityData { get; set; } = new LocalVisibilityDataAIBase();
+
         internal override void ReadBody(ByteReader reader)
         {
-            throw new NotImplementedException();
+            this.LocalVisiblityData = reader.ReadLocalVisiblityData();
         }
         internal override void WriteBody(ByteWriter writer)
         {
-            throw new NotImplementedException();
+            writer.WriteLocalVisiblityData(this.LocalVisiblityData);
         }
     }
 }

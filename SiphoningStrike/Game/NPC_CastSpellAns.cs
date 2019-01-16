@@ -11,13 +11,19 @@ namespace SiphoningStrike.Game
     public sealed class NPC_CastSpellAns : GamePacket // 0x0BD
     {
         public override GamePacketID ID => GamePacketID.NPC_CastSpellAns;
+
+        public int CasterPositionSyncID { get; set; }
+        public CastInfo CastInfo { get; set; }
+
         internal override void ReadBody(ByteReader reader)
         {
-            throw new NotImplementedException();
+            this.CasterPositionSyncID = reader.ReadInt32();
+            this.CastInfo = reader.ReadCastInfo();
         }
         internal override void WriteBody(ByteWriter writer)
         {
-            throw new NotImplementedException();
+            writer.WriteInt32(this.CasterPositionSyncID);
+            writer.WriteCastInfo(this.CastInfo);
         }
     }
 }

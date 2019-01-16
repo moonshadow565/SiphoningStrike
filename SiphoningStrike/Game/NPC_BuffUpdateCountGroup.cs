@@ -11,13 +11,36 @@ namespace SiphoningStrike.Game
     public sealed class NPC_BuffUpdateCountGroup : GamePacket // 0x0C7
     {
         public override GamePacketID ID => GamePacketID.NPC_BuffUpdateCountGroup;
+
+        public float Duration { get; set; }
+        public float RunningTime { get; set; }
+        public List<BuffUpdateCountGroupEntry> Entries = new List<BuffUpdateCountGroupEntry>();
+
         internal override void ReadBody(ByteReader reader)
         {
-            throw new NotImplementedException();
+            this.Duration = reader.ReadFloat();
+            this.RunningTime = reader.ReadFloat();
+
+            int numInGroup = reader.ReadByte();
+            for (var i = 0; i < numInGroup; i++)
+            {
+                this.Entries.Add(reader.ReadBuffUpdateCountGroupEntry());
+            }
         }
         internal override void WriteBody(ByteWriter writer)
         {
-            throw new NotImplementedException();
+            writer.WriteFloat(this.Duration);
+            writer.WriteFloat(this.RunningTime);
+
+            int numInGroup = this.Entries.Count;
+            if (numInGroup > 0xFF)
+            {
+                throw new IOException("Too many BuffUpdateCountGroupEntry entries!");
+            }
+            for (var i = 0; i < numInGroup; i++)
+            {
+                writer.WriteBuffUpdateCountGroupEntry(this.Entries[i]);
+            }
         }
     }
 }

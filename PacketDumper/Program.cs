@@ -96,7 +96,7 @@ namespace PacketDumper
                             ChannelID = rPacket.Channel < 8 ? (ChannelID)rPacket.Channel : (ChannelID?)null,
                             RawChannel = rPacket.Channel,
                         });
-                        if (!(packet is UnknownPacket) && rPacket.Channel > 0 && rPacket.Channel < 5 && rawID != 0 && packet.BytesLeft.Length > 0)
+                        if (rPacket.Channel > 0 && rPacket.Channel < 5 && rawID != 0 && packet.BytesLeft.Length > 0)
                         {
                             softBadPackets.Add(new BadPacket()
                             {
@@ -106,23 +106,22 @@ namespace PacketDumper
                                 Error = $"Extra bytes: {Convert.ToBase64String(packet.BytesLeft)}",
                             });
                         }
-                        else if(!(packet is UnknownPacket) && rPacket.Channel > 0 && rPacket.Channel < 5)
+                        else if(rPacket.Channel > 0 && rPacket.Channel < 5)
                         {
                             goodIDs.Add(rawID);
                         }
 
                     }
-                    catch(NotImplementedException notImpl)
-                    {}
                     catch (Exception exception)
                     {
-                        hardBadPackets.Add(new BadPacket()
-                        {
-                            RawID = rawID,
-                            Raw = rPacket.Bytes,
-                            RawChannel = rPacket.Channel,
-                            Error = exception.ToString(),
-                        });
+                        if(rawID != 0x4A && rawID != 0xAB && rawID != 0x4B && rawID != 0x24)
+                            hardBadPackets.Add(new BadPacket()
+                            {
+                                RawID = rawID,
+                                Raw = rPacket.Bytes,
+                                RawChannel = rPacket.Channel,
+                                Error = exception.ToString(),
+                            });
                     }
                 }
             }

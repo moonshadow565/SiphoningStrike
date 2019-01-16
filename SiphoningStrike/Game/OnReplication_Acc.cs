@@ -11,13 +11,16 @@ namespace SiphoningStrike.Game
     public sealed class OnReplication_Acc : GamePacket // 0x0B0
     {
         public override GamePacketID ID => GamePacketID.OnReplication_Acc;
+
+        public int SyncID { get; set; }
+
         internal override void ReadBody(ByteReader reader)
         {
-            throw new NotImplementedException();
+            this.SyncID = reader.ReadInt32();
         }
         internal override void WriteBody(ByteWriter writer)
         {
-            throw new NotImplementedException();
+            writer.WriteInt32(this.SyncID);
         }
     }
 }

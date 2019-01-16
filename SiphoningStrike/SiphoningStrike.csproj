@@ -300,6 +300,20 @@
     <Compile Include="LoadScreen\PKT_101_RequestReskin.cs" />
     <Compile Include="LoadScreen\PKT_102_RequestRename.cs" />
     <Compile Include="LoadScreen\PKT_103_TeamRosterUpdate.cs" />
+    <Compile Include="Game\Common\TooltipVars.cs" />
+    <Compile Include="Game\Common\CastInfo.cs" />
+    <Compile Include="Game\Common\BuffAddGroupEntry.cs" />
+    <Compile Include="Game\Common\BuffRemoveGroupEntry.cs" />
+    <Compile Include="Game\Common\BuffUpdateCountGroupEntry.cs" />
+    <Compile Include="Game\Common\BuffReplaceGroupEntry.cs" />
+    <Compile Include="Game\Common\UpdateLevelPropData.cs" />
+    <Compile Include="Game\Common\FXCreateGroupEntry.cs" />
+    <Compile Include="Game\Common\FXCreateGroupItem.cs" />
+    <Compile Include="Game\Common\CompressedWaypoint.cs" />
+    <Compile Include="Game\Common\MovementData.cs" />
+    <Compile Include="Game\Common\SpeedParams.cs" />
+    <Compile Include="Game\Common\ReplicationData.cs" />
+    <Compile Include="Game\Common\LocalVisibilityData.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

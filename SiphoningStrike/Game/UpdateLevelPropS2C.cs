@@ -11,13 +11,16 @@ namespace SiphoningStrike.Game
     public sealed class UpdateLevelPropS2C : GamePacket // 0x0DA
     {
         public override GamePacketID ID => GamePacketID.UpdateLevelPropS2C;
+
+        public UpdateLevelPropData UpdateLevelPropData { get; set; }
+
         internal override void ReadBody(ByteReader reader)
         {
-            throw new NotImplementedException();
+            this.UpdateLevelPropData = reader.ReadUpdateLevelPropData();
         }
         internal override void WriteBody(ByteWriter writer)
         {
-            throw new NotImplementedException();
+            writer.WriteUpdateLevelPropData(this.UpdateLevelPropData);
         }
     }
 }
