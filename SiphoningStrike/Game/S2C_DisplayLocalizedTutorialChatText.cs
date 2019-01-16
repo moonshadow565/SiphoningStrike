@@ -16,11 +16,11 @@ namespace SiphoningStrike.Game
 
         internal override void ReadBody(ByteReader reader)
         {
-            this.Message = reader.ReadFixedString(128);
+            this.Message = reader.ReadZeroTerminatedString();
         }
         internal override void WriteBody(ByteWriter writer)
         {
-            writer.WriteFixedString(this.Message, 128);
+            writer.WriteZeroTerminatedString(this.Message);
         }
     }
 }

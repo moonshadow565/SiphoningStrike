@@ -13,9 +13,11 @@ namespace SiphoningStrike.Game
         public override GamePacketID ID => GamePacketID.FX_Create_Group;
         internal override void ReadBody(ByteReader reader)
         {
+            throw new NotImplementedException();
         }
         internal override void WriteBody(ByteWriter writer)
         {
+            throw new NotImplementedException();
         }
     }
 }

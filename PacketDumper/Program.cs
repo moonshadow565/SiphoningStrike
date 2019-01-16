@@ -92,7 +92,7 @@ namespace PacketDumper
                             ChannelID = rPacket.Channel < 8 ? (ChannelID)rPacket.Channel : (ChannelID?)null,
                             RawChannel = rPacket.Channel,
                         });
-                        if (rPacket.Channel > 0 && rPacket.Channel < 5 && rawID != 0 && packet.BytesLeft.Length > 0)
+                        if (!(packet is UnknownPacket) && rPacket.Channel > 0 && rPacket.Channel < 5 && rawID != 0 && packet.BytesLeft.Length > 0)
                         {
                             softBadPackets.Add(new BadPacket()
                             {
@@ -102,12 +102,14 @@ namespace PacketDumper
                                 Error = $"Extra bytes: {Convert.ToBase64String(packet.BytesLeft)}",
                             });
                         }
-                        else if(rPacket.Channel > 0 && rPacket.Channel < 5)
+                        else if(!(packet is UnknownPacket) && rPacket.Channel > 0 && rPacket.Channel < 5)
                         {
                             goodIDs.Add(rawID);
                         }
 
                     }
+                    catch(NotImplementedException notImpl)
+                    {}
                     catch (Exception exception)
                     {
                         hardBadPackets.Add(new BadPacket()

@@ -31,7 +31,10 @@ namespace SiphoningStrike.Game.Common
 
             ushort bitfield = reader.ReadUInt16();
             data.Ping = (ushort)(bitfield & 0x7FFF);
-            data.Ready = (bitfield & 0x8000) != 0;
+
+            byte bitfield2 = reader.ReadByte();
+            data.Ready = (bitfield2 & 0x01) != 0;
+
             return data;
         }
 
@@ -50,9 +53,12 @@ namespace SiphoningStrike.Game.Common
 
             ushort bitfield = 0;
             bitfield |= (ushort)(data.Ping & 0x7FFF);
-            if (data.Ready)
-                bitfield |= 0x8000;
             writer.WriteUInt16(bitfield);
+
+            byte bitfield2 = 0;
+            if (data.Ready)
+                bitfield2 |= 0x01;
+            writer.WriteByte(bitfield2);
         }
     }
 }

@@ -13,9 +13,11 @@ namespace SiphoningStrike.Game
         public override GamePacketID ID => GamePacketID.NPC_BuffRemoveGroup;
         internal override void ReadBody(ByteReader reader)
         {
+            throw new NotImplementedException();
         }
         internal override void WriteBody(ByteWriter writer)
         {
+            throw new NotImplementedException();
         }
     }
 }

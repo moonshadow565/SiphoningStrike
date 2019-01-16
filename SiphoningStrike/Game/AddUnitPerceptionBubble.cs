@@ -17,6 +17,7 @@ namespace SiphoningStrike.Game
         public float Radius { get; set; }
         public uint UnitNetID { get; set; }
         public float TimeToLive { get; set; }
+        public uint BubbleID { get; set; }
         public uint Flags { get; set; }
 
         internal override void ReadBody(ByteReader reader)
@@ -26,6 +27,7 @@ namespace SiphoningStrike.Game
             this.Radius = reader.ReadFloat();
             this.UnitNetID = reader.ReadUInt32();
             this.TimeToLive = reader.ReadFloat();
+            this.BubbleID = reader.ReadUInt32();
             this.Flags = reader.ReadUInt32();
         }
         internal override void WriteBody(ByteWriter writer)
@@ -35,6 +37,7 @@ namespace SiphoningStrike.Game
             writer.WriteFloat(this.Radius);
             writer.WriteUInt32(this.UnitNetID);
             writer.WriteFloat(this.TimeToLive);
+            writer.WriteUInt32(this.BubbleID);
             writer.WriteUInt32(this.Flags);
         }
     }
