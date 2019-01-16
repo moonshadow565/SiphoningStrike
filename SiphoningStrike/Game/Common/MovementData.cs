@@ -14,29 +14,38 @@ namespace SiphoningStrike.Game.Common
 
     public abstract class MovementData
     {
-        internal abstract void Write(ByteWriter writer);
         public abstract MovementDataType Type { get; }
+        public int SyncID { get; set; }
+        internal abstract void Write(ByteWriter writer);
     }
 
     static class MovementDataExtension
     {
-        public static MovementData ReadMovementData(this ByteReader reader, MovementDataType type)
+        public static MovementData ReadMovementDataWithHeader(this ByteReader reader)
         {
+            var type = (MovementDataType)reader.ReadByte();
+            var syncID = reader.ReadInt32();
             switch (type)
             {
                 case MovementDataType.Stop:
-                    return new MovementDataStop(reader);
+                    return new MovementDataStop(reader, syncID);
                 case MovementDataType.Normal:
-                    return new MovementDataNormal(reader);
+                    return new MovementDataNormal(reader, syncID);
                 case MovementDataType.WithSpeed:
-                    return new MovementDataWithSpeed(reader);
+                    return new MovementDataWithSpeed(reader, syncID);
                 default:
-                    return new MovementDataNone(reader);
+                    return new MovementDataNone(reader, syncID);
             }
         }
 
-        public static void WriteMovementData(this ByteWriter writer, MovementData data)
+        public static void WriteMovementDataWithHeader(this ByteWriter writer, MovementData data)
         {
+            if(data == null)
+            {
+                data = new MovementDataNone();
+            }
+            writer.WriteByte((byte)data.Type);
+            writer.WriteInt32(data.SyncID);
             data.Write(writer);
         }
     }
@@ -50,7 +59,7 @@ namespace SiphoningStrike.Game.Common
         {
         }
         public MovementDataNone() { }
-        internal MovementDataNone(ByteReader reader)
+        internal MovementDataNone(ByteReader reader, int syncID)
         {
         }
     }
@@ -62,8 +71,9 @@ namespace SiphoningStrike.Game.Common
         public Vector2 Forward { get; set; }
 
         public MovementDataStop() { }
-        internal MovementDataStop(ByteReader reader)
+        internal MovementDataStop(ByteReader reader, int syncID)
         {
+            this.SyncID = syncID;
             Position = reader.ReadVector2();
             Forward = reader.ReadVector2();
         }
@@ -85,14 +95,15 @@ namespace SiphoningStrike.Game.Common
 
         public MovementDataNormal() { }
 
-        internal MovementDataNormal(ByteReader reader)
+        internal MovementDataNormal(ByteReader reader, int syncID)
         {
+            this.SyncID = syncID;
             ushort bitfield = reader.ReadUInt16();
             HasTeleportID = (bitfield & 1) != 0;
 
             ushort bitfield2 = reader.ReadUInt16();
             byte size = (byte)(bitfield2 & 0x7F);
-
+            Console.WriteLine($"size:{size}");
             if (size > 0)
             {
                 TeleportNetID = reader.ReadUInt32();
@@ -145,8 +156,9 @@ namespace SiphoningStrike.Game.Common
 
         public MovementDataWithSpeed() { }
 
-        internal MovementDataWithSpeed(ByteReader reader)
+        internal MovementDataWithSpeed(ByteReader reader, int syncID)
         {
+            this.SyncID = syncID;
             ushort bitfield = reader.ReadUInt16();
             HasTeleportID = (bitfield & 1) != 0;
 

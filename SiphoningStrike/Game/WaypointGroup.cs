@@ -21,7 +21,7 @@ namespace SiphoningStrike.Game
             int count = reader.ReadInt16();
             for (int i = 0; i < count; i++)
             {
-                this.Movements.Add(new MovementDataNormal(reader));
+                this.Movements.Add(new MovementDataNormal(reader, SyncID));
             }
         }
         internal override void WriteBody(ByteWriter writer)

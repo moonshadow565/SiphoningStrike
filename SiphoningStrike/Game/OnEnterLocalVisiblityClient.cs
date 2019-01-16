@@ -12,15 +12,21 @@ namespace SiphoningStrike.Game
     {
         public override GamePacketID ID => GamePacketID.OnEnterLocalVisiblityClient;
 
-        public LocalVisibilityData LocalVisiblityData { get; set; } = new LocalVisibilityDataAIBase();
+        public float MaxHealth { get; set; }
+        public float Health { get; set; }
 
         internal override void ReadBody(ByteReader reader)
         {
-            this.LocalVisiblityData = reader.ReadLocalVisiblityData();
+            if (reader.BytesLeft > 0)
+            {
+                MaxHealth = reader.ReadFloat();
+                Health = reader.ReadFloat();
+            }
         }
         internal override void WriteBody(ByteWriter writer)
         {
-            writer.WriteLocalVisiblityData(this.LocalVisiblityData);
+            writer.WriteFloat(MaxHealth);
+            writer.WriteFloat(Health);
         }
     }
 }

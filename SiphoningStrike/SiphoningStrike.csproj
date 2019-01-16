@@ -313,7 +313,6 @@
     <Compile Include="Game\Common\MovementData.cs" />
     <Compile Include="Game\Common\SpeedParams.cs" />
     <Compile Include="Game\Common\ReplicationData.cs" />
-    <Compile Include="Game\Common\LocalVisibilityData.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

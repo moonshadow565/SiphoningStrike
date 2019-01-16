@@ -124,7 +124,7 @@ namespace SiphoningStrike
         BuyItemAns                               = 0x072, // Done
         S2C_SetSpellData                         = 0x073, // Done
         S2C_PauseAnimation                       = 0x074, // Done
-        NPC_IssueOrderReq                        = 0x075, // Fixme: []
+        NPC_IssueOrderReq                        = 0x075, // Fixme: unchecked
         S2C_CameraBehavior                       = 0x076, // Done
         S2C_AnimatedBuildingSetCurrentSkin       = 0x077, // Done
         Connected                                = 0x078, // Done
@@ -201,7 +201,7 @@ namespace SiphoningStrike
         NPC_BuffAdd2                             = 0x0BF, // Done
         S2C_OpenAFKWarningMessage                = 0x0C0, // Done
         WaypointList                             = 0x0C1, // Done
-        OnEnterVisiblityClient                   = 0x0C2, // Fixme: var
+        OnEnterVisiblityClient                   = 0x0C2, // Done
         S2C_AddDebugCircle                       = 0x0C3, // Done
         S2C_DisableHUDForEndOfGame               = 0x0C4, // Done
         SynchVersionC2S                          = 0x0C5, // Done
