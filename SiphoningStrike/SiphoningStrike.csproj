@@ -1,8 +1,9 @@
-﻿<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{867706D6-6A19-4718-B154-07F1D5E1D89C}</ProjectGuid>
+    <ProjectGuid>{0C68D4DB-45BD-4069-9CB4-7FC41EE48313}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>SiphoningStrike</RootNamespace>
     <AssemblyName>SiphoningStrike</AssemblyName>
@@ -17,7 +18,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
@@ -25,33 +25,27 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Numerics.Vectors" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ByteWriter.cs" />
-    <Compile Include="Game\Common\BasicAttackData.cs" />
     <Compile Include="BasePacket.cs" />
-    <Compile Include="LoadScreenPacketID.cs" />
-    <Compile Include="GamePacket.cs" />
-    <Compile Include="IUnusedPacket.cs" />
-    <Compile Include="GamePacketID.cs" />
-    <Compile Include="UnknownPacket.cs" />
-    <Compile Include="ByteReader.cs" />
-    <Compile Include="ChannelID.cs" />
-    <Compile Include="KeyCheckPacket.cs" />
-    <Compile Include="ChatPacket.cs" />
-    <Compile Include="LoadScreenPacket.cs" />
-    <Compile Include="LoadScreen\PKT_100_RequestJoinTeam.cs" />
-    <Compile Include="LoadScreen\PKT_101_RequestReskin.cs" />
-    <Compile Include="LoadScreen\PKT_102_RequestRename.cs" />
-    <Compile Include="LoadScreen\PKT_103_TeamRosterUpdate.cs" />
     <Compile Include="BatchGamePacket.cs" />
+    <Compile Include="ByteReader.cs" />
+    <Compile Include="ByteWriter.cs" />
+    <Compile Include="ChannelID.cs" />
+    <Compile Include="ChatPacket.cs" />
+    <Compile Include="GamePacket.cs" />
+    <Compile Include="GamePacketID.cs" />
+    <Compile Include="IUnusedPacket.cs" />
+    <Compile Include="KeyCheckPacket.cs" />
+    <Compile Include="LoadScreenPacket.cs" />
+    <Compile Include="LoadScreenPacketID.cs" />
+    <Compile Include="UnknownPacket.cs" />
     <Compile Include="Game\AI_Command.cs" />
     <Compile Include="Game\AI_TargetHeroS2C.cs" />
     <Compile Include="Game\AI_TargetS2C.cs" />
@@ -94,7 +88,6 @@
     <Compile Include="Game\ChangeSlotSpellName.cs" />
     <Compile Include="Game\ChangeSlotSpellOffsetTarget.cs" />
     <Compile Include="Game\ChangeSlotSpellType.cs" />
-    <Compile Include="Game\Unused_ClientCheatDetectionSignal.cs" />
     <Compile Include="Game\Connected.cs" />
     <Compile Include="Game\DampenerSwitch.cs" />
     <Compile Include="Game\DisplayFloatingText.cs" />
@@ -260,27 +253,28 @@
     <Compile Include="Game\UnitAddGold.cs" />
     <Compile Include="Game\UnitApplyDamage.cs" />
     <Compile Include="Game\UnitApplyHeal.cs" />
-    <Compile Include="Game\Unused_Dummy.cs" />
-    <Compile Include="Game\Unused_PKT32.cs" />
-    <Compile Include="Game\Unused_SPM_HierarchicalProfilerUpdate.cs" />
-    <Compile Include="Game\Unused_SPM_RemoveListener.cs" />
-    <Compile Include="Game\Unused_SPM_AddMemoryListener.cs" />
-    <Compile Include="Game\Unused_SPM_HierarchicalMemoryUpdate.cs" />
-    <Compile Include="Game\Unused_SPM_RemoveMemoryListener.cs" />
-    <Compile Include="Game\Unused_SPM_AddListener.cs" />
-    <Compile Include="Game\Unused_SPM_RemoveBBProfileListener.cs" />
-    <Compile Include="Game\Unused_SPM_AddBBProfileListener.cs" />
-    <Compile Include="Game\Unused_SPM_HierarchicalBBProfileUpdate.cs" />
-    <Compile Include="Game\Unused_Undefined.cs" />
-    <Compile Include="Game\Unused_SPM_SamplingProfilerUpdate.cs" />
-    <Compile Include="Game\Unused_S2C_AntiBot.cs" />
-    <Compile Include="Game\Unused_S2C_AntiBotWriteLog.cs" />
-    <Compile Include="Game\Unused_S2C_AntiBotKickOut.cs" />
-    <Compile Include="Game\Unused_S2C_AntiBotBanPlayer.cs" />
-    <Compile Include="Game\Unused_S2C_AntiBotTrojan.cs" />
-    <Compile Include="Game\Unused_S2C_AntiBotCloseClient.cs" />
     <Compile Include="Game\Unused_C2S_AntiBotDP.cs" />
+    <Compile Include="Game\Unused_ClientCheatDetectionSignal.cs" />
+    <Compile Include="Game\Unused_Dummy.cs" />
     <Compile Include="Game\Unused_ED.cs" />
+    <Compile Include="Game\Unused_PKT32.cs" />
+    <Compile Include="Game\Unused_S2C_AntiBot.cs" />
+    <Compile Include="Game\Unused_S2C_AntiBotBanPlayer.cs" />
+    <Compile Include="Game\Unused_S2C_AntiBotCloseClient.cs" />
+    <Compile Include="Game\Unused_S2C_AntiBotKickOut.cs" />
+    <Compile Include="Game\Unused_S2C_AntiBotTrojan.cs" />
+    <Compile Include="Game\Unused_S2C_AntiBotWriteLog.cs" />
+    <Compile Include="Game\Unused_SPM_AddBBProfileListener.cs" />
+    <Compile Include="Game\Unused_SPM_AddListener.cs" />
+    <Compile Include="Game\Unused_SPM_AddMemoryListener.cs" />
+    <Compile Include="Game\Unused_SPM_HierarchicalBBProfileUpdate.cs" />
+    <Compile Include="Game\Unused_SPM_HierarchicalMemoryUpdate.cs" />
+    <Compile Include="Game\Unused_SPM_HierarchicalProfilerUpdate.cs" />
+    <Compile Include="Game\Unused_SPM_RemoveBBProfileListener.cs" />
+    <Compile Include="Game\Unused_SPM_RemoveListener.cs" />
+    <Compile Include="Game\Unused_SPM_RemoveMemoryListener.cs" />
+    <Compile Include="Game\Unused_SPM_SamplingProfilerUpdate.cs" />
+    <Compile Include="Game\Unused_Undefined.cs" />
     <Compile Include="Game\UpdateGoldRedirectTarget.cs" />
     <Compile Include="Game\UpdateLevelPropS2C.cs" />
     <Compile Include="Game\UseItemAns.cs" />
@@ -295,17 +289,17 @@
     <Compile Include="Game\World_SendCamera_Server.cs" />
     <Compile Include="Game\World_SendCamera_Server_Acknologment.cs" />
     <Compile Include="Game\World_SendGameNumber.cs" />
+    <Compile Include="Game\Common\BasicAttackData.cs" />
+    <Compile Include="Game\Common\Color.cs" />
     <Compile Include="Game\Common\ConnectionInfo.cs" />
-    <Compile Include="Game\Common\Talent.cs" />
+    <Compile Include="Game\Common\DeathData.cs" />
     <Compile Include="Game\Common\NavFlagCricle.cs" />
     <Compile Include="Game\Common\PlayerLoadInfo.cs" />
-    <Compile Include="Game\Common\DeathData.cs" />
-    <Compile Include="Game\Common\Color.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Game\" />
-    <Folder Include="Game\Common\" />
-    <Folder Include="LoadScreen\" />
+    <Compile Include="Game\Common\Talent.cs" />
+    <Compile Include="LoadScreen\PKT_100_RequestJoinTeam.cs" />
+    <Compile Include="LoadScreen\PKT_101_RequestReskin.cs" />
+    <Compile Include="LoadScreen\PKT_102_RequestRename.cs" />
+    <Compile Include="LoadScreen\PKT_103_TeamRosterUpdate.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
