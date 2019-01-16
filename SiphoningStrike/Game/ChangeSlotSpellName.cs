@@ -22,7 +22,7 @@ namespace SiphoningStrike.Game
             this.Slot = (byte)(bitfield & 0x7F);
             this.IsSummonerSpell = (bitfield & 0x80) != 0;
 
-            this.SpellName = reader.ReadFixedStringLast(64);
+            this.SpellName = reader.ReadZeroTerminatedString();
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -32,7 +32,7 @@ namespace SiphoningStrike.Game
                 bitfield |= 0x80;
             writer.WriteByte(bitfield);
 
-            writer.WriteFixedStringLast(this.SpellName, 64);
+            writer.WriteZeroTerminatedString(this.SpellName);
         }
     }
 }

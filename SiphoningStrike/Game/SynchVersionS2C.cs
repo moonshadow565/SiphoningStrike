@@ -30,7 +30,7 @@ namespace SiphoningStrike.Game
                 this.PlayerInfo[i] = reader.ReadPlayerInfo();
             }
             this.VersionString = reader.ReadFixedString(256);
-            this.MapMode = reader.ReadFixedStringLast(128);
+            this.MapMode = reader.ReadFixedString(128);
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -41,7 +41,7 @@ namespace SiphoningStrike.Game
                 writer.WritePlayerInfo(this.PlayerInfo[i]);
             }
             writer.WriteFixedString(this.VersionString, 256);
-            writer.WriteFixedStringLast(this.MapMode, 128);
+            writer.WriteFixedString(this.MapMode, 128);
         }
     }
 }

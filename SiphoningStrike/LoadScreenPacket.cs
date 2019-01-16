@@ -32,7 +32,7 @@ namespace SiphoningStrike
             var lookup = new LoadScreenDict();
             foreach (Type type in Assembly.GetAssembly(typeof(LoadScreenPacket)).GetTypes())
             {
-                if (!type.IsClass || type.IsAbstract && !type.IsSubclassOf(typeof(LoadScreenPacket)))
+                if (!type.IsClass || type.IsAbstract || !type.IsSubclassOf(typeof(LoadScreenPacket)))
                 {
                     continue;
                 }

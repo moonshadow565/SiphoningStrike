@@ -22,14 +22,14 @@ namespace SiphoningStrike.Game
             this.TargetNetID = reader.ReadUInt32();
             this.FloatingTextType = reader.ReadByte();
             this.Param = reader.ReadInt32();
-            this.Message = reader.ReadFixedStringLast(128);
+            this.Message = reader.ReadFixedString(128);
         }
         internal override void WriteBody(ByteWriter writer)
         {
             writer.WriteUInt32(this.TargetNetID);
             writer.WriteByte(this.FloatingTextType);
             writer.WriteInt32(this.Param);
-            writer.WriteFixedStringLast(this.Message, 128);
+            writer.WriteFixedString(this.Message, 128);
         }
     }
 }

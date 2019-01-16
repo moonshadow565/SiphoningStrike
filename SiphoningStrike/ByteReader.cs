@@ -93,13 +93,19 @@ namespace SiphoningStrike
             return Encoding.UTF8.GetString(data);
         }
 
-        public string ReadFixedStringLast(int maxLength)
+        public string ReadZeroTerminatedString()
         {
-            return ReadFixedString(maxLength);
-            //FIXME: is this really needed?
-            var data = ReadBytes(Math.Min(BytesLeft, maxLength));
-            var strData = data.TakeWhile(c => c != 0).ToArray();
-            return Encoding.UTF8.GetString(data);
+            var data = new List<byte>();
+            while (true)
+            {
+                byte c = ReadByte();
+                if (c == 0)
+                {
+                    break;
+                }
+                data.Add(c);
+            }
+            return Encoding.UTF8.GetString(data.ToArray());
         }
 
         public string ReadSizedStringWithZero()

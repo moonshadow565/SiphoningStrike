@@ -20,13 +20,13 @@ namespace SiphoningStrike.Game
         {
             this.StackID = reader.ReadUInt32();
             this.UseSpells = reader.ReadBool();
-            this.SkinName = reader.ReadFixedStringLast(64);
+            this.SkinName = reader.ReadZeroTerminatedString();
         }
         internal override void WriteBody(ByteWriter writer)
         {
             writer.WriteUInt32(this.StackID);
             writer.WriteBool(this.UseSpells);
-            writer.WriteFixedStringLast(this.SkinName, 64);
+            writer.WriteZeroTerminatedString(this.SkinName);
         }
     }
 }

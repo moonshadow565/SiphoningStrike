@@ -20,13 +20,13 @@ namespace SiphoningStrike.Game
         {
             this.UniteNetID = reader.ReadUInt32();
             this.UnitNetNodeID = reader.ReadByte();
-            this.Name = reader.ReadFixedStringLast(64);
+            this.Name = reader.ReadFixedString(64);
         }
         internal override void WriteBody(ByteWriter writer)
         {
             writer.WriteUInt32(this.UniteNetID);
             writer.WriteByte(this.UnitNetNodeID);
-            writer.WriteFixedStringLast(this.Name, 64);
+            writer.WriteFixedString(this.Name, 64);
         }
     }
 }

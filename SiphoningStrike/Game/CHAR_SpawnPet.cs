@@ -49,7 +49,7 @@ namespace SiphoningStrike.Game
             this.CopyInventory = (bitfield & 1) != 0;
             this.ClearFocusTarget = (bitfield & 2) != 0;
 
-            this.AIscript = reader.ReadFixedStringLast(32);
+            this.AIscript = reader.ReadFixedString(32);
             this.ShowMinimapIcon = reader.ReadBool();
         }
         internal override void WriteBody(ByteWriter writer)
@@ -74,7 +74,7 @@ namespace SiphoningStrike.Game
                 bitfield |= 2;
             writer.WriteByte(bitfield);
 
-            writer.WriteFixedStringLast(this.AIscript, 32);
+            writer.WriteFixedString(this.AIscript, 32);
             writer.WriteBool(this.ShowMinimapIcon);
         }
     }

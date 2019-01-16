@@ -60,18 +60,9 @@ namespace SiphoningStrike
             WritePad(maxLength - count);
         }
 
-        public void WriteFixedStringLast(string str, int maxLength)
+        public void WriteZeroTerminatedString(string str)
         {
-            WriteFixedString(str, maxLength);
-            return;
-            //FIXME: is this really needed?
-            var data = string.IsNullOrEmpty(str) ? new byte[0] : Encoding.UTF8.GetBytes(str);
-            var count = data.Length;
-            if (count >= (maxLength - 1))
-            {
-                throw new IOException("Too much data!");
-            }
-            WriteBytes(data);
+            WriteBytes(string.IsNullOrEmpty(str) ? new byte[0] : Encoding.UTF8.GetBytes(str));
             WriteByte(0);
         }
 

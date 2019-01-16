@@ -20,13 +20,13 @@ namespace SiphoningStrike.Game
         {
             this.TimeLastClient = reader.ReadFloat();
             this.ClientID = reader.ReadUInt32();
-            this.VersionString = reader.ReadFixedStringLast(128);
+            this.VersionString = reader.ReadFixedString(128);
         }
         internal override void WriteBody(ByteWriter writer)
         {
             writer.WriteFloat(this.TimeLastClient);
             writer.WriteUInt32(this.ClientID);
-            writer.WriteFixedStringLast(this.VersionString, 128);
+            writer.WriteFixedString(this.VersionString, 128);
         }
     }
 }

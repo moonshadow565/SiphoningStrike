@@ -20,13 +20,13 @@ namespace SiphoningStrike.Game
         {
             this.Flags = reader.ReadUInt32();
             this.ScaleTime = reader.ReadFloat();
-            this.AnimationName = reader.ReadFixedStringLast(64);
+            this.AnimationName = reader.ReadZeroTerminatedString();
         }
         internal override void WriteBody(ByteWriter writer)
         {
             writer.WriteUInt32(this.Flags);
             writer.WriteFloat(this.ScaleTime);
-            writer.WriteFixedStringLast(this.AnimationName, 64);
+            writer.WriteZeroTerminatedString(this.AnimationName);
         }
     }
 }

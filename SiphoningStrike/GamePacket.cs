@@ -54,7 +54,7 @@ namespace SiphoningStrike
             var lookup = new GamePacketDict();
             foreach (Type type in Assembly.GetAssembly(typeof(GamePacket)).GetTypes())
             {
-                if (!type.IsClass || type.IsAbstract && !type.IsSubclassOf(typeof(GamePacket)))
+                if (!type.IsClass || type.IsAbstract || !type.IsSubclassOf(typeof(GamePacket)))
                 {
                     continue;
                 }

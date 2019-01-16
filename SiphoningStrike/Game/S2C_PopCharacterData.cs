@@ -16,7 +16,15 @@ namespace SiphoningStrike.Game
 
         internal override void ReadBody(ByteReader reader)
         {
-            this.PopID = reader.ReadUInt32();
+            //TODO: ??
+            if(reader.BytesLeft == 0)
+            {
+                this.PopID = 0xFFFFFFFF;
+            }
+            else 
+            {
+                this.PopID = reader.ReadUInt32();
+            }
         }
         internal override void WriteBody(ByteWriter writer)
         {

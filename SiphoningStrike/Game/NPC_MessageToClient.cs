@@ -26,7 +26,7 @@ namespace SiphoningStrike.Game
             this.SlotNumber = reader.ReadInt32();
             this.IsError = reader.ReadBool();
             this.ColorIndex = reader.ReadByte();
-            this.Message = reader.ReadFixedStringLast(1024);
+            this.Message = reader.ReadZeroTerminatedString();
         }
         internal override void WriteBody(ByteWriter writer)
         {
@@ -35,7 +35,7 @@ namespace SiphoningStrike.Game
             writer.WriteInt32(this.SlotNumber);
             writer.WriteBool(this.IsError);
             writer.WriteByte(this.ColorIndex);
-            writer.WriteFixedStringLast(this.Message, 1024);
+            writer.WriteZeroTerminatedString(this.Message);
         }
     }
 }

@@ -18,12 +18,12 @@ namespace SiphoningStrike.Game
         internal override void ReadBody(ByteReader reader)
         {
             this.IsReset = reader.ReadBool();
-            this.VoiceOverride = reader.ReadFixedStringLast(64);
+            this.VoiceOverride = reader.ReadZeroTerminatedString();
         }
         internal override void WriteBody(ByteWriter writer)
         {
             writer.WriteBool(this.IsReset);
-            writer.WriteFixedStringLast(this.VoiceOverride, 64);
+            writer.WriteZeroTerminatedString(this.VoiceOverride);
         }
     }
 }
