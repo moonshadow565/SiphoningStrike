@@ -103,7 +103,6 @@ namespace SiphoningStrike.Game.Common
 
             ushort bitfield2 = reader.ReadUInt16();
             byte size = (byte)(bitfield2 & 0x7F);
-            Console.WriteLine($"size:{size}");
             if (size > 0)
             {
                 TeleportNetID = reader.ReadUInt32();

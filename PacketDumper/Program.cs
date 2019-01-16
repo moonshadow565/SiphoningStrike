@@ -114,7 +114,7 @@ namespace PacketDumper
                     }
                     catch (Exception exception)
                     {
-                        if(rawID != 0x4A && rawID != 0xAB && rawID != 0x4B && rawID != 0x24)
+                        if(rawID != 0x4A && rawID != 0xAB && rawID != 0x4B /*&& rawID != 0x24*/)
                             hardBadPackets.Add(new BadPacket()
                             {
                                 RawID = rawID,

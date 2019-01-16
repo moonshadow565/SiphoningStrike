@@ -124,7 +124,7 @@ namespace SiphoningStrike
         BuyItemAns                               = 0x072, // Done
         S2C_SetSpellData                         = 0x073, // Done
         S2C_PauseAnimation                       = 0x074, // Done
-        NPC_IssueOrderReq                        = 0x075, // Fixme: unchecked
+        NPC_IssueOrderReq                        = 0x075, // Done
         S2C_CameraBehavior                       = 0x076, // Done
         S2C_AnimatedBuildingSetCurrentSkin       = 0x077, // Done
         Connected                                = 0x078, // Done
