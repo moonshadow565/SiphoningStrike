@@ -313,6 +313,24 @@
     <Compile Include="Game\Common\MovementData.cs" />
     <Compile Include="Game\Common\SpeedParams.cs" />
     <Compile Include="Game\Common\ReplicationData.cs" />
+    <Compile Include="Game\Events\ArgsAlert.cs" />
+    <Compile Include="Game\Events\ArgsAssist.cs" />
+    <Compile Include="Game\Events\ArgsBase.cs" />
+    <Compile Include="Game\Events\ArgsCapturePoint.cs" />
+    <Compile Include="Game\Events\ArgsDamage.cs" />
+    <Compile Include="Game\Events\ArgsDamageCriticalStrike.cs" />
+    <Compile Include="Game\Events\ArgsGoldEarned.cs" />
+    <Compile Include="Game\Events\ArgsGoldSpent.cs" />
+    <Compile Include="Game\Events\ArgsHeal.cs" />
+    <Compile Include="Game\Events\ArgsItemConsumedPurchased.cs" />
+    <Compile Include="Game\Events\ArgsSurrenderRemainingTime.cs" />
+    <Compile Include="Game\Events\ArgsSurrenderVotes.cs" />
+    <Compile Include="Game\Events\EventID.cs" />
+    <Compile Include="Game\Events\Events.cs" />
+    <Compile Include="Game\Events\Event.cs" />
+    <Compile Include="Game\Events\ArgsBuff.cs" />
+    <Compile Include="Game\Events\ArgsDie.cs" />
+    <Compile Include="Game\Events\ArgsKillingSpree.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

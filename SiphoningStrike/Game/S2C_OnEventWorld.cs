@@ -13,6 +13,9 @@ namespace SiphoningStrike.Game
         public override GamePacketID ID => GamePacketID.S2C_OnEventWorld;
         internal override void ReadBody(ByteReader reader)
         {
+            // byte id
+            // uint sourceNetID
+            // params...
             throw new NotImplementedException();
         }
         internal override void WriteBody(ByteWriter writer)

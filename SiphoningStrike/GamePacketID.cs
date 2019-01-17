@@ -43,7 +43,7 @@ namespace SiphoningStrike
         NPC_BuffReplaceGroup                     = 0x021, // Done
         NPC_SetAutocast                          = 0x022, // Done
         SwapItemReq                              = 0x023, // Done
-        NPC_Die_EventHistroy                     = 0x024, // Fixme: no
+        NPC_Die_EventHistroy                     = 0x024, // Done
         UnitAddGold                              = 0x025, // Done
         AddUnitPerceptionBubble                  = 0x026, // Done
         S2C_MoveCameraToPoint                    = 0x027, // Done
