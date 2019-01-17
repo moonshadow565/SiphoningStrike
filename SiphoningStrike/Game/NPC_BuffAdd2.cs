@@ -11,29 +11,37 @@ namespace SiphoningStrike.Game
     public sealed class NPC_BuffAdd2 : GamePacket // 0x0BF
     {
         public override GamePacketID ID => GamePacketID.NPC_BuffAdd2;
-        public NPC_BuffAdd2() {}
-        public NPC_BuffAdd2(byte[] data)
+
+        public byte BuffSlot { get; set; }
+        public byte ButtType { get; set; }
+        public byte Count { get; set; }
+        public bool IsHidden { get; set; }
+        public uint BuffNameHash { get; set; }
+        public float RunningTime { get; set; }
+        public float Duration { get; set; }
+        public uint CasterNetID { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.BuffSlot = reader.ReadByte();
+            this.ButtType = reader.ReadByte();
+            this.Count = reader.ReadByte();
+            this.IsHidden = reader.ReadBool();
+            this.BuffNameHash = reader.ReadUInt32();
+            this.RunningTime = reader.ReadFloat();
+            this.Duration = reader.ReadFloat();
+            this.CasterNetID = reader.ReadUInt32();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteByte(this.BuffSlot);
+            writer.WriteByte(this.ButtType);
+            writer.WriteByte(this.Count);
+            writer.WriteBool(this.IsHidden);
+            writer.WriteUInt32(this.BuffNameHash);
+            writer.WriteFloat(this.RunningTime);
+            writer.WriteFloat(this.Duration);
+            writer.WriteUInt32(this.CasterNetID);
         }
     }
 }

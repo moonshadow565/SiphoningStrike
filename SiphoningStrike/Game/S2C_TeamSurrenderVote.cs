@@ -11,29 +11,46 @@ namespace SiphoningStrike.Game
     public sealed class S2C_TeamSurrenderVote : GamePacket // 0x0D2
     {
         public override GamePacketID ID => GamePacketID.S2C_TeamSurrenderVote;
-        public S2C_TeamSurrenderVote() {}
-        public S2C_TeamSurrenderVote(byte[] data)
+
+        public bool VoteYes { get; set; }
+        public bool OpenVoteMenu { get; set; }
+
+        public uint PlayerNetID { get; set; }
+        public byte ForVote { get; set; }
+        public byte AgainstVote { get; set; }
+        public byte NumPlayers { get; set; }
+        public uint TeamID { get; set; }
+        public float TimeOut { get; set; }
+
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
+            byte bitfield = reader.ReadByte();
+            this.VoteYes = (bitfield & 1) != 0;
+            this.OpenVoteMenu = (bitfield & 2) != 0;
 
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.PlayerNetID = reader.ReadUInt32();
+            this.ForVote = reader.ReadByte();
+            this.AgainstVote = reader.ReadByte();
+            this.NumPlayers = reader.ReadByte();
+            this.TeamID = reader.ReadUInt32();
+            this.TimeOut = reader.ReadFloat();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
+            byte bitfield = 0;
+            if (this.VoteYes)
+                bitfield |= 1;
+            if (this.OpenVoteMenu)
+                bitfield |= 2;
+            writer.WriteByte(bitfield);
 
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteUInt32(this.PlayerNetID);
+            writer.WriteByte(this.ForVote);
+            writer.WriteByte(this.AgainstVote);
+            writer.WriteByte(this.NumPlayers);
+            writer.WriteUInt32(this.TeamID);
+            writer.WriteFloat(this.TimeOut);
         }
     }
 }

@@ -11,29 +11,34 @@ namespace SiphoningStrike.Game
     public sealed class AddUnitPerceptionBubble : GamePacket // 0x026
     {
         public override GamePacketID ID => GamePacketID.AddUnitPerceptionBubble;
-        public AddUnitPerceptionBubble() {}
-        public AddUnitPerceptionBubble(byte[] data)
+
+        public uint PerceptionBubbleType { get; set; }
+        public uint ClientNetID { get; set; }
+        public float Radius { get; set; }
+        public uint UnitNetID { get; set; }
+        public float TimeToLive { get; set; }
+        public uint BubbleID { get; set; }
+        public uint Flags { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.PerceptionBubbleType = reader.ReadUInt32();
+            this.ClientNetID = reader.ReadUInt32();
+            this.Radius = reader.ReadFloat();
+            this.UnitNetID = reader.ReadUInt32();
+            this.TimeToLive = reader.ReadFloat();
+            this.BubbleID = reader.ReadUInt32();
+            this.Flags = reader.ReadUInt32();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteUInt32(this.PerceptionBubbleType);
+            writer.WriteUInt32(this.ClientNetID);
+            writer.WriteFloat(this.Radius);
+            writer.WriteUInt32(this.UnitNetID);
+            writer.WriteFloat(this.TimeToLive);
+            writer.WriteUInt32(this.BubbleID);
+            writer.WriteUInt32(this.Flags);
         }
     }
 }

@@ -11,29 +11,32 @@ namespace SiphoningStrike.Game
     public sealed class S2C_ToggleUIHighlight : GamePacket // 0x052
     {
         public override GamePacketID ID => GamePacketID.S2C_ToggleUIHighlight;
-        public S2C_ToggleUIHighlight() {}
-        public S2C_ToggleUIHighlight(byte[] data)
+
+        public byte ElementID { get; set; }
+        public byte ElementType { get; set; }
+        public byte ElementNumber { get; set; }
+        public byte ElementSubCategory { get; set; }
+        public bool Enabled { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.ElementID = reader.ReadByte();
+            this.ElementType = reader.ReadByte();
+            this.ElementNumber = reader.ReadByte();
+            this.ElementSubCategory = reader.ReadByte();
+            byte bitfield = reader.ReadByte();
+            this.Enabled = (bitfield & 1) != 0;
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteByte(this.ElementID);
+            writer.WriteByte(this.ElementType);
+            writer.WriteByte(this.ElementNumber);
+            writer.WriteByte(this.ElementSubCategory);
+            byte bitfield = 0;
+            if (this.Enabled)
+                bitfield |= 1;
+            writer.WriteByte(bitfield);
         }
     }
 }

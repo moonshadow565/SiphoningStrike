@@ -11,29 +11,28 @@ namespace SiphoningStrike.Game
     public sealed class FX_Create_Group : GamePacket // 0x08C
     {
         public override GamePacketID ID => GamePacketID.FX_Create_Group;
-        public FX_Create_Group() {}
-        public FX_Create_Group(byte[] data)
+
+        public List<FXCreateGroupEntry> Entries { get; set; } = new List<FXCreateGroupEntry>();
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            int count = reader.ReadByte();
+            for (var i = 0; i < count; i++)
+            {
+                this.Entries.Add(reader.ReadFXCreateGroupEntry());
+            }
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            int count = Entries.Count;
+            if(count  > 0xFF)
+            {
+                throw new IOException("Too many FXCreateGroupEntry!");
+            }
+            for (var i = 0; i < count; i++)
+            {
+                writer.WriteFXCreateGroupEntry(this.Entries[i]);
+            }
         }
     }
 }

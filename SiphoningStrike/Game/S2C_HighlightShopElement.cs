@@ -11,29 +11,22 @@ namespace SiphoningStrike.Game
     public sealed class S2C_HighlightShopElement : GamePacket // 0x0B6
     {
         public override GamePacketID ID => GamePacketID.S2C_HighlightShopElement;
-        public S2C_HighlightShopElement() {}
-        public S2C_HighlightShopElement(byte[] data)
+
+        public byte ElementType { get; set; }
+        public byte ElementNumber { get; set; }
+        public byte ElementSubCategory { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.ElementType = reader.ReadByte();
+            this.ElementNumber = reader.ReadByte();
+            this.ElementSubCategory = reader.ReadByte();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteByte(this.ElementType);
+            writer.WriteByte(this.ElementNumber);
+            writer.WriteByte(this.ElementSubCategory);
         }
     }
 }

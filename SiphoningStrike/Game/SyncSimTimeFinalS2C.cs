@@ -11,29 +11,22 @@ namespace SiphoningStrike.Game
     public sealed class SyncSimTimeFinalS2C : GamePacket // 0x079
     {
         public override GamePacketID ID => GamePacketID.SyncSimTimeFinalS2C;
-        public SyncSimTimeFinalS2C() {}
-        public SyncSimTimeFinalS2C(byte[] data)
+
+        public float TimeLastClient { get; set; }
+        public float TimeRTTLastOverhead { get; set; }
+        public float TimeConvergance { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.TimeLastClient = reader.ReadFloat();
+            this.TimeRTTLastOverhead = reader.ReadFloat();
+            this.TimeConvergance = reader.ReadFloat();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteFloat(this.TimeLastClient);
+            writer.WriteFloat(this.TimeRTTLastOverhead);
+            writer.WriteFloat(this.TimeConvergance);
         }
     }
 }

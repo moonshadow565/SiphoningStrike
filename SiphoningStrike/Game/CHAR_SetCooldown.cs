@@ -11,29 +11,28 @@ namespace SiphoningStrike.Game
     public sealed class CHAR_SetCooldown : GamePacket // 0x08A
     {
         public override GamePacketID ID => GamePacketID.CHAR_SetCooldown;
-        public CHAR_SetCooldown() {}
-        public CHAR_SetCooldown(byte[] data)
+
+        public byte Slot { get; set; }
+        public bool IsSummonerSpell { get; set; }
+        public float Cooldown { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
+            byte bitfield = reader.ReadByte();
+            this.Slot = (byte)(bitfield & 0x7F);
+            this.IsSummonerSpell = (bitfield & 0x80) != 0;
 
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.Cooldown = reader.ReadFloat();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
+            byte bitfield = 0;
+            bitfield |= (byte)(this.Slot & 0x7F);
+            if (this.IsSummonerSpell)
+                bitfield |= 0x80;
+            writer.WriteByte(bitfield);
 
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteFloat(this.Cooldown);
         }
     }
 }

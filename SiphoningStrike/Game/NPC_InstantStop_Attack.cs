@@ -11,29 +11,36 @@ namespace SiphoningStrike.Game
     public sealed class NPC_InstantStop_Attack : GamePacket // 0x039
     {
         public override GamePacketID ID => GamePacketID.NPC_InstantStop_Attack;
-        public NPC_InstantStop_Attack() {}
-        public NPC_InstantStop_Attack(byte[] data)
+
+        public bool KeepAnimating { get; set; }
+        public bool ForceSpellCast { get; set; }
+        public bool ForceStop { get; set; }
+        public bool AvatarSpell { get; set; }
+        public bool DestroyMissile { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            byte bitfield = reader.ReadByte();
+            this.KeepAnimating = (bitfield & 0x01) != 0;
+            this.ForceSpellCast = (bitfield & 0x02) != 0;
+            this.ForceStop = (bitfield & 0x04) != 0;
+            this.AvatarSpell = (bitfield & 0x08) != 0;
+            this.DestroyMissile = (bitfield & 0x10) != 0;
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            byte bitfield = 0;
+            if (this.KeepAnimating)
+                bitfield |= 0x01;
+            if (this.ForceSpellCast)
+                bitfield |= 0x02;
+            if (this.ForceStop)
+                bitfield |= 0x04;
+            if (this.AvatarSpell)
+                bitfield |= 0x08;
+            if (this.DestroyMissile)
+                bitfield |= 0x10;
+            writer.WriteByte(bitfield);
         }
     }
 }

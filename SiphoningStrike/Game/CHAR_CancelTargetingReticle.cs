@@ -11,29 +11,23 @@ namespace SiphoningStrike.Game
     public sealed class CHAR_CancelTargetingReticle : GamePacket // 0x08B
     {
         public override GamePacketID ID => GamePacketID.CHAR_CancelTargetingReticle;
-        public CHAR_CancelTargetingReticle() {}
-        public CHAR_CancelTargetingReticle(byte[] data)
+
+        public byte Slot { get; set; }
+        public bool IsSummonerSpell { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            byte bitfield = reader.ReadByte();
+            this.Slot = (byte)(bitfield & 0x7F);
+            this.IsSummonerSpell = (bitfield & 0x80) != 0;
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            byte bitfield = 0;
+            bitfield |= (byte)(this.Slot & 0x7F);
+            if (this.IsSummonerSpell)
+                bitfield |= 0x80;
+            writer.WriteByte(bitfield);
         }
     }
 }

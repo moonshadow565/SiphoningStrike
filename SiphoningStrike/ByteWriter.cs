@@ -4,6 +4,7 @@ using System.Text;
 using System.Numerics;
 using System.Linq;
 using System.Collections.Generic;
+using SiphoningStrike.Game.Common;
 
 namespace SiphoningStrike
 {
@@ -11,6 +12,7 @@ namespace SiphoningStrike
     {
         private BinaryWriter _writer;
         private MemoryStream _stream;
+
         public ByteWriter()
         {
             _stream = new MemoryStream();
@@ -31,7 +33,7 @@ namespace SiphoningStrike
         }
 
         public void WriteBool(bool data) => _writer.Write(data);
-        public void WriteSByte(SByte data) => _writer.Write(data);
+        public void WriteSByte(sbyte data) => _writer.Write(data);
         public void WriteByte(byte data) => _writer.Write(data);
         public void WriteInt16(short data) => _writer.Write(data);
         public void WriteUInt16(ushort data) => _writer.Write(data);
@@ -58,16 +60,27 @@ namespace SiphoningStrike
             WritePad(maxLength - count);
         }
 
-        public void WriteFixedStringLast(string str, int maxLength)
+        public void WriteZeroTerminatedString(string str)
+        {
+            WriteBytes(string.IsNullOrEmpty(str) ? new byte[0] : Encoding.UTF8.GetBytes(str));
+            WriteByte(0);
+        }
+
+        public void WriteSizedStringWithZero(string str)
+        {
+            var data = string.IsNullOrEmpty(str) ? new byte[0] : Encoding.UTF8.GetBytes(str);
+            var count = data.Length + 1;
+            WriteInt32(count);
+            WriteBytes(data);
+            WritePad(1);
+        }
+
+        public void WriteSizedString(string str)
         {
             var data = string.IsNullOrEmpty(str) ? new byte[0] : Encoding.UTF8.GetBytes(str);
             var count = data.Length;
-            if (count >= (maxLength - 1))
-            {
-                throw new IOException("Too much data!");
-            }
+            WriteInt32(count);
             WriteBytes(data);
-            WriteByte(0);
         }
 
         public void WriteVector2(Vector2 data)
@@ -89,6 +102,11 @@ namespace SiphoningStrike
             WriteFloat(data.Y);
             WriteFloat(data.Z);
             WriteFloat(data.W);
+        }
+
+        public void WriteColor(Color color)
+        {
+            WriteUInt32((uint)color);
         }
     }
 }

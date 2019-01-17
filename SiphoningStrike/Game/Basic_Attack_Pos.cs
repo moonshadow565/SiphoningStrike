@@ -11,29 +11,19 @@ namespace SiphoningStrike.Game
     public sealed class Basic_Attack_Pos : GamePacket // 0x01D
     {
         public override GamePacketID ID => GamePacketID.Basic_Attack_Pos;
-        public Basic_Attack_Pos() {}
-        public Basic_Attack_Pos(byte[] data)
+
+        public BasicAttackData BasicAttackData { get; set; } = new BasicAttackData();
+        public Vector2 Position { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.BasicAttackData = reader.ReadBasicAttackData();
+            this.Position = reader.ReadVector2();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteBasicAttackData(this.BasicAttackData);
+            writer.WriteVector2(this.Position);
         }
     }
 }

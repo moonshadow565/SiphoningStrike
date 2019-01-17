@@ -10,30 +10,40 @@ namespace SiphoningStrike.Game
 {
     public sealed class S2C_HeroStats : GamePacket // 0x04B
     {
+        //FIXME: just ignore this useless packet?
+
         public override GamePacketID ID => GamePacketID.S2C_HeroStats;
-        public S2C_HeroStats() {}
-        public S2C_HeroStats(byte[] data)
+
+        public byte[] Data { get; set; } = new byte[0];
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            int size = reader.ReadInt32();
+            this.Data = reader.ReadBytes(size);
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
+        {
+            writer.WriteInt32(Data.Length);
+            writer.WriteBytes(Data);
+        }
+
+        public void WriteData(List<HeroStat> stats)
         {
             var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
+            foreach (var stat in stats)
+            {
+                stat.Write(writer);
+            }
+            this.Data = writer.GetBytes();
+        }
 
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+        public void ReadData(List<HeroStat> stats)
+        {
+            var reader = new ByteReader(this.Data);
+            foreach (var stat in stats)
+            {
+                stat.Read(reader);
+            }
         }
     }
 }

@@ -20,13 +20,8 @@ namespace SiphoningStrike.LoadScreen
         public uint CurrentTeamSizeOrder { get; set; }
         public uint CurrentTeamSizeChaos { get; set; }
 
-        public TeamRosterUpdate() { }
-
-        public TeamRosterUpdate(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-
-            reader.ReadByte();
             reader.ReadPad(3);
 
             this.TeamSizeOrder = reader.ReadUInt32();
@@ -41,15 +36,10 @@ namespace SiphoningStrike.LoadScreen
             }
             this.CurrentTeamSizeOrder = reader.ReadUInt32();
             this.CurrentTeamSizeChaos = reader.ReadUInt32();
-
-            this.BytesLeft = reader.ReadBytesLeft();
         }
 
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-
-            writer.WriteByte((byte)this.ID);
             writer.WritePad(3);
 
             writer.WriteUInt32(this.TeamSizeOrder);
@@ -64,9 +54,6 @@ namespace SiphoningStrike.LoadScreen
             }
             writer.WriteUInt32(this.CurrentTeamSizeOrder);
             writer.WriteUInt32(this.CurrentTeamSizeChaos);
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

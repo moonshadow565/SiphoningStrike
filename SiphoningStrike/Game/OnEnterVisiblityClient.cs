@@ -11,29 +11,72 @@ namespace SiphoningStrike.Game
     public sealed class OnEnterVisiblityClient : GamePacket // 0x0C2
     {
         public override GamePacketID ID => GamePacketID.OnEnterVisiblityClient;
-        public OnEnterVisiblityClient() {}
-        public OnEnterVisiblityClient(byte[] data)
+
+        public List<ItemData> Items { get; set; } = new List<ItemData>();
+        public byte LookAtType { get; set; }
+        public Vector3 LookAtPosition { get; set; }
+        public MovementData MovementData { get; set; } = new MovementDataNone();
+
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            if(reader.BytesLeft < 2)
+            {
+                reader.ReadPad(1);
+                return;
+            }
+            byte itemCount = reader.ReadByte();
+            for (int i = 0; i < itemCount; i++)
+            {
+                var item = new ItemData();
+                item.Slot = reader.ReadByte();
+                item.ItemsInSlot = reader.ReadByte();
+                item.SpellCharges = reader.ReadByte();
+                item.ItemID = reader.ReadUInt32();
+                this.Items.Add(item);
+            }
+            this.LookAtType = reader.ReadByte();
+            if(this.LookAtType != 0)
+            {
+                this.LookAtPosition = reader.ReadVector3();
+            }
+            if (reader.BytesLeft < 1)
+            {
+                return;
+            }
+            this.MovementData = reader.ReadMovementDataWithHeader();
         }
-        public override byte[] GetBytes()
+
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
+            int itemCount = this.Items.Count;
+            if (itemCount > 0xFF)
+            {
+                throw new IOException("More than 255 items!");
+            }
+            writer.WriteByte((byte)itemCount);
+            foreach (var item in this.Items)
+            {
+                writer.WriteByte(item.Slot);
+                writer.WriteByte(item.ItemsInSlot);
+                writer.WriteByte(item.SpellCharges);
+                writer.WriteUInt32(item.ItemID);
+            }
+            writer.WriteByte(this.LookAtType);
+            if(this.LookAtType != 0)
+            {
+                writer.WriteVector3(this.LookAtPosition);
+            }
+            writer.WriteMovementDataWithHeader(this.MovementData);
+        }
 
-            throw new NotImplementedException();
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+        public class ItemData
+        {
+            public byte Slot { get; internal set; }
+            public byte ItemsInSlot { get; internal set; }
+            public byte SpellCharges { get; internal set; }
+            public uint ItemID { get; internal set; }
         }
     }
 }

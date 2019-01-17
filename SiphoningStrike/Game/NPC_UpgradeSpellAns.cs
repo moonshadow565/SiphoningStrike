@@ -11,29 +11,22 @@ namespace SiphoningStrike.Game
     public sealed class NPC_UpgradeSpellAns : GamePacket // 0x018
     {
         public override GamePacketID ID => GamePacketID.NPC_UpgradeSpellAns;
-        public NPC_UpgradeSpellAns() {}
-        public NPC_UpgradeSpellAns(byte[] data)
+
+        public byte Slot { get; set; }
+        public byte SpellLevel { get; set; }
+        public byte SkillPoints { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.Slot = reader.ReadByte();
+            this.SpellLevel = reader.ReadByte();
+            this.SkillPoints = reader.ReadByte();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteByte(this.Slot);
+            writer.WriteByte(this.SpellLevel);
+            writer.WriteByte(this.SkillPoints);
         }
     }
 }

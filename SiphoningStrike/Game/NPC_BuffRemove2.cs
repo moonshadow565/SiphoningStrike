@@ -11,29 +11,19 @@ namespace SiphoningStrike.Game
     public sealed class NPC_BuffRemove2 : GamePacket // 0x07F
     {
         public override GamePacketID ID => GamePacketID.NPC_BuffRemove2;
-        public NPC_BuffRemove2() {}
-        public NPC_BuffRemove2(byte[] data)
+
+        public byte BuffSlot { get; set; }
+        public uint BuffNameHash { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.BuffSlot = reader.ReadByte();
+            this.BuffNameHash = reader.ReadUInt32();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteByte(this.BuffSlot);
+            writer.WriteUInt32(this.BuffNameHash);
         }
     }
 }

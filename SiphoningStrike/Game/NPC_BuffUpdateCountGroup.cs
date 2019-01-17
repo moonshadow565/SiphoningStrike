@@ -11,29 +11,36 @@ namespace SiphoningStrike.Game
     public sealed class NPC_BuffUpdateCountGroup : GamePacket // 0x0C7
     {
         public override GamePacketID ID => GamePacketID.NPC_BuffUpdateCountGroup;
-        public NPC_BuffUpdateCountGroup() {}
-        public NPC_BuffUpdateCountGroup(byte[] data)
+
+        public float Duration { get; set; }
+        public float RunningTime { get; set; }
+        public List<BuffUpdateCountGroupEntry> Entries = new List<BuffUpdateCountGroupEntry>();
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
+            this.Duration = reader.ReadFloat();
+            this.RunningTime = reader.ReadFloat();
 
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            int numInGroup = reader.ReadByte();
+            for (var i = 0; i < numInGroup; i++)
+            {
+                this.Entries.Add(reader.ReadBuffUpdateCountGroupEntry());
+            }
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
+            writer.WriteFloat(this.Duration);
+            writer.WriteFloat(this.RunningTime);
 
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            int numInGroup = this.Entries.Count;
+            if (numInGroup > 0xFF)
+            {
+                throw new IOException("Too many BuffUpdateCountGroupEntry entries!");
+            }
+            for (var i = 0; i < numInGroup; i++)
+            {
+                writer.WriteBuffUpdateCountGroupEntry(this.Entries[i]);
+            }
         }
     }
 }

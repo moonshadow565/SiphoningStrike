@@ -11,29 +11,33 @@ namespace SiphoningStrike.Game
     public sealed class ModifyShield : GamePacket // 0x069
     {
         public override GamePacketID ID => GamePacketID.ModifyShield;
-        public ModifyShield() {}
-        public ModifyShield(byte[] data)
+
+        public bool Physical { get; set; }
+        public bool Magical { get; set; }
+        public bool StopShieldFade { get; set; }
+        public float Ammount { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
+            byte bitfield = reader.ReadByte();
+            this.Physical = (bitfield & 1) != 0;
+            this.Magical = (bitfield & 2) != 0;
+            this.StopShieldFade = (bitfield & 4) != 0;
 
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.Ammount = reader.ReadFloat();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
+            byte bitfield = 0;
+            if (this.Physical)
+                bitfield |= 1;
+            if (this.Magical)
+                bitfield |= 2;
+            if (this.StopShieldFade)
+                bitfield |= 4;
+            writer.WriteByte(bitfield);
 
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteFloat(this.Ammount);
         }
     }
 }

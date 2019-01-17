@@ -11,29 +11,64 @@ namespace SiphoningStrike.Game
     public sealed class S2C_CreateNeutral : GamePacket // 0x066
     {
         public override GamePacketID ID => GamePacketID.S2C_CreateNeutral;
-        public S2C_CreateNeutral() {}
-        public S2C_CreateNeutral(byte[] data)
+
+        public uint UnitNetID { get; set; }
+        public byte UnitNetNodeID { get; set; }
+        public Vector3 Position { get; set; }
+        public Vector3 GroupPosition { get; set; }
+        public Vector3 FaceDirectionPosition { get; set; }
+        public string Name { get; set; } = "";
+        public string SkinName { get; set; } = "";
+        public string UniqueName { get; set; } = "";
+        public string MinimapIcon { get; set; } = "";
+        public uint TeamID { get; set; }
+        public int DamageBonus { get; set; }
+        public int HealthBonus { get; set; }
+        public int RoamState { get; set; }
+        public int GroupNumber { get; set; }
+        public bool BehaviorTree { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
+            this.UnitNetID = reader.ReadUInt32();
+            this.UnitNetNodeID = reader.ReadByte();
+            this.Position = reader.ReadVector3();
+            this.GroupPosition = reader.ReadVector3();
+            this.FaceDirectionPosition = reader.ReadVector3();
+            this.Name = reader.ReadFixedString(64);
+            this.SkinName = reader.ReadFixedString(64);
+            this.UniqueName = reader.ReadFixedString(64);
+            this.MinimapIcon = reader.ReadFixedString(64);
+            this.TeamID = reader.ReadUInt32();
+            this.DamageBonus = reader.ReadInt32();
+            this.HealthBonus = reader.ReadInt32();
+            this.RoamState = reader.ReadInt32();
+            this.GroupNumber = reader.ReadInt32();
 
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            byte bitfield = reader.ReadByte();
+            this.BehaviorTree = (bitfield & 0x01) != 0;
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
+            writer.WriteUInt32(this.UnitNetID);
+            writer.WriteByte(this.UnitNetNodeID);
+            writer.WriteVector3(this.Position);
+            writer.WriteVector3(this.GroupPosition);
+            writer.WriteVector3(this.FaceDirectionPosition);
+            writer.WriteFixedString(this.Name, 64);
+            writer.WriteFixedString(this.SkinName, 64);
+            writer.WriteFixedString(this.UniqueName, 64);
+            writer.WriteFixedString(this.MinimapIcon, 64);
+            writer.WriteUInt32(this.TeamID);
+            writer.WriteInt32(this.DamageBonus);
+            writer.WriteInt32(this.HealthBonus);
+            writer.WriteInt32(this.RoamState);
+            writer.WriteInt32(this.GroupNumber);
 
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            byte bitfield = 0;
+            if (this.BehaviorTree)
+                bitfield |= 0x01;
+            writer.WriteByte(bitfield);
         }
     }
 }

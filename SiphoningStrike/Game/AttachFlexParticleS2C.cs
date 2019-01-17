@@ -11,29 +11,25 @@ namespace SiphoningStrike.Game
     public sealed class AttachFlexParticleS2C : GamePacket // 0x0DB
     {
         public override GamePacketID ID => GamePacketID.AttachFlexParticleS2C;
-        public AttachFlexParticleS2C() {}
-        public AttachFlexParticleS2C(byte[] data)
+
+        public uint UnitNetID { get; set; }
+        public byte FlexID { get; set; }
+        public byte CpIndex { get; set; }
+        public byte AttachType { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.UnitNetID = reader.ReadUInt32();
+            this.FlexID = reader.ReadByte();
+            this.CpIndex = reader.ReadByte();
+            this.AttachType = reader.ReadByte();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteUInt32(this.UnitNetID);
+            writer.WriteByte(this.FlexID);
+            writer.WriteByte(this.CpIndex);
+            writer.WriteByte(this.AttachType);
         }
     }
 }

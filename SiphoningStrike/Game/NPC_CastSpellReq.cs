@@ -11,29 +11,34 @@ namespace SiphoningStrike.Game
     public sealed class NPC_CastSpellReq : GamePacket // 0x0A2
     {
         public override GamePacketID ID => GamePacketID.NPC_CastSpellReq;
-        public NPC_CastSpellReq() {}
-        public NPC_CastSpellReq(byte[] data)
+
+        public bool IsSummonerSpellSlot { get; set; }
+        public byte Slot { get; set; }
+        public Vector3 Position { get; set; }
+        public Vector3 EndPosition { get; set; }
+        public uint TargetNetID { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
+            byte bitfield = reader.ReadByte();
+            this.IsSummonerSpellSlot = (bitfield & 0x01) != 0;
+            this.Slot = (byte)((bitfield >> 1) & 0x7F);
 
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.Position = reader.ReadVector3();
+            this.EndPosition = reader.ReadVector3();
+            this.TargetNetID = reader.ReadUInt32();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
+            byte bitfield = 0;
+            if (this.IsSummonerSpellSlot)
+                bitfield |= 0x01;
+            bitfield |= (byte)((this.Slot & 0x7F) << 1);
+            writer.WriteByte(bitfield);
 
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteVector3(this.Position);
+            writer.WriteVector3(this.EndPosition);
+            writer.WriteUInt32(this.TargetNetID);   
         }
     }
 }

@@ -11,29 +11,33 @@ namespace SiphoningStrike.Game
     public sealed class S2C_StopAnimation : GamePacket // 0x02B
     {
         public override GamePacketID ID => GamePacketID.S2C_StopAnimation;
-        public S2C_StopAnimation() {}
-        public S2C_StopAnimation(byte[] data)
+
+        public bool Fade { get; set; }
+        public bool IgnoreLock { get; set; }
+        public bool StopAll { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            byte flags = reader.ReadByte();
+            this.Fade = (flags & 1) != 0;
+            this.IgnoreLock = (flags & 2) != 0;
+            this.StopAll = (flags & 4) != 0;
+            //FIXME: riot?
+            if(reader.BytesLeft == 3)
+            {
+                reader.ReadPad(3);
+            }
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            byte flags = 0;
+            if (Fade)
+                flags |= 1;
+            if (IgnoreLock)
+                flags |= 2;
+            if (StopAll)
+                flags |= 4;
+            writer.WriteByte(flags);
         }
     }
 }

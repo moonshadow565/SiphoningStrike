@@ -11,29 +11,19 @@ namespace SiphoningStrike.Game
     public sealed class S2C_SetInputLockingFlag : GamePacket // 0x089
     {
         public override GamePacketID ID => GamePacketID.S2C_SetInputLockingFlag;
-        public S2C_SetInputLockingFlag() {}
-        public S2C_SetInputLockingFlag(byte[] data)
+
+        public uint InputLockingFlags { get; set; }
+        public bool Value { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.InputLockingFlags = reader.ReadUInt32();
+            this.Value = reader.ReadBool();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteUInt32(this.InputLockingFlags);
+            writer.WriteBool(this.Value);
         }
     }
 }

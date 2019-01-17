@@ -11,29 +11,32 @@ namespace SiphoningStrike.Game
     public sealed class NPC_BuffRemoveGroup : GamePacket // 0x09B
     {
         public override GamePacketID ID => GamePacketID.NPC_BuffRemoveGroup;
-        public NPC_BuffRemoveGroup() {}
-        public NPC_BuffRemoveGroup(byte[] data)
+        public uint BuffNameHash { get; set; }
+        public List<BuffRemoveGroupEntry> Entries { get; set; } = new List<BuffRemoveGroupEntry>();
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
+            this.BuffNameHash = reader.ReadUInt32();
 
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            int numInGroup = reader.ReadByte();
+            for (var i = 0; i < numInGroup; i++)
+            {
+                this.Entries.Add(reader.ReadBuffRemoveGroupEntry());
+            }
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
+            writer.WriteUInt32(this.BuffNameHash);
 
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            int numInGroup = this.Entries.Count;
+            if (numInGroup > 0xFF)
+            {
+                throw new IOException("Too many BuffAddGroupEntry entries!");
+            }
+            for (var i = 0; i < numInGroup; i++)
+            {
+                writer.WriteBuffRemoveGroupEntry(this.Entries[i]);
+            }
         }
     }
 }

@@ -11,29 +11,22 @@ namespace SiphoningStrike.Game
     public sealed class S2C_PlayAnimation : GamePacket // 0x0B8
     {
         public override GamePacketID ID => GamePacketID.S2C_PlayAnimation;
-        public S2C_PlayAnimation() {}
-        public S2C_PlayAnimation(byte[] data)
+
+        public uint Flags { get; set; }
+        public float ScaleTime { get; set; }
+        public string AnimationName { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.Flags = reader.ReadUInt32();
+            this.ScaleTime = reader.ReadFloat();
+            this.AnimationName = reader.ReadZeroTerminatedString();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteUInt32(this.Flags);
+            writer.WriteFloat(this.ScaleTime);
+            writer.WriteZeroTerminatedString(this.AnimationName);
         }
     }
 }

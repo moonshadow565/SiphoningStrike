@@ -11,29 +11,20 @@ namespace SiphoningStrike.Game
     public sealed class C2S_TeamSurrenderVote : GamePacket // 0x0AC
     {
         public override GamePacketID ID => GamePacketID.C2S_TeamSurrenderVote;
-        public C2S_TeamSurrenderVote() {}
-        public C2S_TeamSurrenderVote(byte[] data)
+
+        public bool VotedYes { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            byte bitfield = reader.ReadByte();
+            this.VotedYes = (bitfield & 1) != 0;
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            byte bitfield = 0;
+            if (this.VotedYes)
+                bitfield |= 1;
+            writer.WriteByte(bitfield);
         }
     }
 }

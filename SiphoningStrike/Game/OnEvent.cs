@@ -5,35 +5,23 @@ using System.Numerics;
 using System.Linq;
 using System.Collections.Generic;
 using SiphoningStrike.Game.Common;
+using SiphoningStrike.Game.Events;
 
 namespace SiphoningStrike.Game
 {
     public sealed class OnEvent : GamePacket // 0x0AB
     {
         public override GamePacketID ID => GamePacketID.OnEvent;
-        public OnEvent() {}
-        public OnEvent(byte[] data)
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
+            // byte id
+            // params...
             throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
             throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

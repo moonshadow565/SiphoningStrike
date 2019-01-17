@@ -11,29 +11,19 @@ namespace SiphoningStrike.Game
     public sealed class S2C_HandleGameScore : GamePacket // 0x0DD
     {
         public override GamePacketID ID => GamePacketID.S2C_HandleGameScore;
-        public S2C_HandleGameScore() {}
-        public S2C_HandleGameScore(byte[] data)
+
+        public uint TeamID { get; set; }
+        public int Score { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.TeamID = reader.ReadUInt32();
+            this.Score = reader.ReadInt32();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteUInt32(this.TeamID);
+            writer.WriteInt32(this.Score);
         }
     }
 }

@@ -11,29 +11,16 @@ namespace SiphoningStrike.Game
     public sealed class S2C_DisplayLocalizedTutorialChatText : GamePacket // 0x002
     {
         public override GamePacketID ID => GamePacketID.S2C_DisplayLocalizedTutorialChatText;
-        public S2C_DisplayLocalizedTutorialChatText() {}
-        public S2C_DisplayLocalizedTutorialChatText(byte[] data)
+
+        public string Message { get; set; } = "";
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.Message = reader.ReadZeroTerminatedString();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteZeroTerminatedString(this.Message);
         }
     }
 }

@@ -11,29 +11,34 @@ namespace SiphoningStrike.Game
     public sealed class UnitApplyDamage : GamePacket // 0x068
     {
         public override GamePacketID ID => GamePacketID.UnitApplyDamage;
-        public UnitApplyDamage() {}
-        public UnitApplyDamage(byte[] data)
+
+        public byte DamageResultType { get; set; }
+        public bool HasAttackSound { get; set; }
+        public uint TargetNetID { get; set; }
+        public uint SourceNetID { get; set; }
+        public float Damage { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
+            byte bitfield = reader.ReadByte();
+            this.DamageResultType = (byte)(bitfield & 0x7F);
+            this.HasAttackSound = (bitfield & 0x80) != 0;
 
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.TargetNetID = reader.ReadUInt32();
+            this.SourceNetID = reader.ReadUInt32();
+            this.Damage = reader.ReadFloat();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
+            byte bitfield = 0;
+            bitfield |= (byte)(bitfield & 0x7F);
+            if (this.HasAttackSound)
+                bitfield |= 0x80;
+            writer.WriteByte(bitfield);
 
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteUInt32(this.TargetNetID);
+            writer.WriteUInt32(this.SourceNetID);
+            writer.WriteFloat(this.Damage);
         }
     }
 }

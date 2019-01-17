@@ -11,29 +11,16 @@ namespace SiphoningStrike.Game
     public sealed class NPC_Hero_Die : GamePacket // 0x061
     {
         public override GamePacketID ID => GamePacketID.NPC_Hero_Die;
-        public NPC_Hero_Die() {}
-        public NPC_Hero_Die(byte[] data)
+
+        public DeathData DeathData { get; set; } = new DeathData();
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.DeathData = reader.ReadDeathData();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteDeathData(this.DeathData);
         }
     }
 }

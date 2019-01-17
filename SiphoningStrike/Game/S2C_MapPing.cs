@@ -11,29 +11,43 @@ namespace SiphoningStrike.Game
     public sealed class S2C_MapPing : GamePacket // 0x046
     {
         public override GamePacketID ID => GamePacketID.S2C_MapPing;
-        public S2C_MapPing() {}
-        public S2C_MapPing(byte[] data)
+
+        public Vector3 Position { get; set; }
+        public uint TargetNetID { get; set; }
+        public uint SourceNetID { get; set; }
+
+        public byte PingCategory { get; set; }
+        public bool PlayAudio { get; set; }
+        public bool ShowChat { get; set; }
+        public bool PingThrottled { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
+            this.Position = reader.ReadVector3();
+            this.TargetNetID = reader.ReadUInt32();
+            this.SourceNetID = reader.ReadUInt32();
 
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            byte bitfield = reader.ReadByte();
+            this.PingCategory = (byte)(bitfield & 0x0F);
+            this.PlayAudio = (bitfield & 0x10) != 0;
+            this.ShowChat = (bitfield & 0x20) != 0;
+            this.PingThrottled = (bitfield & 0x40) != 0;
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
+            writer.WriteVector3(this.Position);
+            writer.WriteUInt32(this.TargetNetID);
+            writer.WriteUInt32(this.SourceNetID);
 
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            byte bitfield = 0;
+            bitfield |= (byte)(this.PingCategory & 0x0F);
+            if (PlayAudio)
+                bitfield |= 0x10;
+            if (ShowChat)
+                bitfield |= 0x20;
+            if (PingThrottled)
+                bitfield |= 0x40;
+            writer.WriteByte(bitfield);
         }
     }
 }

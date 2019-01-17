@@ -11,29 +11,34 @@ namespace SiphoningStrike.Game
     public sealed class S2C_ChainMissileSync : GamePacket // 0x06F
     {
         public override GamePacketID ID => GamePacketID.S2C_ChainMissileSync;
-        public S2C_ChainMissileSync() {}
-        public S2C_ChainMissileSync(byte[] data)
+
+        private uint[] _targetNetIDs = new uint[32];
+        public int TargetCount { get; set; }
+        public uint OwnerNetworkID { get; set; }
+        public uint[] TargetNetIDs => _targetNetIDs;
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
+            this.TargetCount = reader.ReadInt32();
+            this.OwnerNetworkID = reader.ReadUInt32();
+            var left = reader.BytesLeft;
 
-            throw new NotImplementedException();
+            //NOTE: rito plz...
+            var toread = this.TargetCount;
+            if (left > (toread * 4) && left == (this.TargetNetIDs.Length * 4))
+            {
+                toread = this.TargetNetIDs.Length;
+            }
 
-            this.BytesLeft = reader.ReadBytesLeft();
+            for (var i = 0; i < toread; i++)
+                this.TargetNetIDs[i] = reader.ReadUInt32();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteInt32(TargetCount);
+            writer.WriteUInt32(OwnerNetworkID);
+            for (var i = 0; i < this.TargetNetIDs.Length; i++)
+                writer.WriteUInt32(this.TargetNetIDs[i]);
         }
     }
 }

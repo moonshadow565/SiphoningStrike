@@ -11,29 +11,43 @@ namespace SiphoningStrike.Game
     public sealed class NPC_BuffAddGroup : GamePacket // 0x06B
     {
         public override GamePacketID ID => GamePacketID.NPC_BuffAddGroup;
-        public NPC_BuffAddGroup() {}
-        public NPC_BuffAddGroup(byte[] data)
+
+        public byte BuffType { get; set; }
+        public uint BuffNameHash { get; set; }
+        public float RunningTime { get; set; }
+        public float Duration { get; set; }
+        public List<BuffAddGroupEntry> Entries { get; set; } = new List<BuffAddGroupEntry>();
+
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
+            this.BuffType = reader.ReadByte();
+            this.BuffNameHash = reader.ReadUInt32();
+            this.RunningTime = reader.ReadFloat();
+            this.Duration = reader.ReadFloat();
 
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            int numInGroup = reader.ReadByte();
+            for (var i = 0; i < numInGroup; i++)
+            {
+                this.Entries.Add(reader.ReadBuffAddGroupEntry());
+            }
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
+            writer.WriteByte(this.BuffType);
+            writer.WriteUInt32(this.BuffNameHash);
+            writer.WriteFloat(this.RunningTime);
+            writer.WriteFloat(this.Duration);
 
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            int numInGroup = this.Entries.Count;
+            if(numInGroup > 0xFF)
+            {
+                throw new IOException("Too many BuffAddGroupEntry entries!");
+            }
+            for (var i = 0; i < numInGroup; i++)
+            {
+                writer.WriteBuffAddGoupEntry(this.Entries[i]);
+            }
         }
     }
 }

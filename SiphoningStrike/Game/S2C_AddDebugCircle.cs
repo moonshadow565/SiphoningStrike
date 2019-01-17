@@ -11,29 +11,28 @@ namespace SiphoningStrike.Game
     public sealed class S2C_AddDebugCircle : GamePacket // 0x0C3
     {
         public override GamePacketID ID => GamePacketID.S2C_AddDebugCircle;
-        public S2C_AddDebugCircle() {}
-        public S2C_AddDebugCircle(byte[] data)
+
+        public uint DebugID { get; set; }
+        public uint UnitNetID { get; set; }
+        public Vector3 Center { get; set; }
+        public float Radius { get; set; }
+        public Color Color { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.DebugID = reader.ReadUInt32();
+            this.UnitNetID = reader.ReadUInt32();
+            this.Center = reader.ReadVector3();
+            this.Radius = reader.ReadFloat();
+            this.Color = reader.ReadColor();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteUInt32(this.DebugID);
+            writer.WriteUInt32(this.UnitNetID);
+            writer.WriteVector3(this.Center);
+            writer.WriteFloat(this.Radius);
+            writer.WriteColor(this.Color);
         }
     }
 }

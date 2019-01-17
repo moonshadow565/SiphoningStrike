@@ -11,29 +11,19 @@ namespace SiphoningStrike.Game
     public sealed class S2C_UnitSetMinimapIcon : GamePacket // 0x0E1
     {
         public override GamePacketID ID => GamePacketID.S2C_UnitSetMinimapIcon;
-        public S2C_UnitSetMinimapIcon() {}
-        public S2C_UnitSetMinimapIcon(byte[] data)
+
+        public uint UnitNetID { get; set; }
+        public string IconName { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.UnitNetID = reader.ReadUInt32();
+            this.IconName = reader.ReadFixedString(64);
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteUInt32(this.UnitNetID);
+            writer.WriteFixedString(this.IconName, 64);
         }
     }
 }

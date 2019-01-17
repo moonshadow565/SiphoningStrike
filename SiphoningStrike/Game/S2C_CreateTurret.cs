@@ -11,29 +11,22 @@ namespace SiphoningStrike.Game
     public sealed class S2C_CreateTurret : GamePacket // 0x0A5
     {
         public override GamePacketID ID => GamePacketID.S2C_CreateTurret;
-        public S2C_CreateTurret() {}
-        public S2C_CreateTurret(byte[] data)
+
+        public uint UniteNetID { get; set; }
+        public byte UnitNetNodeID { get; set; }
+        public string Name { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.UniteNetID = reader.ReadUInt32();
+            this.UnitNetNodeID = reader.ReadByte();
+            this.Name = reader.ReadFixedString(64);
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteUInt32(this.UniteNetID);
+            writer.WriteByte(this.UnitNetNodeID);
+            writer.WriteFixedString(this.Name, 64);
         }
     }
 }

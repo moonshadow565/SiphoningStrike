@@ -11,29 +11,24 @@ namespace SiphoningStrike.Game
     public sealed class S2C_AI_TargetSelection : GamePacket // 0x06C
     {
         public override GamePacketID ID => GamePacketID.S2C_AI_TargetSelection;
-        public S2C_AI_TargetSelection() {}
-        public S2C_AI_TargetSelection(byte[] data)
+
+        private uint[] _targetNetIds = new uint[5];
+
+        public uint[] TargetNetIDs => _targetNetIds;
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            for (var i = 0; i < this.TargetNetIDs.Length; i++)
+            {
+                this.TargetNetIDs[i] = reader.ReadUInt32();
+            }
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            for (var i = 0; i < this.TargetNetIDs.Length; i++)
+            {
+                writer.WriteUInt32(this.TargetNetIDs[i]);
+            }
         }
     }
 }

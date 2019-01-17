@@ -11,29 +11,46 @@ namespace SiphoningStrike.Game
     public sealed class MissileReplication : GamePacket // 0x041
     {
         public override GamePacketID ID => GamePacketID.MissileReplication;
-        public MissileReplication() {}
-        public MissileReplication(byte[] data)
+
+        public Vector3 Position { get; set; }
+        public Vector3 CasterPosition { get; set; }
+        public Vector3 Direction { get; set; }
+        public Vector3 Velocity { get; set; }
+        public Vector3 StartPoint { get; set; }
+        public Vector3 EndPoint { get; set; }
+        public Vector3 UnitPosition { get; set; }
+        public float Speed { get; set; }
+        public float LifePercentage { get; set; }
+        public byte Bounced { get; set; }
+        public CastInfo CastInfo { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.Position = reader.ReadVector3();
+            this.CasterPosition = reader.ReadVector3();
+            this.Direction = reader.ReadVector3();
+            this.Velocity = reader.ReadVector3();
+            this.StartPoint = reader.ReadVector3();
+            this.EndPoint = reader.ReadVector3();
+            this.UnitPosition = reader.ReadVector3();
+            this.Speed = reader.ReadFloat();
+            this.LifePercentage = reader.ReadFloat();
+            this.Bounced = reader.ReadByte();
+            this.CastInfo = reader.ReadCastInfo();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteVector3(this.Position);
+            writer.WriteVector3(this.CasterPosition);
+            writer.WriteVector3(this.Direction);
+            writer.WriteVector3(this.Velocity);
+            writer.WriteVector3(this.StartPoint);
+            writer.WriteVector3(this.EndPoint);
+            writer.WriteVector3(this.UnitPosition);
+            writer.WriteFloat(this.Speed);
+            writer.WriteFloat(this.LifePercentage);
+            writer.WriteByte(this.Bounced);
+            writer.WriteCastInfo(this.CastInfo);
         }
     }
 }

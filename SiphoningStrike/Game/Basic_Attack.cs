@@ -11,29 +11,15 @@ namespace SiphoningStrike.Game
     public sealed class Basic_Attack : GamePacket // 0x00D
     {
         public override GamePacketID ID => GamePacketID.Basic_Attack;
-        public Basic_Attack() {}
-        public Basic_Attack(byte[] data)
+
+        public BasicAttackData BasicAttackData { get; set; } = new BasicAttackData();
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.BasicAttackData = reader.ReadBasicAttackData();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteBasicAttackData(this.BasicAttackData);
         }
     }
 }

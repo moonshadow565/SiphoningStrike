@@ -11,29 +11,30 @@ namespace SiphoningStrike.Game
     public sealed class S2C_MoveCameraToPoint : GamePacket // 0x027
     {
         public override GamePacketID ID => GamePacketID.S2C_MoveCameraToPoint;
-        public S2C_MoveCameraToPoint() {}
-        public S2C_MoveCameraToPoint(byte[] data)
+        public bool StartFromCurrentPosition { get; set; }
+        public Vector3 StartPosition { get; set; }
+        public Vector3 TargetPosition { get; set; }
+        public float TravelTime { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
+            byte bitfield = reader.ReadByte();
+            this.StartFromCurrentPosition = (bitfield & 0x01) != 0;
 
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.StartPosition = reader.ReadVector3();
+            this.TargetPosition = reader.ReadVector3();
+            this.TravelTime = reader.ReadFloat();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
+            byte bitfield = 0;
+            if (StartFromCurrentPosition)
+                bitfield |= 0x01;
+            writer.WriteByte(bitfield);
 
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteVector3(this.StartPosition);
+            writer.WriteVector3(this.TargetPosition);
+            writer.WriteFloat(this.TravelTime);
         }
     }
 }

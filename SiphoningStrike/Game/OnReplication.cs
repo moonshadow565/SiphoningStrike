@@ -11,29 +11,34 @@ namespace SiphoningStrike.Game
     public sealed class OnReplication : GamePacket // 0x0CC
     {
         public override GamePacketID ID => GamePacketID.OnReplication;
-        public OnReplication() {}
-        public OnReplication(byte[] data)
+
+        public int SyncID { get; set; }
+
+        public List<ReplicationData> ReplicationData { get; set; } = new List<ReplicationData>();
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
+            this.SyncID = reader.ReadInt32();
+            int count = reader.ReadByte();
 
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            for (var i = 0; i < count; i++)
+            {
+                this.ReplicationData.Add(reader.ReadReplicationData());
+            }
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteInt32(this.SyncID);
+            int count = ReplicationData.Count;
+            if (count > 0xFF)
+            {
+                throw new IOException("Too many replication data in list > 0xFF");
+            }
+            writer.WriteByte((byte)count);
+            for (int i = 0; i < count; i++)
+            {
+                writer.WriteReplicationData(ReplicationData[i]);
+            }
         }
     }
 }

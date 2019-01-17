@@ -11,29 +11,46 @@ namespace SiphoningStrike.Game
     public sealed class S2C_CreateHero : GamePacket // 0x04F
     {
         public override GamePacketID ID => GamePacketID.S2C_CreateHero;
-        public S2C_CreateHero() {}
-        public S2C_CreateHero(byte[] data)
+
+        public uint UnitNetID { get; set; }
+        public uint ClientID { get; set; }
+        public byte NetNodeID { get; set; }
+        public byte SkillLevel { get; set; }
+        public bool TeamIsOrder { get; set; }
+        public bool IsBot { get; set; }
+        public byte BotRank { get; set; }
+        public byte SpawnPositionIndex { get; set; }
+        public uint SkinID { get; set; }
+        public string Name { get; set; } = "";
+        public string Skin { get; set; } = "";
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.UnitNetID = reader.ReadUInt32();
+            this.ClientID = reader.ReadUInt32();
+            this.NetNodeID = reader.ReadByte();
+            this.SkillLevel = reader.ReadByte();
+            this.TeamIsOrder = reader.ReadBool();
+            this.IsBot = reader.ReadBool();
+            this.BotRank = reader.ReadByte();
+            this.SpawnPositionIndex = reader.ReadByte();
+            this.SkinID = reader.ReadUInt32();
+            this.Name = reader.ReadFixedString(40);
+            this.Skin = reader.ReadFixedString(40);
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteUInt32(this.UnitNetID);
+            writer.WriteUInt32(this.ClientID);
+            writer.WriteByte(this.NetNodeID);
+            writer.WriteByte(this.SkillLevel);
+            writer.WriteBool(this.TeamIsOrder);
+            writer.WriteBool(this.IsBot);
+            writer.WriteByte(this.BotRank);
+            writer.WriteByte(this.SpawnPositionIndex);
+            writer.WriteUInt32(this.SkinID);
+            writer.WriteFixedString(this.Name, 40);
+            writer.WriteFixedString(this.Skin, 40);
         }
     }
 }

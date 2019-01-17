@@ -11,29 +11,30 @@ namespace SiphoningStrike.Game
     public sealed class WaypointListHeroWithSpeed : GamePacket // 0x088
     {
         public override GamePacketID ID => GamePacketID.WaypointListHeroWithSpeed;
-        public WaypointListHeroWithSpeed() {}
-        public WaypointListHeroWithSpeed(byte[] data)
+
+        public int SyncID { get; set; }
+        public SpeedParams SpeedParams { get; set; } = new SpeedParams();
+        public List<Vector2> Waypoints { get; set; } = new List<Vector2>();
+
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.SyncID = reader.ReadInt32();
+            this.SpeedParams = reader.ReadWaypointSpeedParams();
+            while (reader.BytesLeft >= 8)
+            {
+                Vector2 waypoint = reader.ReadVector2();
+                this.Waypoints.Add(waypoint);
+            }
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteInt32(SyncID);
+            writer.WriteSpeedParams(SpeedParams);
+            foreach (var waypoint in this.Waypoints)
+            {
+                writer.WriteVector2(waypoint);
+            }
         }
     }
 }

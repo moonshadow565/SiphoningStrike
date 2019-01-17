@@ -11,29 +11,22 @@ namespace SiphoningStrike.Game
     public sealed class OnEnterLocalVisiblityClient : GamePacket // 0x0B5
     {
         public override GamePacketID ID => GamePacketID.OnEnterLocalVisiblityClient;
-        public OnEnterLocalVisiblityClient() {}
-        public OnEnterLocalVisiblityClient(byte[] data)
+
+        public float MaxHealth { get; set; }
+        public float Health { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            if (reader.BytesLeft > 0)
+            {
+                MaxHealth = reader.ReadFloat();
+                Health = reader.ReadFloat();
+            }
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteFloat(MaxHealth);
+            writer.WriteFloat(Health);
         }
     }
 }

@@ -11,29 +11,31 @@ namespace SiphoningStrike.Game
     public sealed class NPC_MessageToClient : GamePacket // 0x01B
     {
         public override GamePacketID ID => GamePacketID.NPC_MessageToClient;
-        public NPC_MessageToClient() {}
-        public NPC_MessageToClient(byte[] data)
+
+        public uint TargetNetID { get; set; }
+        public float BubbleDelay { get; set; }
+        public int SlotNumber { get; set; }
+        public bool IsError { get; set; }
+        public byte ColorIndex { get; set; }
+        public string Message { get; set; } = "";
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.TargetNetID = reader.ReadUInt32();
+            this.BubbleDelay = reader.ReadFloat();
+            this.SlotNumber = reader.ReadInt32();
+            this.IsError = reader.ReadBool();
+            this.ColorIndex = reader.ReadByte();
+            this.Message = reader.ReadZeroTerminatedString();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteUInt32(this.TargetNetID);
+            writer.WriteFloat(this.BubbleDelay);
+            writer.WriteInt32(this.SlotNumber);
+            writer.WriteBool(this.IsError);
+            writer.WriteByte(this.ColorIndex);
+            writer.WriteZeroTerminatedString(this.Message);
         }
     }
 }

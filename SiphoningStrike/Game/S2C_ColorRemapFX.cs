@@ -11,29 +11,28 @@ namespace SiphoningStrike.Game
     public sealed class S2C_ColorRemapFX : GamePacket // 0x0E4
     {
         public override GamePacketID ID => GamePacketID.S2C_ColorRemapFX;
-        public S2C_ColorRemapFX() {}
-        public S2C_ColorRemapFX(byte[] data)
+
+        public bool IsFadingIn { get; set; }
+        public float FadeTime { get; set; }
+        public uint TeamID { get; set; }
+        public Color Color { get; set; }
+        public float MaxWeight { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.IsFadingIn = reader.ReadBool();
+            this.FadeTime = reader.ReadFloat();
+            this.TeamID = reader.ReadUInt32();
+            this.Color = reader.ReadColor();
+            this.MaxWeight = reader.ReadFloat();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteBool(this.IsFadingIn);
+            writer.WriteFloat(this.FadeTime);
+            writer.WriteUInt32(this.TeamID);
+            writer.WriteColor(this.Color);
+            writer.WriteFloat(this.MaxWeight);
         }
     }
 }

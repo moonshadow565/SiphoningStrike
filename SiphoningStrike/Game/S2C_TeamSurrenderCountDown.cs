@@ -11,29 +11,16 @@ namespace SiphoningStrike.Game
     public sealed class S2C_TeamSurrenderCountDown : GamePacket // 0x016
     {
         public override GamePacketID ID => GamePacketID.S2C_TeamSurrenderCountDown;
-        public S2C_TeamSurrenderCountDown() {}
-        public S2C_TeamSurrenderCountDown(byte[] data)
+
+        public float TimeRemaining { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.TimeRemaining = reader.ReadFloat();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteFloat(this.TimeRemaining);
         }
     }
 }

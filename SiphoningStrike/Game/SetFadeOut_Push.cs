@@ -11,29 +11,22 @@ namespace SiphoningStrike.Game
     public sealed class SetFadeOut_Push : GamePacket // 0x0BA
     {
         public override GamePacketID ID => GamePacketID.SetFadeOut_Push;
-        public SetFadeOut_Push() {}
-        public SetFadeOut_Push(byte[] data)
+
+        public ushort FadeID { get; set; }
+        public float FadeTime { get; set; }
+        public float FadeTargetValue { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.FadeID = reader.ReadUInt16();
+            this.FadeTime = reader.ReadFloat();
+            this.FadeTargetValue = reader.ReadFloat();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteUInt16(this.FadeID);
+            writer.WriteFloat(this.FadeTime);
+            writer.WriteFloat(this.FadeTargetValue);
         }
     }
 }

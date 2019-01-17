@@ -11,29 +11,25 @@ namespace SiphoningStrike.Game
     public sealed class DisplayFloatingText : GamePacket // 0x01C
     {
         public override GamePacketID ID => GamePacketID.DisplayFloatingText;
-        public DisplayFloatingText() {}
-        public DisplayFloatingText(byte[] data)
+
+        public uint TargetNetID { get; set; }
+        public byte FloatingTextType { get; set; }
+        public int Param { get; set; }
+        public string Message { get; set; } = "";
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.TargetNetID = reader.ReadUInt32();
+            this.FloatingTextType = reader.ReadByte();
+            this.Param = reader.ReadInt32();
+            this.Message = reader.ReadFixedString(128);
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteUInt32(this.TargetNetID);
+            writer.WriteByte(this.FloatingTextType);
+            writer.WriteInt32(this.Param);
+            writer.WriteFixedString(this.Message, 128);
         }
     }
 }

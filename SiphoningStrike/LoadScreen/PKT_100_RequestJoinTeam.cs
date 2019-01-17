@@ -13,31 +13,17 @@ namespace SiphoningStrike.LoadScreen
         public uint ClientID { get; set; }
         public uint TeamID { get; set; }
 
-        public RequestJoinTeam() { }
-        public RequestJoinTeam(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-
-            reader.ReadByte();
             reader.ReadPad(3);
-
             this.ClientID = reader.ReadUInt32();
-            this.TeamID = reader.ReadUInt32();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.TeamID = reader.ReadUInt32();;
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-
-            writer.WriteByte((byte)this.ID);
             writer.WritePad(3);
-
             writer.WriteUInt32(this.ClientID);
             writer.WriteUInt32(this.TeamID);
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
         }
     }
 }

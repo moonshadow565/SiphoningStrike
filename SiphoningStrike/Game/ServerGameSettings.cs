@@ -11,29 +11,19 @@ namespace SiphoningStrike.Game
     public sealed class ServerGameSettings : GamePacket // 0x095
     {
         public override GamePacketID ID => GamePacketID.ServerGameSettings;
-        public ServerGameSettings() {}
-        public ServerGameSettings(byte[] data)
+
+        public bool FowLocalCulling { get; set; }
+        public bool FowBroadcastEverything { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.FowLocalCulling = reader.ReadBool();
+            this.FowBroadcastEverything = reader.ReadBool();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteBool(this.FowLocalCulling);
+            writer.WriteBool(this.FowBroadcastEverything);
         }
     }
 }

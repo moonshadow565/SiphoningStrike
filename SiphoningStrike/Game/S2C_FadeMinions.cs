@@ -11,29 +11,22 @@ namespace SiphoningStrike.Game
     public sealed class S2C_FadeMinions : GamePacket // 0x0D4
     {
         public override GamePacketID ID => GamePacketID.S2C_FadeMinions;
-        public S2C_FadeMinions() {}
-        public S2C_FadeMinions(byte[] data)
+
+        public byte TeamID { get; set; }
+        public float FadeAmount { get; set; }
+        public float FadeTime { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.TeamID = reader.ReadByte();
+            this.FadeAmount = reader.ReadFloat();
+            this.FadeTime = reader.ReadFloat();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteByte(this.TeamID);
+            writer.WriteFloat(this.FadeAmount);
+            writer.WriteFloat(this.FadeTime);
         }
     }
 }

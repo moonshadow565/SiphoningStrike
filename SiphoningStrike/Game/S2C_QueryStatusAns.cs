@@ -11,29 +11,16 @@ namespace SiphoningStrike.Game
     public sealed class S2C_QueryStatusAns : GamePacket // 0x08D
     {
         public override GamePacketID ID => GamePacketID.S2C_QueryStatusAns;
-        public S2C_QueryStatusAns() {}
-        public S2C_QueryStatusAns(byte[] data)
+
+        public bool IsOK { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.IsOK = reader.ReadBool();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteBool(this.IsOK);
         }
     }
 }

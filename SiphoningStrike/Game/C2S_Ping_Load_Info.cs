@@ -11,29 +11,15 @@ namespace SiphoningStrike.Game
     public sealed class C2S_Ping_Load_Info : GamePacket // 0x019
     {
         public override GamePacketID ID => GamePacketID.C2S_Ping_Load_Info;
-        public C2S_Ping_Load_Info() {}
-        public C2S_Ping_Load_Info(byte[] data)
+        public ConnectionInfo ConnectionInfo { get; set; } = new ConnectionInfo();
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.ConnectionInfo = reader.ReadConnectionInfo();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteConnectionInfo(this.ConnectionInfo);
         }
     }
 }

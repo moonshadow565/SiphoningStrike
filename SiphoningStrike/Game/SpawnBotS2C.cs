@@ -11,29 +11,43 @@ namespace SiphoningStrike.Game
     public sealed class SpawnBotS2C : GamePacket // 0x0D8
     {
         public override GamePacketID ID => GamePacketID.SpawnBotS2C;
-        public SpawnBotS2C() {}
-        public SpawnBotS2C(byte[] data)
+        public uint UnitNetID { get; set; }
+        public byte UnitNetNodeID { get; set; }
+        public Vector3 Position { get; set; }
+        public byte BotRank { get; set; }
+        public uint TeamID { get; set; }
+        public uint SkinID { get; set; }
+        public string Name { get; set; }
+        public string SkinName { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
+            this.UnitNetID = reader.ReadUInt32();
+            this.UnitNetNodeID = reader.ReadByte();
+            this.Position = reader.ReadVector3();
+            this.BotRank = reader.ReadByte();
 
-            throw new NotImplementedException();
+            uint bitfield1 = reader.ReadUInt32();
+            this.TeamID = (bitfield1 & 0x1FF);
 
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.SkinID = reader.ReadUInt32();
+            this.Name = reader.ReadFixedString(64);
+            this.SkinName = reader.ReadFixedString(64);
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
+            writer.WriteUInt32(this.UnitNetID);
+            writer.WriteByte(this.UnitNetNodeID);
+            writer.WriteVector3(this.Position);
+            writer.WriteByte(this.BotRank);
 
-            throw new NotImplementedException();
+            uint bitfield1 = 0;
+            bitfield1 |= (this.TeamID & 0x1FF);
+            writer.WriteUInt32(bitfield1);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteUInt32(this.SkinID);
+            writer.WriteFixedString(this.Name, 64);
+            writer.WriteFixedString(this.SkinName, 64);
         }
     }
 }

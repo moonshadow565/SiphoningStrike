@@ -11,29 +11,31 @@ namespace SiphoningStrike.Game
     public sealed class S2C_WriteNavFlags : GamePacket // 0x047
     {
         public override GamePacketID ID => GamePacketID.S2C_WriteNavFlags;
-        public S2C_WriteNavFlags() {}
-        public S2C_WriteNavFlags(byte[] data)
+
+        public int SyncID { get; set; }
+        public List<NavFlagCricle> NavFlagCricles { get; set; } = new List<NavFlagCricle>();
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.SyncID = reader.ReadInt32();
+            int size = reader.ReadInt16();
+            for (var i = 0; i < size; i += 16)
+            {
+                this.NavFlagCricles.Add(reader.ReadNavFlagCricle());
+            }
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteInt32(this.SyncID);
+            int size = NavFlagCricles.Count * 16;
+            if (size > 0xFFFF)
+            {
+                throw new IOException("NavFlagCircles list too big!");
+            }
+            for (int i = 0; i < this.NavFlagCricles.Count; i++)
+            {
+                writer.WriteNavFlagCricle(this.NavFlagCricles[i]);
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Text;
 using System.Numerics;
 using System.Linq;
 using System.Collections.Generic;
+using SiphoningStrike.Game.Common;
 
 namespace SiphoningStrike
 {
@@ -11,6 +12,7 @@ namespace SiphoningStrike
     {
         private BinaryReader _reader;
         private MemoryStream _stream;
+
         public ByteReader(byte[] data)
         {
             _stream = new MemoryStream(data);
@@ -26,7 +28,7 @@ namespace SiphoningStrike
         public int BytesLeft => (int)(_stream.Length - _stream.Position);
 
         public bool ReadBool() => _reader.ReadBoolean();
-        public SByte ReadSByte() => _reader.ReadSByte();
+        public sbyte ReadSByte() => _reader.ReadSByte();
         public byte ReadByte() => _reader.ReadByte();
         public short ReadInt16() => _reader.ReadInt16();
         public ushort ReadUInt16() => _reader.ReadUInt16();
@@ -91,11 +93,47 @@ namespace SiphoningStrike
             return Encoding.UTF8.GetString(data);
         }
 
-        public string ReadFixedStringLast(int maxLength)
+        public string ReadZeroTerminatedString()
         {
-            var data = ReadBytes(Math.Min(BytesLeft, maxLength));
-            var strData = data.TakeWhile(c => c != 0).ToArray();
+            var data = new List<byte>();
+            while (true)
+            {
+                byte c = ReadByte();
+                if (c == 0)
+                {
+                    break;
+                }
+                data.Add(c);
+            }
+            return Encoding.UTF8.GetString(data.ToArray());
+        }
+
+        public string ReadSizedStringWithZero()
+        {
+            var count = ReadInt32();
+            if (count <= 0)
+            {
+                return "";
+            }
+            var data = ReadBytes(count - 1);
+            ReadPad(1);
             return Encoding.UTF8.GetString(data);
+        }
+
+        public string ReadSizedString()
+        {
+            var count = ReadInt32();
+            if (count <= 0)
+            {
+                return "";
+            }
+            var data = ReadBytes(count);
+            return Encoding.UTF8.GetString(data);
+        }
+
+        public Color ReadColor()
+        {
+            return (Color)ReadUInt32();
         }
     }
 }

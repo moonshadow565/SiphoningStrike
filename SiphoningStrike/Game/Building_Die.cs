@@ -11,29 +11,16 @@ namespace SiphoningStrike.Game
     public sealed class Building_Die : GamePacket // 0x08E
     {
         public override GamePacketID ID => GamePacketID.Building_Die;
-        public Building_Die() {}
-        public Building_Die(byte[] data)
+
+        public uint AttackerNetID { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.AttackerNetID = reader.ReadUInt32();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteUInt32(this.AttackerNetID);
         }
     }
 }

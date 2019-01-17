@@ -13,35 +13,21 @@ namespace SiphoningStrike.LoadScreen
 
         public ulong PlayerID { get; set; }
         public uint SkinID { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; } = "";
 
-        public RequestRename() { }
-        public RequestRename(byte[] data)
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-
-            reader.ReadByte();
-
+            reader.ReadPad(7);
             this.PlayerID = reader.ReadUInt64();
             this.SkinID = reader.ReadUInt32();
-            reader.ReadUInt32(); // buffer, length, ignored
-            this.Name = reader.ReadFixedStringLast(128);
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.Name = reader.ReadSizedStringWithZero();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-
-            writer.WriteByte((byte)this.ID);
-
-            writer.WriteByte((byte)this.ID);
+            writer.WritePad(7);
             writer.WriteUInt64(this.PlayerID);
-            writer.WriteUInt32(0); // buffer, length, ignored
-            writer.WriteFixedStringLast(this.Name, 128);
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteUInt32(this.SkinID);
+            writer.WriteSizedStringWithZero(this.Name);
         }
     }
 }

@@ -11,29 +11,25 @@ namespace SiphoningStrike.Game
     public sealed class SetItem : GamePacket // 0x056
     {
         public override GamePacketID ID => GamePacketID.SetItem;
-        public SetItem() {}
-        public SetItem(byte[] data)
+
+        public byte Slot { get; set; }
+        public uint ItemID { get; set; }
+        public byte ItemsInSlot { get; set; }
+        public byte SpellCharges { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
-
-            throw new NotImplementedException();
-
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.Slot = reader.ReadByte();
+            this.ItemID = reader.ReadUInt32();
+            this.ItemsInSlot = reader.ReadByte();
+            this.SpellCharges = reader.ReadByte();
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
-
-            throw new NotImplementedException();
-
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteByte(this.Slot);
+            writer.WriteUInt32(this.ItemID);
+            writer.WriteByte(this.ItemsInSlot);
+            writer.WriteByte(this.SpellCharges);
         }
     }
 }

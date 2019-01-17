@@ -11,29 +11,53 @@ namespace SiphoningStrike.Game
     public sealed class SpawnLevelPropS2C : GamePacket // 0x0D9
     {
         public override GamePacketID ID => GamePacketID.SpawnLevelPropS2C;
-        public SpawnLevelPropS2C() {}
-        public SpawnLevelPropS2C(byte[] data)
+
+        public uint UniNetID { get; set; }
+        public byte UnitNetNodeID { get; set; }
+        public Vector3 Position { get; set; }
+        public Vector3 Facing { get; set; }
+        public Vector3 PositionOffset { get; set; }
+        public uint TeamID { get; set; }
+        public byte SkillLevel { get; set; }
+        public byte Rank { get; set; }
+        public byte Type { get; set; }
+        public string Name { get; set; }
+        public string PropName { get; set; }
+
+        internal override void ReadBody(ByteReader reader)
         {
-            var reader = new ByteReader(data);
-            
-            reader.ReadByte();
-            this.SenderNetID = reader.ReadUInt32();
+            this.UniNetID = reader.ReadUInt32();
+            this.UnitNetNodeID = reader.ReadByte();
+            this.Position = reader.ReadVector3();
+            this.Facing = reader.ReadVector3();
+            this.PositionOffset = reader.ReadVector3();
 
-            throw new NotImplementedException();
+            uint bitfield1 = reader.ReadUInt32();
+            this.TeamID = (bitfield1 & 0x1FF);
 
-            this.BytesLeft = reader.ReadBytesLeft();
+            this.SkillLevel = reader.ReadByte();
+            this.Rank = reader.ReadByte();
+            this.Type = reader.ReadByte();
+            this.Name = reader.ReadFixedString(64);
+            this.PropName = reader.ReadFixedString(64);
         }
-        public override byte[] GetBytes()
+        internal override void WriteBody(ByteWriter writer)
         {
-            var writer = new ByteWriter();
-            
-            writer.WriteByte((byte)this.ID);
-            writer.WriteUInt32(this.SenderNetID);
+            writer.WriteUInt32(this.UniNetID);
+            writer.WriteByte(this.UnitNetNodeID);
+            writer.WriteVector3(this.Position);
+            writer.WriteVector3(this.Facing);
+            writer.WriteVector3(this.PositionOffset);
 
-            throw new NotImplementedException();
+            uint bitfield1 = 0;
+            bitfield1 |= (this.TeamID & 0x1FF);
+            writer.WriteUInt32(bitfield1);
 
-            writer.WriteBytes(this.BytesLeft);
-            return writer.GetBytes();
+            writer.WriteByte(this.SkillLevel);
+            writer.WriteByte(this.Rank);
+            writer.WriteByte(this.Type);
+            writer.WriteFixedString(this.Name, 64);
+            writer.WriteFixedString(this.PropName, 64);
         }
     }
 }
