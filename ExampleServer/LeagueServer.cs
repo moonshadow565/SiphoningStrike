@@ -160,7 +160,7 @@ namespace ExampleServer
                 //TODO: throw here?
                 return false;
             }
-            LogPacket(client, packet.GetBytes(), channel);
+            //LogPacket(client, packet.GetBytes(), channel);
             return SendEncrypted(_peers[client], channel, packet, reliable, unsequenced);
         }
 

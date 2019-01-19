@@ -24,7 +24,7 @@ namespace ExampleServer
             var key = Encoding.ASCII.GetBytes("GLzvuWtyCfHyGhF2");
             var cids = new List<uint> { 1 };
             var server = new LeagueServer(address, key, cids);
-            var mapNum = 8;
+            var mapNum = 1;
             var playerLiteInfo = new PlayerLoadInfo
             {
                 PlayerID = 1,
@@ -53,7 +53,7 @@ namespace ExampleServer
                 var packet = e.Packet;
                 var cid = e.ClientID;
                 var channel = e.ChannelID;
-                Console.WriteLine($"Recieving {e.Packet.GetType().Name} on {e.ChannelID.ToString()} from {(uint)cid}");
+                //Console.WriteLine($"Recieving {e.Packet.GetType().Name} on {e.ChannelID.ToString()} from {(uint)cid}");
                 if(packet is IUnusedPacket)
                 {
                     
@@ -183,7 +183,7 @@ namespace ExampleServer
                     {
                         var resWaypoints = new WaypointGroup();
                         resWaypoints.SenderNetID = 0x40000001;
-                        resWaypoints.SyncID = movReq.MovementData.SyncID;
+                        resWaypoints.SyncID = Environment.TickCount;
                         resWaypoints.Movements.Add(movReq.MovementData);
 
                         server.SendEncrypted(e.ClientID, ChannelID.Broadcast, resWaypoints);
