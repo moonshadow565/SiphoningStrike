@@ -26,6 +26,7 @@ namespace SiphoningStrike.LoadScreen
 
             this.TeamSizeOrder = reader.ReadUInt32();
             this.TeamSizeChaos = reader.ReadUInt32();
+            reader.ReadPad(4);
             for (var i = 0; i < OrderPlayerIDs.Length; i++)
             {
                 this.OrderPlayerIDs[i] = reader.ReadUInt64();
@@ -44,6 +45,7 @@ namespace SiphoningStrike.LoadScreen
 
             writer.WriteUInt32(this.TeamSizeOrder);
             writer.WriteUInt32(this.TeamSizeChaos);
+            writer.WritePad(4);
             for (var i = 0; i < OrderPlayerIDs.Length; i++)
             {
                 writer.WriteUInt64(this.OrderPlayerIDs[i]);

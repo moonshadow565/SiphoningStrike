@@ -7,6 +7,9 @@ namespace SiphoningStrike
         public uint ChatType { get; set; }
         public string Message { get; set; }
 
+        public ChatPacket() {}
+        public ChatPacket(byte[] data) { Read(data); }
+
         internal override void ReadPacket(ByteReader reader)
         {
             this.ClientID = reader.ReadUInt32();

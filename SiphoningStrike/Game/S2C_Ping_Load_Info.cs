@@ -12,7 +12,7 @@ namespace SiphoningStrike.Game
     {
         public override GamePacketID ID => GamePacketID.S2C_Ping_Load_Info;
 
-        public ConnectionInfo ConnectionInfo { get; set; }
+        public ConnectionInfo ConnectionInfo { get; set; } = new ConnectionInfo();
 
         internal override void ReadBody(ByteReader reader)
         {

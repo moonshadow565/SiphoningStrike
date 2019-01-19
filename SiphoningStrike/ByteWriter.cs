@@ -52,7 +52,7 @@ namespace SiphoningStrike
         {
             var data = string.IsNullOrEmpty(str) ? new byte[0] : Encoding.UTF8.GetBytes(str);
             var count = data.Length;
-            if (count >= (maxLength - 1))
+            if (count >= maxLength)
             {
                 throw new IOException("Too much data!");
             }
