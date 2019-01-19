@@ -27,7 +27,7 @@ namespace SiphoningStrike.LoadScreen
             writer.WritePad(7);
             writer.WriteUInt64(this.PlayerID);
             writer.WriteUInt32(this.SkinID);
-            writer.WriteSizedStringWithZero(this.Name);;
+            writer.WriteSizedStringWithZero(this.Name);
         }
     }
 }

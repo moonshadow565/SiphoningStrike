@@ -5,6 +5,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiphoningStrike", "Siphonin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PacketDumper", "PacketDumper\PacketDumper.csproj", "{22E080A2-E779-4974-9815-5B76A1591ABB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENetCS", "ENetCS\ENetCS.csproj", "{4490AD19-2B7D-41C9-A809-A608973A42E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleServer", "ExampleServer\ExampleServer.csproj", "{E77C6962-4D0D-4DE2-A14C-29221BBA0B2D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +23,14 @@ Global
 		{22E080A2-E779-4974-9815-5B76A1591ABB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22E080A2-E779-4974-9815-5B76A1591ABB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22E080A2-E779-4974-9815-5B76A1591ABB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4490AD19-2B7D-41C9-A809-A608973A42E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4490AD19-2B7D-41C9-A809-A608973A42E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4490AD19-2B7D-41C9-A809-A608973A42E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4490AD19-2B7D-41C9-A809-A608973A42E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E77C6962-4D0D-4DE2-A14C-29221BBA0B2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E77C6962-4D0D-4DE2-A14C-29221BBA0B2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E77C6962-4D0D-4DE2-A14C-29221BBA0B2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E77C6962-4D0D-4DE2-A14C-29221BBA0B2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0
