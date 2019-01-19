@@ -14,7 +14,7 @@ namespace SiphoningStrike.Game
 
         public float TimeLastClient { get; set; }
         public uint ClientID { get; set; }
-        public string VersionString { get; set; }
+        public string VersionString { get; set; } = "";
 
         internal override void ReadBody(ByteReader reader)
         {

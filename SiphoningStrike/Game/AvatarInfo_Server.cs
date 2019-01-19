@@ -18,7 +18,6 @@ namespace SiphoningStrike.Game
 
         public uint[] ItemIDs => _itemIDs;
         public uint[] SummonerIDs => _summonerSpellIDs;
-        public uint[] SummonerIDs2 => _summonerSpellIDs;
         public Talent[] Talents => _talents;
         public byte Level { get; set; }
 

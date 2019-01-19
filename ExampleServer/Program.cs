@@ -24,7 +24,7 @@ namespace ExampleServer
             var key = Encoding.ASCII.GetBytes("GLzvuWtyCfHyGhF2");
             var cids = new List<uint> { 1 };
             var server = new LeagueServer(address, key, cids);
-            var mapNum = 1;
+            var mapNum = 8;
             var playerLiteInfo = new PlayerLoadInfo
             {
                 PlayerID = 1,
@@ -34,7 +34,7 @@ namespace ExampleServer
                 SummonorSpell2 = 0,
             };
             var skinID = 0u;
-            var championName = "Annie";
+            var championName = "Nasus";
             var playerName = "Test";
             var jSettings = new JsonSerializerSettings
             {
@@ -68,7 +68,7 @@ namespace ExampleServer
                 {
                     var answer2 = new TeamRosterUpdate();
                     answer2.TeamSizeOrder = 1;
-                    answer2.OrderPlayerIDs[1] = cid;
+                    answer2.OrderPlayerIDs[0] = cid;
                     answer2.CurrentTeamSizeOrder = 1;
                     server.SendEncrypted(cid, ChannelID.LoadingScreen, answer2);
 
@@ -98,8 +98,8 @@ namespace ExampleServer
                     answer.IsVersionOK = true;
                     answer.VersionString = syncReq.VersionString;
                     answer.MapToLoad = mapNum;
-                    answer.PlayerInfo[1] = playerLiteInfo;
-                    answer.MapMode = "CLASSIC";
+                    answer.PlayerInfo[0] = playerLiteInfo;
+                    answer.MapMode = "Automatic";
                     server.SendEncrypted(cid, ChannelID.Broadcast, answer);
                 }
                 else if(packet is C2S_CharSelected reqSelected)
@@ -107,24 +107,23 @@ namespace ExampleServer
                     var startSpawn = new S2C_StartSpawn();
                     server.SendEncrypted(cid, ChannelID.Broadcast, startSpawn);
 
-
                     var spawnHero = new S2C_CreateHero();
-                    spawnHero.SenderNetID = 0x40000001;
+                    spawnHero.ClientID = cid;
                     spawnHero.Name = playerName;
                     spawnHero.Skin = championName;
                     spawnHero.SkinID = 0;
                     spawnHero.NetNodeID = 0x40;
                     spawnHero.UnitNetID = 0x40000001;
                     spawnHero.TeamIsOrder = true;
-                    spawnHero.SpawnPositionIndex = 2;
+                    spawnHero.SkillLevel = 1;
                     server.SendEncrypted(cid, ChannelID.Broadcast, spawnHero);
 
-
+                    /*
                     var avatarInfo = new AvatarInfo_Server();
                     avatarInfo.SenderNetID = 0x40000001;
-                    avatarInfo.SummonerIDs[0] = 106858133;
-                    avatarInfo.SummonerIDs2[0] = 106858133;
+                    avatarInfo.SummonerIDs[0] = 0;
                     server.SendEncrypted(cid, ChannelID.Broadcast, avatarInfo);
+                    */
 
                     var endSpawn = new S2C_EndSpawn();
                     server.SendEncrypted(cid, ChannelID.Broadcast, endSpawn);
@@ -135,14 +134,14 @@ namespace ExampleServer
                     startGame.TournamentPauseEnabled = true;
                     server.SendEncrypted(cid, ChannelID.Broadcast, startGame);
 
-                    var answer2 = new TeamRosterUpdate();
-                    answer2.TeamSizeOrder = 1;
-                    answer2.OrderPlayerIDs[0] = cid;
-                    answer2.CurrentTeamSizeOrder = 1;
-                    server.SendEncrypted(cid, ChannelID.LoadingScreen, answer2);
-
                     var entervision = new OnEnterVisiblityClient();
                     entervision.SenderNetID = 0x40000001;
+                    entervision.MovementData = new MovementDataStop
+                    {
+                        SyncID = Environment.TickCount,
+                        Position = new Vector2(26.0f, 280.0f),
+                        Forward = new Vector2(26.0f, 280.0f)
+                    };
                     server.SendEncrypted(cid, ChannelID.Broadcast, entervision);
                 }
                 else if(packet is World_SendCamera_Server reqCamerPosition)

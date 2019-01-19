@@ -332,6 +332,7 @@
     <Compile Include="Game\Events\ArgsDie.cs" />
     <Compile Include="Game\Events\ArgsKillingSpree.cs" />
     <Compile Include="Game\Common\HeroStat.cs" />
+    <Compile Include="Utility.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

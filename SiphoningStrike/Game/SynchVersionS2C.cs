@@ -17,8 +17,8 @@ namespace SiphoningStrike.Game
         public bool IsVersionOK { get; set; }
         public int MapToLoad { get; set; }
         public PlayerLoadInfo[] PlayerInfo => _playerInfo;
-        public string VersionString { get; set; }
-        public string MapMode { get; set; }
+        public string VersionString { get; set; } = "";
+        public string MapMode { get; set; } = "";
 
 
         internal override void ReadBody(ByteReader reader)

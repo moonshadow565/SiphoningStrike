@@ -118,6 +118,20 @@ namespace ExampleServer
             }
         }
 
+        private static void LogPacket(uint peerId, byte[] data, ChannelID channelID)
+        {
+            byte channel = (byte)channelID;
+            byte packetId = data[0];
+            int dataLength = data.Length;
+            Console.Error.Write($"Log packet({packetId}) on({channel}) from({peerId}) size({dataLength})\n");
+            for (var i = 0; i < dataLength; i += 16)
+            {
+                for (var c = i; c < dataLength && c < (i + 16); c++)
+                    Console.Error.Write($"{(uint)(data[c]):X2} ");
+                Console.Error.Write('\n');
+            }
+        }
+
         private bool SendEncrypted(Peer peer, ChannelID channel, BasePacket packet,
                                 bool reliable = true, bool unsequenced = false)
         {
@@ -146,6 +160,7 @@ namespace ExampleServer
                 //TODO: throw here?
                 return false;
             }
+            LogPacket(client, packet.GetBytes(), channel);
             return SendEncrypted(_peers[client], channel, packet, reliable, unsequenced);
         }
 
@@ -158,7 +173,8 @@ namespace ExampleServer
                     case EventType.None:
                         break;
                     case EventType.Connect:
-                        //eevent.Peer.Mtu = 996;
+                        eevent.Peer.UserData = (IntPtr)0;
+                        eevent.Peer.Mtu = 996;
                         break;
                     case EventType.Disconnect:
                         if((uint)eevent.Peer.UserData != 0)
@@ -239,11 +255,11 @@ namespace ExampleServer
                 peer.UserData = (IntPtr)cid;
                 _peers[cid] = peer;
 
-                KeyCheckPacket serverAuthPacket = new KeyCheckPacket();;
+                KeyCheckPacket serverAuthPacket = new KeyCheckPacket();
                 serverAuthPacket.ClientID = cid;
                 serverAuthPacket.PlayerID = cid;
                 serverAuthPacket.EncryptedPlayerID = clientAuthPacket.EncryptedPlayerID;
-                SendEncrypted(peer, ChannelID.Default, serverAuthPacket);
+                SendEncrypted(cid, ChannelID.Default, serverAuthPacket);
                 OnConnected(this, new LeagueConnectedEventArgs(cid));
             }
             catch(IOException)
