@@ -89,7 +89,7 @@ namespace ExampleServer
                 {
                     var answer = new S2C_Ping_Load_Info();
                     answer.ConnectionInfo = reqPingLoadInfo.ConnectionInfo;
-                    answer.ConnectionInfo.PlayerID = cid;
+                     
                     server.SendEncrypted(cid, ChannelID.Broadcast, answer);
                 }
                 else if (packet is SynchVersionC2S syncReq)
