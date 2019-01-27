@@ -99,7 +99,7 @@ namespace SiphoningStrike.Game.Common
             {
                 if (flags[flag])
                 {
-                    writer.WriteSByte((SByte)(data[i].X - data[i - 1].Y));
+                    writer.WriteSByte((SByte)(data[i].X - data[i - 1].X));
                 }
                 else
                 {
