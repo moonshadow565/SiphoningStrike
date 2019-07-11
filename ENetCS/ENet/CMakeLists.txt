@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 2.6)
 
 project(enet)
-set(CMAKE_BUILD_TYPE Release)
 
 # The "configure" step.
 include(CheckFunctionExists)
@@ -64,6 +63,7 @@ endif()
  
 include_directories(${PROJECT_SOURCE_DIR}/include)
  
+add_definitions(-DENET_DLL)
 add_library(enet SHARED
         callbacks.c
         host.c
