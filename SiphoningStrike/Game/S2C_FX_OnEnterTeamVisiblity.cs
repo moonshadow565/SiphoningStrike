@@ -12,14 +12,18 @@ namespace SiphoningStrike.Game
     {
         public override GamePacketID ID => GamePacketID.S2C_FX_OnEnterTeamVisiblity;
 
+        public uint UnitNetID { get; set; }
+
         public byte VisiblityTeam { get; set; }
 
         internal override void ReadBody(ByteReader reader)
         {
+            this.UnitNetID = reader.ReadUInt32();
             this.VisiblityTeam = reader.ReadByte();
         }
         internal override void WriteBody(ByteWriter writer)
         {
+            writer.WriteUInt32(this.UnitNetID);
             writer.WriteByte(this.VisiblityTeam);
         }
     }

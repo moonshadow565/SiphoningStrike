@@ -62,7 +62,7 @@ namespace SiphoningStrike.Game.Common
 
         public byte SpellSlot { get; set; }
         public float ManaCost { get; set; }
-        public Vector3 CasterPosition { get; set; }
+        public Vector3 CastLaunchPosition { get; set; }
 
 
     }
@@ -108,7 +108,7 @@ namespace SiphoningStrike.Game.Common
 
             data.SpellSlot = reader.ReadByte();
             data.ManaCost = reader.ReadFloat();
-            data.CasterPosition = reader.ReadVector3();
+            data.CastLaunchPosition = reader.ReadVector3();
             return data;
         }
 
@@ -163,7 +163,7 @@ namespace SiphoningStrike.Game.Common
 
             writer.WriteByte(data.SpellSlot);
             writer.WriteFloat(data.ManaCost);
-            writer.WriteVector3(data.CasterPosition);
+            writer.WriteVector3(data.CastLaunchPosition);
 
 
             var writerData = writer.GetBytes();

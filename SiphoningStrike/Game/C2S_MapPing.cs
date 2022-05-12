@@ -23,6 +23,7 @@ namespace SiphoningStrike.Game
             this.TargetNetID = reader.ReadUInt32();
 
             byte bitfield = reader.ReadByte();
+            PingCategory = (byte)(bitfield & 0x0F);
         }
         internal override void WriteBody(ByteWriter writer)
         {

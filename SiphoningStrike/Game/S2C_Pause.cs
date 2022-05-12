@@ -12,27 +12,21 @@ namespace SiphoningStrike.Game
     {
         public override GamePacketID ID => GamePacketID.S2C_Pause;
 
-        public uint ClientID { get; set; }
-        public int PauseTimeRemaining { get; set; }
-        public bool IsTournamentPause { get; set; }
+        public Vector3 Position { get; set; }
+        public Vector3 Forward { get; set; }
+        public int SyncID { get; set; }
 
         internal override void ReadBody(ByteReader reader)
         {
-            this.ClientID = reader.ReadUInt32();
-            this.PauseTimeRemaining = reader.ReadInt32();
-
-            byte bitfield = reader.ReadByte();
-            this.IsTournamentPause = (bitfield & 0x01) != 0;
+            this.Position = reader.ReadVector3();
+            this.Forward = reader.ReadVector3();
+            this.SyncID = reader.ReadInt32();
         }
         internal override void WriteBody(ByteWriter writer)
         {
-            writer.WriteUInt32(this.ClientID);
-            writer.WriteInt32(this.PauseTimeRemaining);
-
-            byte bitfield = 0;
-            if (this.IsTournamentPause)
-                bitfield |= 0x01;
-            writer.WriteByte(bitfield);
+            writer.WriteVector3(this.Position);
+            writer.WriteVector3(this.Forward);
+            writer.WriteInt32(this.SyncID);
         }
     }
 }

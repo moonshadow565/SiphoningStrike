@@ -28,11 +28,8 @@ namespace SiphoningStrike.Game.Common
             data.Percentage = reader.ReadFloat();
             data.ETA = reader.ReadFloat();
             data.Count = reader.ReadInt16();
-            //FIXME: check this
-            ushort bitfield = reader.ReadUInt16();
-            data.Ping = (ushort)(bitfield & 0x7FFF);
-            data.Ready = (bitfield & 0x8000) != 0;
-
+            data.Ping = (ushort)(reader.ReadUInt16() & 0x7FFF);
+            data.Ready = (reader.ReadByte() & 1) != 0;
             return data;
         }
 
@@ -48,12 +45,8 @@ namespace SiphoningStrike.Game.Common
             writer.WriteFloat(data.Percentage);
             writer.WriteFloat(data.ETA);
             writer.WriteInt16(data.Count);
-
-            ushort bitfield = 0;
-            bitfield |= (ushort)(data.Ping & 0x7FFF);
-            if (data.Ready)
-                bitfield |= 0x8000;
-            writer.WriteUInt16(bitfield);
+            writer.WriteUInt16((ushort)(data.Ping & 0x7FFF));
+            writer.WriteByte((byte)(data.Ready ? 1 : 0));
         }
     }
 }

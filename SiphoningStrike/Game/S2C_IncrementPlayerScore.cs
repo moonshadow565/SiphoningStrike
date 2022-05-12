@@ -24,7 +24,7 @@ namespace SiphoningStrike.Game
             this.PlayerNetID = reader.ReadUInt32();
             this.ScoreCategory = reader.ReadByte();
             this.ScoreEvent = reader.ReadByte();
-            this.IsCallout = reader.ReadBool();
+            this.IsCallout = (reader.ReadByte() & 1) != 0;
             this.PointValue = reader.ReadFloat();
             this.TotalPointValue = reader.ReadFloat();
         }
@@ -33,7 +33,7 @@ namespace SiphoningStrike.Game
             writer.WriteUInt32(this.PlayerNetID);
             writer.WriteByte(this.ScoreCategory);
             writer.WriteByte(this.ScoreEvent);
-            writer.WriteBool(this.IsCallout);
+            writer.WriteByte((byte)(this.IsCallout ? 1 : 0));
             writer.WriteFloat(this.PointValue);
             writer.WriteFloat(this.TotalPointValue);
         }
