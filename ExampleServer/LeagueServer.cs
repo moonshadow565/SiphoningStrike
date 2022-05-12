@@ -172,11 +172,11 @@ namespace ExampleServer
                     case EventType.NONE:
                         break;
                     case EventType.CONNECT:
-                        eevent.Peer.UserData = (IntPtr)0;
+                        eevent.Peer.UserData = (uint)0;
                         eevent.Peer.MTU = 996;
                         break;
                     case EventType.DISCONNECT:
-                        if((uint)eevent.Peer.UserData != 0)
+                        if(eevent.Peer.UserData is null | (uint)eevent.Peer.UserData != 0)
                         {
                             var cid = (uint)eevent.Peer.UserData;
                             _peers[cid] = null;
@@ -184,7 +184,7 @@ namespace ExampleServer
                         }
                         break;
                     case EventType.RECEIVE:
-                        if((uint)eevent.Peer.UserData == 0)
+                        if(eevent.Peer.UserData is null || (uint)eevent.Peer.UserData == 0)
                         {
                             if(eevent.ChannelID != (byte)ChannelID.Default)
                             {
@@ -251,7 +251,7 @@ namespace ExampleServer
                     peer.Disconnect(0);
                     return;
                 }
-                peer.UserData = (IntPtr)cid;
+                peer.UserData = (uint)cid;
                 _peers[cid] = peer;
 
                 KeyCheckPacket serverAuthPacket = new KeyCheckPacket();
