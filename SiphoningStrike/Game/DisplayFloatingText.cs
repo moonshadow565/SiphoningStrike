@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class DisplayFloatingText : GamePacket // 0x01C
     {
-        public override GamePacketID ID => GamePacketID.DisplayFloatingText;
+        public override GamePacketID ID => GamePacketID.S2C_DisplayFloatingText;
 
         public uint TargetNetID { get; set; }
         public byte FloatingTextType { get; set; }

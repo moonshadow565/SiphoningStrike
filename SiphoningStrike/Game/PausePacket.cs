@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class PausePacket : GamePacket // 0x0A9
     {
-        public override GamePacketID ID => GamePacketID.PausePacket;
+        public override GamePacketID ID => GamePacketID.BID_PausePacket;
 
         public uint ClientID { get; set; }
         public int PauseTimeRemaining { get; set; }

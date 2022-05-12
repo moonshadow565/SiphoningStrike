@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class CHAR_CancelTargetingReticle : GamePacket // 0x08B
     {
-        public override GamePacketID ID => GamePacketID.CHAR_CancelTargetingReticle;
+        public override GamePacketID ID => GamePacketID.S2C_CHAR_CancelTargetingReticle;
 
         public byte Slot { get; set; }
         public bool IsSummonerSpell { get; set; }

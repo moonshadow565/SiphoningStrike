@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class ResetForSlowLoader : GamePacket // 0x042
     {
-        public override GamePacketID ID => GamePacketID.ResetForSlowLoader;
+        public override GamePacketID ID => GamePacketID.S2C_ResetForSlowLoader;
         internal override void ReadBody(ByteReader reader)
         {
         }

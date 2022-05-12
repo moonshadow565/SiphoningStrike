@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class SetItem : GamePacket // 0x056
     {
-        public override GamePacketID ID => GamePacketID.SetItem;
+        public override GamePacketID ID => GamePacketID.S2C_SetItem;
 
         public byte Slot { get; set; }
         public uint ItemID { get; set; }

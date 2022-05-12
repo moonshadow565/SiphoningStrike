@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class NPC_InstantStop_Attack : GamePacket // 0x039
     {
-        public override GamePacketID ID => GamePacketID.NPC_InstantStop_Attack;
+        public override GamePacketID ID => GamePacketID.S2C_NPC_InstantStop_Attack;
 
         public bool KeepAnimating { get; set; }
         public bool ForceSpellCast { get; set; }

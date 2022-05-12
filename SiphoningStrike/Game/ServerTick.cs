@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class ServerTick : GamePacket // 0x02A
     {
-        public override GamePacketID ID => GamePacketID.ServerTick;
+        public override GamePacketID ID => GamePacketID.S2C_ServerTick;
 
         public float Delta { get; set; }
 

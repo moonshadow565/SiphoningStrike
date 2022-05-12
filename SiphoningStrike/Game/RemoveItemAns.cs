@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class RemoveItemAns : GamePacket // 0x00B
     {
-        public override GamePacketID ID => GamePacketID.RemoveItemAns;
+        public override GamePacketID ID => GamePacketID.S2C_RemoveItemAns;
 
         public byte Slot { get; set; }
         public byte ItemsInSlot { get; set; }

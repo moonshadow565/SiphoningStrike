@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class Building_Die : GamePacket // 0x08E
     {
-        public override GamePacketID ID => GamePacketID.Building_Die;
+        public override GamePacketID ID => GamePacketID.S2C_Building_Die;
 
         public uint AttackerNetID { get; set; }
 

@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class FX_Kill : GamePacket // 0x03D
     {
-        public override GamePacketID ID => GamePacketID.FX_Kill;
+        public override GamePacketID ID => GamePacketID.S2C_FX_Kill;
 
         public uint UnknownNetID { get; set; }
 

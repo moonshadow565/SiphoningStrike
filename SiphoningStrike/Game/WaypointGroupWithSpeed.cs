@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class WaypointGroupWithSpeed : GamePacket // 0x067
     {
-        public override GamePacketID ID => GamePacketID.WaypointGroupWithSpeed;
+        public override GamePacketID ID => GamePacketID.S2C_WaypointGroupWithSpeed;
 
         public int SyncID { get; set; }
         public List<MovementDataWithSpeed> Movements { get; set; } = new List<MovementDataWithSpeed>();

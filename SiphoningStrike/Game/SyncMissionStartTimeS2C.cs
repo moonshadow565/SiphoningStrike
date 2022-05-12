@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class SyncMissionStartTimeS2C : GamePacket // 0x0CA
     {
-        public override GamePacketID ID => GamePacketID.SyncMissionStartTimeS2C;
+        public override GamePacketID ID => GamePacketID.S2C_SyncMissionStartTime;
 
         public float StartTime { get; set; }
 

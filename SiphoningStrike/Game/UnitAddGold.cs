@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class UnitAddGold : GamePacket // 0x025
     {
-        public override GamePacketID ID => GamePacketID.UnitAddGold;
+        public override GamePacketID ID => GamePacketID.S2C_UnitAddGold;
 
         public uint TargetNetID { get; set; }
         public uint SourceNetID { get; set; }

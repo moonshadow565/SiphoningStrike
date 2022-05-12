@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class SetFadeOut_Pop : GamePacket // 0x034
     {
-        public override GamePacketID ID => GamePacketID.SetFadeOut_Pop;
+        public override GamePacketID ID => GamePacketID.S2C_SetFadeOut_Pop;
 
         public short StackID { get; set; }
 

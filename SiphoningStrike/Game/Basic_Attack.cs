@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class Basic_Attack : GamePacket // 0x00D
     {
-        public override GamePacketID ID => GamePacketID.Basic_Attack;
+        public override GamePacketID ID => GamePacketID.S2C_Basic_Attack;
 
         public BasicAttackData BasicAttackData { get; set; } = new BasicAttackData();
         internal override void ReadBody(ByteReader reader)

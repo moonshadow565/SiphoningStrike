@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class OnDisconnected : GamePacket // 0x0B1
     {
-        public override GamePacketID ID => GamePacketID.OnDisconnected;
+        public override GamePacketID ID => GamePacketID.UNK_OnDisconnected;
         internal override void ReadBody(ByteReader reader)
         {
         }

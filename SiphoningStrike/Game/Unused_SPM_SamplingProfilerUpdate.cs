@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class Unused_SPM_SamplingProfilerUpdate : GamePacket, IUnusedPacket // 0x0D0
     {
-        public override GamePacketID ID => GamePacketID.Unused_SPM_SamplingProfilerUpdate;
+        public override GamePacketID ID => GamePacketID.S2C_SPM_SamplingProfilerUpdate;
         internal override void ReadBody(ByteReader reader)
         {
             //Unused

@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class SetFadeOut_Push : GamePacket // 0x0BA
     {
-        public override GamePacketID ID => GamePacketID.SetFadeOut_Push;
+        public override GamePacketID ID => GamePacketID.S2C_SetFadeOut_Push;
 
         public ushort FadeID { get; set; }
         public float FadeTime { get; set; }

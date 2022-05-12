@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class MissileReplication_ChainMissile : GamePacket // 0x071
     {
-        public override GamePacketID ID => GamePacketID.MissileReplication_ChainMissile;
+        public override GamePacketID ID => GamePacketID.S2C_MissileReplication_ChainMissile;
         internal override void ReadBody(ByteReader reader)
         {
         }

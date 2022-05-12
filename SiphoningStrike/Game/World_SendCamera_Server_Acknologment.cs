@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class World_SendCamera_Server_Acknologment : GamePacket // 0x02E
     {
-        public override GamePacketID ID => GamePacketID.World_SendCamera_Server_Acknologment;
+        public override GamePacketID ID => GamePacketID.S2C_World_SendCamera_Server_Ack;
         public SByte SyncID { get; set; }
 
         internal override void ReadBody(ByteReader reader)

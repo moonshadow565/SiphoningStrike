@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class Unused_PKT32 : GamePacket, IUnusedPacket // 0x00C
     {
-        public override GamePacketID ID => GamePacketID.Unused_PKT32;
+        public override GamePacketID ID => GamePacketID.UNK_Unused_0C;
         internal override void ReadBody(ByteReader reader)
         {
             //Unused

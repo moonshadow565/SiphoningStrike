@@ -19,7 +19,7 @@ namespace SiphoningStrike.Game
             public BaseEvent Event { get; set; }
         }
 
-        public override GamePacketID ID => GamePacketID.NPC_Die_EventHistroy;
+        public override GamePacketID ID => GamePacketID.S2C_NPC_Die_EventHistory;
 
 
         public uint KillerNetID { get; set; }

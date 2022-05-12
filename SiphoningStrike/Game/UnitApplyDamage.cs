@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class UnitApplyDamage : GamePacket // 0x068
     {
-        public override GamePacketID ID => GamePacketID.UnitApplyDamage;
+        public override GamePacketID ID => GamePacketID.S2C_UnitApplyDamage;
 
         public byte DamageResultType { get; set; }
         public bool HasAttackSound { get; set; }

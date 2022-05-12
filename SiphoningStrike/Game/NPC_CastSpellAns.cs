@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class NPC_CastSpellAns : GamePacket // 0x0BD
     {
-        public override GamePacketID ID => GamePacketID.NPC_CastSpellAns;
+        public override GamePacketID ID => GamePacketID.S2C_NPC_CastSpellAns;
 
         public int CasterPositionSyncID { get; set; }
         public CastInfo CastInfo { get; set; }

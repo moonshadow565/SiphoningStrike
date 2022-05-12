@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class UnitAddEXP : GamePacket // 0x011
     {
-        public override GamePacketID ID => GamePacketID.UnitAddEXP;
+        public override GamePacketID ID => GamePacketID.S2C_UnitAddEXP;
         public uint TargetNetID { get; set; }
         public float ExpAmmount { get; set; }
 

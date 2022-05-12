@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class CHAR_SetCooldown : GamePacket // 0x08A
     {
-        public override GamePacketID ID => GamePacketID.CHAR_SetCooldown;
+        public override GamePacketID ID => GamePacketID.S2C_CHAR_SetCooldown;
 
         public byte Slot { get; set; }
         public bool IsSummonerSpell { get; set; }

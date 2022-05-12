@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class CHAT : GamePacket // 0x092
     {
-        public override GamePacketID ID => GamePacketID.CHAT;
+        public override GamePacketID ID => GamePacketID.UNK_CHAT;
         internal override void ReadBody(ByteReader reader)
         {
         }

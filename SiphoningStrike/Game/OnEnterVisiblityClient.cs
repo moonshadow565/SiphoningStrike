@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class OnEnterVisiblityClient : GamePacket // 0x0C2
     {
-        public override GamePacketID ID => GamePacketID.OnEnterVisiblityClient;
+        public override GamePacketID ID => GamePacketID.S2C_OnEnterVisiblityClient;
 
         public List<ItemData> Items { get; set; } = new List<ItemData>();
         public byte LookAtType { get; set; }

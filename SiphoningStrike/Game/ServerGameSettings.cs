@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class ServerGameSettings : GamePacket // 0x095
     {
-        public override GamePacketID ID => GamePacketID.ServerGameSettings;
+        public override GamePacketID ID => GamePacketID.S2C_ServerGameSettings;
 
         public bool FowLocalCulling { get; set; }
         public bool FowBroadcastEverything { get; set; }

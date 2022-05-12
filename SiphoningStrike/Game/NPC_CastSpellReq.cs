@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class NPC_CastSpellReq : GamePacket // 0x0A2
     {
-        public override GamePacketID ID => GamePacketID.NPC_CastSpellReq;
+        public override GamePacketID ID => GamePacketID.C2S_NPC_CastSpellReq;
 
         public bool IsSummonerSpellSlot { get; set; }
         public byte Slot { get; set; }

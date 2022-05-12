@@ -11,7 +11,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class OnEvent : GamePacket // 0x0AB
     {
-        public override GamePacketID ID => GamePacketID.OnEvent;
+        public override GamePacketID ID => GamePacketID.S2C_OnEvent;
 
         internal override void ReadBody(ByteReader reader)
         {

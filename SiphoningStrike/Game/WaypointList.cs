@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class WaypointList : GamePacket // 0x0C1
     {
-        public override GamePacketID ID => GamePacketID.WaypointList;
+        public override GamePacketID ID => GamePacketID.S2C_WaypointList;
 
         public int SyncID { get; set; }
         public List<Vector2> Waypoints { get; set; } = new List<Vector2>();

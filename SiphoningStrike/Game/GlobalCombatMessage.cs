@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class GlobalCombatMessage : GamePacket // 0x085
     {
-        public override GamePacketID ID => GamePacketID.GlobalCombatMessage;
+        public override GamePacketID ID => GamePacketID.S2C_GlobalCombatMessage;
 
         public uint MessageType { get; set; }
         public uint ObjectNameNetID { get; set; }

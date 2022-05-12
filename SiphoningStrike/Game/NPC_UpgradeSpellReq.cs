@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class NPC_UpgradeSpellReq : GamePacket // 0x03E
     {
-        public override GamePacketID ID => GamePacketID.NPC_UpgradeSpellReq;
+        public override GamePacketID ID => GamePacketID.C2S_NPC_UpgradeSpellReq;
 
         public byte Slot { get; set; }
 

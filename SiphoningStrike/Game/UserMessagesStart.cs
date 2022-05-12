@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class UserMessagesStart : GamePacket // 0x063
     {
-        public override GamePacketID ID => GamePacketID.UserMessagesStart;
+        public override GamePacketID ID => GamePacketID.UNK_UserMessagesStart;
         internal override void ReadBody(ByteReader reader)
         {
         }

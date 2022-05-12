@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class RemoveItemReq : GamePacket // 0x009
     {
-        public override GamePacketID ID => GamePacketID.RemoveItemReq;
+        public override GamePacketID ID => GamePacketID.C2S_RemoveItemReq;
 
         public byte Slot { get; set; }
         public bool Sell { get; set; }

@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class UpdateLevelPropS2C : GamePacket // 0x0DA
     {
-        public override GamePacketID ID => GamePacketID.UpdateLevelPropS2C;
+        public override GamePacketID ID => GamePacketID.S2C_UpdateLevelProp;
 
         public UpdateLevelPropData UpdateLevelPropData { get; set; }
 

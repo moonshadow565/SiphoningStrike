@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class SetFrequency : GamePacket // 0x013
     {
-        public override GamePacketID ID => GamePacketID.SetFrequency;
+        public override GamePacketID ID => GamePacketID.S2C_SetFrequency;
         public float NewFrequency { get; set; }
 
         internal override void ReadBody(ByteReader reader)

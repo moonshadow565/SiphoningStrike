@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class WaypointListHeroWithSpeed : GamePacket // 0x088
     {
-        public override GamePacketID ID => GamePacketID.WaypointListHeroWithSpeed;
+        public override GamePacketID ID => GamePacketID.S2C_WaypointListHeroWithSpeed;
 
         public int SyncID { get; set; }
         public SpeedParams SpeedParams { get; set; } = new SpeedParams();

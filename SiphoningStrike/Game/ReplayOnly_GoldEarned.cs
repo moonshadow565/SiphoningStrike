@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class ReplayOnly_GoldEarned : GamePacket // 0x0F2
     {
-        public override GamePacketID ID => GamePacketID.ReplayOnly_GoldEarned;
+        public override GamePacketID ID => GamePacketID.S2C_AntiBotReplayOnly_GoldEarned;
 
         public uint OwnerNetID { get; set; }
         public float Amount { get; set; }

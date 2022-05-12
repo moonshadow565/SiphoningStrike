@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class BuyItemReq : GamePacket // 0x087
     {
-        public override GamePacketID ID => GamePacketID.BuyItemReq;
+        public override GamePacketID ID => GamePacketID.C2S_BuyItemReq;
 
         public uint ItemID { get; set; }
 

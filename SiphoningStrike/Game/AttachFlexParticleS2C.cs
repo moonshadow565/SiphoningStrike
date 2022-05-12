@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class AttachFlexParticleS2C : GamePacket // 0x0DB
     {
-        public override GamePacketID ID => GamePacketID.AttachFlexParticleS2C;
+        public override GamePacketID ID => GamePacketID.S2C_AttachFlexParticle;
 
         public uint UnitNetID { get; set; }
         public byte FlexID { get; set; }

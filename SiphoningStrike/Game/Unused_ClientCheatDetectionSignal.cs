@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class Unused_ClientCheatDetectionSignal : GamePacket // 0x081
     {
-        public override GamePacketID ID => GamePacketID.Unused_ClientCheatDetectionSignal;
+        public override GamePacketID ID => GamePacketID.C2S_ClientCheatDetectionSignal;
         internal override void ReadBody(ByteReader reader)
         {
             // Unused

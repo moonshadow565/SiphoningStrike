@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class OnEnterLocalVisiblityClient : GamePacket // 0x0B5
     {
-        public override GamePacketID ID => GamePacketID.OnEnterLocalVisiblityClient;
+        public override GamePacketID ID => GamePacketID.S2C_OnEnterLocalVisiblityClient;
 
         public float MaxHealth { get; set; }
         public float Health { get; set; }

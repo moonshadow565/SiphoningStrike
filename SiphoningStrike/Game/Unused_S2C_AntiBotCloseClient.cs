@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class Unused_S2C_AntiBotCloseClient : GamePacket, IUnusedPacket // 0x0EB
     {
-        public override GamePacketID ID => GamePacketID.Unused_S2C_AntiBotCloseClient;
+        public override GamePacketID ID => GamePacketID.S2C_AntiBotCloseClient;
         internal override void ReadBody(ByteReader reader)
         {
             //Unused

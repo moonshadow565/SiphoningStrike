@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class MissileReplication : GamePacket // 0x041
     {
-        public override GamePacketID ID => GamePacketID.MissileReplication;
+        public override GamePacketID ID => GamePacketID.S2C_MissileReplication;
 
         public Vector3 Position { get; set; }
         public Vector3 CasterPosition { get; set; }

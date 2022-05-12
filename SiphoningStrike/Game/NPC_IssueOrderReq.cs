@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class NPC_IssueOrderReq : GamePacket // 0x075
     {
-        public override GamePacketID ID => GamePacketID.NPC_IssueOrderReq;
+        public override GamePacketID ID => GamePacketID.C2S_NPC_IssueOrderReq;
 
         public byte OrderType { get; set; }
         public Vector3 Position { get; set; }

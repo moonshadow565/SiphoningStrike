@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class Connected : GamePacket // 0x078
     {
-        public override GamePacketID ID => GamePacketID.Connected;
+        public override GamePacketID ID => GamePacketID.UNK_Connected;
 
         public uint ClientID { get; set; }
 

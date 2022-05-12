@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class HeroReincarnate : GamePacket // 0x04D
     {
-        public override GamePacketID ID => GamePacketID.HeroReincarnate;
+        public override GamePacketID ID => GamePacketID.S2C_HeroReincarnate;
 
         public Vector3 Position { get; set; }
 

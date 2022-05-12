@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class AvatarInfo_Server : GamePacket // 0x02C
     {
-        public override GamePacketID ID => GamePacketID.AvatarInfo_Server;
+        public override GamePacketID ID => GamePacketID.S2C_AvatarInfo_Server;
 
         private uint[] _itemIDs = new uint[30];
         private uint[] _summonerSpellIDs = new uint[2];

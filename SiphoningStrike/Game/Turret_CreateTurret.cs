@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class Turret_CreateTurret : GamePacket // 0x040
     {
-        public override GamePacketID ID => GamePacketID.Turret_CreateTurret;
+        public override GamePacketID ID => GamePacketID.UNK_Turret_CreateTurret;
         internal override void ReadBody(ByteReader reader)
         {
         }

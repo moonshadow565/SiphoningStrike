@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class SpawnBotS2C : GamePacket // 0x0D8
     {
-        public override GamePacketID ID => GamePacketID.SpawnBotS2C;
+        public override GamePacketID ID => GamePacketID.S2C_SpawnBot;
         public uint UnitNetID { get; set; }
         public byte UnitNetNodeID { get; set; }
         public Vector3 Position { get; set; }

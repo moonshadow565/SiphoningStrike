@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class UnitApplyHeal : GamePacket // 0x084
     {
-        public override GamePacketID ID => GamePacketID.UnitApplyHeal;
+        public override GamePacketID ID => GamePacketID.S2C_UnitApplyHeal;
 
         public float MaxHP { get; set; }
         public float Heal { get; set; }

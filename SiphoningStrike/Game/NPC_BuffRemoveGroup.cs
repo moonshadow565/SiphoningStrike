@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class NPC_BuffRemoveGroup : GamePacket // 0x09B
     {
-        public override GamePacketID ID => GamePacketID.NPC_BuffRemoveGroup;
+        public override GamePacketID ID => GamePacketID.S2C_NPC_BuffRemoveGroup;
         public uint BuffNameHash { get; set; }
         public List<BuffRemoveGroupEntry> Entries { get; set; } = new List<BuffRemoveGroupEntry>();
 

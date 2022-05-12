@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class Unused_Dummy : GamePacket, IUnusedPacket // 0x000
     {
-        public override GamePacketID ID => GamePacketID.Unused_Dummy;
+        public override GamePacketID ID => GamePacketID.BID_Dummy;
         internal override void ReadBody(ByteReader reader)
         {
             //Unused

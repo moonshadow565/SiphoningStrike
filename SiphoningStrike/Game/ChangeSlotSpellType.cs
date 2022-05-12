@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class ChangeSlotSpellType : GamePacket // 0x01A
     {
-        public override GamePacketID ID => GamePacketID.ChangeSlotSpellType;
+        public override GamePacketID ID => GamePacketID.S2C_ChangeSlotSpellType;
 
         public byte Slot { get; set; }
         public bool IsSummonerSpell { get; set; }

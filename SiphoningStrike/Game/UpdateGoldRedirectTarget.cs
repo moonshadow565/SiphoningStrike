@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class UpdateGoldRedirectTarget : GamePacket // 0x007
     {
-        public override GamePacketID ID => GamePacketID.UpdateGoldRedirectTarget;
+        public override GamePacketID ID => GamePacketID.S2C_UpdateGoldRedirectTarget;
         public uint TargetNetID { get; set; }
 
         internal override void ReadBody(ByteReader reader)

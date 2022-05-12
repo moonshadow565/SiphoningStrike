@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class AI_TargetS2C : GamePacket // 0x06D
     {
-        public override GamePacketID ID => GamePacketID.AI_TargetS2C;
+        public override GamePacketID ID => GamePacketID.S2C_AI_Target;
 
         public uint TargetNetID { get; set; }
 

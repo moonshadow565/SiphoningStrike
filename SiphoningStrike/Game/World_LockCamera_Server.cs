@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class World_LockCamera_Server : GamePacket // 0x086
     {
-        public override GamePacketID ID => GamePacketID.World_LockCamera_Server;
+        public override GamePacketID ID => GamePacketID.C2S_World_LockCamera_Server;
 
         public bool Locked { get; set; }
         public uint ClientID { get; set; }

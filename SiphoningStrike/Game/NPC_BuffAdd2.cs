@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class NPC_BuffAdd2 : GamePacket // 0x0BF
     {
-        public override GamePacketID ID => GamePacketID.NPC_BuffAdd2;
+        public override GamePacketID ID => GamePacketID.S2C_NPC_BuffAdd2;
 
         public byte BuffSlot { get; set; }
         public byte ButtType { get; set; }

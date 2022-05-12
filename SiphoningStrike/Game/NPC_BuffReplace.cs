@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class NPC_BuffReplace : GamePacket // 0x032
     {
-        public override GamePacketID ID => GamePacketID.NPC_BuffReplace;
+        public override GamePacketID ID => GamePacketID.S2C_NPC_BuffReplace;
 
         public float RunningTime { get; set; }
         public float Duration { get; set; }

@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class UseObjectC2S : GamePacket // 0x03F
     {
-        public override GamePacketID ID => GamePacketID.UseObjectC2S;
+        public override GamePacketID ID => GamePacketID.C2S_UseObject;
 
         public uint TargetNetID { get; set; }
 

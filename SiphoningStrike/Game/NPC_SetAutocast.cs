@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class NPC_SetAutocast : GamePacket // 0x022
     {
-        public override GamePacketID ID => GamePacketID.NPC_SetAutocast;
+        public override GamePacketID ID => GamePacketID.S2C_NPC_SetAutocast;
         public byte Slot { get; set; }
 
         internal override void ReadBody(ByteReader reader)

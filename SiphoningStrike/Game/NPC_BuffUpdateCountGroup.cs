@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class NPC_BuffUpdateCountGroup : GamePacket // 0x0C7
     {
-        public override GamePacketID ID => GamePacketID.NPC_BuffUpdateCountGroup;
+        public override GamePacketID ID => GamePacketID.S2C_NPC_BuffUpdateCountGroup;
 
         public float Duration { get; set; }
         public float RunningTime { get; set; }

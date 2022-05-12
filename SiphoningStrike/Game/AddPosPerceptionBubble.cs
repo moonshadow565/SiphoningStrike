@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class AddPosPerceptionBubble : GamePacket // 0x07B
     {
-        public override GamePacketID ID => GamePacketID.AddPosPerceptionBubble;
+        public override GamePacketID ID => GamePacketID.S2C_AddPosPerceptionBubble;
 
         public uint PerceptionBubbleType { get; set; }
         public uint ClientNetID { get; set; }

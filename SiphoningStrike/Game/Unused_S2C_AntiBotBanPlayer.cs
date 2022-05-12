@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class Unused_S2C_AntiBotBanPlayer : GamePacket, IUnusedPacket // 0x0E9
     {
-        public override GamePacketID ID => GamePacketID.Unused_S2C_AntiBotBanPlayer;
+        public override GamePacketID ID => GamePacketID.S2C_AntiBotBanPlayer;
         internal override void ReadBody(ByteReader reader)
         {
             //Unused

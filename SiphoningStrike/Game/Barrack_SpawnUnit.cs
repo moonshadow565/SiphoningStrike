@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class Barrack_SpawnUnit : GamePacket // 0x003
     {
-        public override GamePacketID ID => GamePacketID.Barrack_SpawnUnit;
+        public override GamePacketID ID => GamePacketID.S2C_Barrack_SpawnUnit;
 
         public uint UnitNetID { get; set; }
         public byte UnitNetNodeID { get; set; }

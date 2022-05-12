@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class Basic_Attack_Pos : GamePacket // 0x01D
     {
-        public override GamePacketID ID => GamePacketID.Basic_Attack_Pos;
+        public override GamePacketID ID => GamePacketID.S2C_Basic_Attack_Pos;
 
         public BasicAttackData BasicAttackData { get; set; } = new BasicAttackData();
         public Vector2 Position { get; set; }

@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class RemovePerceptionBubble : GamePacket // 0x038
     {
-        public override GamePacketID ID => GamePacketID.RemovePerceptionBubble;
+        public override GamePacketID ID => GamePacketID.S2C_RemovePerceptionBubble;
 
         public uint BubbleID { get; set; }
 

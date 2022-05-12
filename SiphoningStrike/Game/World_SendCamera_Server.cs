@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class World_SendCamera_Server : GamePacket // 0x030
     {
-        public override GamePacketID ID => GamePacketID.World_SendCamera_Server;
+        public override GamePacketID ID => GamePacketID.C2S_World_SendCamera_Server;
 
         public Vector3 CameraPosition { get; set; }
         public Vector3 CameraDirection { get; set; }

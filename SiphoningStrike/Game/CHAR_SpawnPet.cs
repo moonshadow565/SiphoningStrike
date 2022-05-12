@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class CHAR_SpawnPet : GamePacket // 0x03C
     {
-        public override GamePacketID ID => GamePacketID.CHAR_SpawnPet;
+        public override GamePacketID ID => GamePacketID.S2C_CHAR_SpawnPet;
 
         public uint UnitNetID { get; set; }
         public byte UnitNetNodeID { get; set; }

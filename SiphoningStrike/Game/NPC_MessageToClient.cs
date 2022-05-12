@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class NPC_MessageToClient : GamePacket // 0x01B
     {
-        public override GamePacketID ID => GamePacketID.NPC_MessageToClient;
+        public override GamePacketID ID => GamePacketID.S2C_NPC_MessageToClient;
 
         public uint TargetNetID { get; set; }
         public float BubbleDelay { get; set; }

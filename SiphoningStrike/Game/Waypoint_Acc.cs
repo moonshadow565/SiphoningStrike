@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class Waypoint_Acc : GamePacket // 0x07A
     {
-        public override GamePacketID ID => GamePacketID.Waypoint_Acc;
+        public override GamePacketID ID => GamePacketID.C2S_Waypoint_Acc;
 
         public int SyncID { get; set; }
         public byte TeleportCount { get; set; }

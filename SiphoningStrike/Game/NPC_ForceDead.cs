@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class NPC_ForceDead : GamePacket // 0x01E
     {
-        public override GamePacketID ID => GamePacketID.NPC_ForceDead;
+        public override GamePacketID ID => GamePacketID.S2C_NPC_ForceDead;
         internal override void ReadBody(ByteReader reader)
         {
         }

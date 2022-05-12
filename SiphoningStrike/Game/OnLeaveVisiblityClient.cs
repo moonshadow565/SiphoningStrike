@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class OnLeaveVisiblityClient : GamePacket // 0x054
     {
-        public override GamePacketID ID => GamePacketID.OnLeaveVisiblityClient;
+        public override GamePacketID ID => GamePacketID.S2C_OnLeaveVisiblityClient;
         internal override void ReadBody(ByteReader reader)
         {
         }

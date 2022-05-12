@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class SynchVersionS2C : GamePacket // 0x057
     {
-        public override GamePacketID ID => GamePacketID.SynchVersionS2C;
+        public override GamePacketID ID => GamePacketID.S2C_SynchVersion;
 
         private PlayerLoadInfo[] _playerInfo = new PlayerLoadInfo[12];
 

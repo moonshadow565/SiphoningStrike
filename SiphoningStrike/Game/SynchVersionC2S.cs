@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class SynchVersionC2S : GamePacket // 0x0C5
     {
-        public override GamePacketID ID => GamePacketID.SynchVersionC2S;
+        public override GamePacketID ID => GamePacketID.C2S_SynchVersion;
 
         public float TimeLastClient { get; set; }
         public uint ClientID { get; set; }

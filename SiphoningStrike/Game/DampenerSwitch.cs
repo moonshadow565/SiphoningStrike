@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class DampenerSwitch : GamePacket // 0x02D
     {
-        public override GamePacketID ID => GamePacketID.DampenerSwitch;
+        public override GamePacketID ID => GamePacketID.S2C_DampenerSwitch;
 
         public ushort Duration { get; set; }
         public bool State { get; set; }

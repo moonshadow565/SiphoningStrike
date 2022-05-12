@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class SwapItemAns : GamePacket // 0x044
     {
-        public override GamePacketID ID => GamePacketID.SwapItemAns;
+        public override GamePacketID ID => GamePacketID.S2C_SwapItemAns;
 
         public byte Source { get; set; }
         public byte Destination { get; set; }

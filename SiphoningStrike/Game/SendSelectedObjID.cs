@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class SendSelectedObjID : GamePacket // 0x0B7
     {
-        public override GamePacketID ID => GamePacketID.SendSelectedObjID;
+        public override GamePacketID ID => GamePacketID.C2S_SendSelectedObjID;
 
         public uint ClientID { get; set; }
         public uint SelectedNetID { get; set; }

@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class AI_Command : GamePacket // 0x07E
     {
-        public override GamePacketID ID => GamePacketID.AI_Command;
+        public override GamePacketID ID => GamePacketID.C2S_AI_Command;
 
         public string Command { get; set; }
 

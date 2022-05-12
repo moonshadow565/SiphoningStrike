@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class Unused_SPM_HierarchicalBBProfileUpdate : GamePacket, IUnusedPacket // 0x0BE
     {
-        public override GamePacketID ID => GamePacketID.Unused_SPM_HierarchicalBBProfileUpdate;
+        public override GamePacketID ID => GamePacketID.S2C_SPM_HierarchicalBBProfileUpdate;
         internal override void ReadBody(ByteReader reader)
         {
             //Unused

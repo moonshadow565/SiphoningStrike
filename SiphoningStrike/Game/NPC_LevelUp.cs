@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class NPC_LevelUp : GamePacket // 0x045
     {
-        public override GamePacketID ID => GamePacketID.NPC_LevelUp;
+        public override GamePacketID ID => GamePacketID.S2C_NPC_LevelUp;
 
         public byte Level { get; set; }
         public byte AveliablePoints { get; set; }

@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class ModifyShield : GamePacket // 0x069
     {
-        public override GamePacketID ID => GamePacketID.ModifyShield;
+        public override GamePacketID ID => GamePacketID.S2C_ModifyShield;
 
         public bool Physical { get; set; }
         public bool Magical { get; set; }

@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class Unused_SPM_RemoveMemoryListener : GamePacket, IUnusedPacket // 0x093
     {
-        public override GamePacketID ID => GamePacketID.Unused_SPM_RemoveMemoryListener;
+        public override GamePacketID ID => GamePacketID.C2S_SPM_RemoveMemoryListener;
         internal override void ReadBody(ByteReader reader)
         {
             //Unused

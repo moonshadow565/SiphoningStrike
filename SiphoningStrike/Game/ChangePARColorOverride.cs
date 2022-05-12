@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class ChangePARColorOverride : GamePacket // 0x099
     {
-        public override GamePacketID ID => GamePacketID.ChangePARColorOverride;
+        public override GamePacketID ID => GamePacketID.S2C_ChangePARColorOverride;
 
         public uint UnitNetID { get; set; }
         public bool Enabled { get; set; }

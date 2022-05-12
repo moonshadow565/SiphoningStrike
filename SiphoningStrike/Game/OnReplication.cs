@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class OnReplication : GamePacket // 0x0CC
     {
-        public override GamePacketID ID => GamePacketID.OnReplication;
+        public override GamePacketID ID => GamePacketID.S2C_OnReplication;
 
         public int SyncID { get; set; }
 

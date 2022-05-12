@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class SpawnLevelPropS2C : GamePacket // 0x0D9
     {
-        public override GamePacketID ID => GamePacketID.SpawnLevelPropS2C;
+        public override GamePacketID ID => GamePacketID.S2C_SpawnLevelProp;
 
         public uint UniNetID { get; set; }
         public byte UnitNetNodeID { get; set; }

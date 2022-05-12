@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class FX_Create_Group : GamePacket // 0x08C
     {
-        public override GamePacketID ID => GamePacketID.FX_Create_Group;
+        public override GamePacketID ID => GamePacketID.S2C_FX_Create_Group;
 
         public List<FXCreateGroupEntry> Entries { get; set; } = new List<FXCreateGroupEntry>();
 

@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class NPC_Hero_Die : GamePacket // 0x061
     {
-        public override GamePacketID ID => GamePacketID.NPC_Hero_Die;
+        public override GamePacketID ID => GamePacketID.S2C_NPC_Hero_Die;
 
         public DeathData DeathData { get; set; } = new DeathData();
 

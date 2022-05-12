@@ -10,7 +10,7 @@ namespace SiphoningStrike.Game
 {
     public sealed class World_SendGameNumber : GamePacket // 0x098
     {
-        public override GamePacketID ID => GamePacketID.World_SendGameNumber;
+        public override GamePacketID ID => GamePacketID.S2C_World_SendGameNumber;
 
         public ulong GameID { get; set; }
 
