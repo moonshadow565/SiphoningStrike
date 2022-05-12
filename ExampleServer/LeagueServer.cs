@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using ENet;
+using LENet;
 using SiphoningStrike;
 using SiphoningStrike.Game;
 using SiphoningStrike.Game.Common;
@@ -81,18 +81,17 @@ namespace ExampleServer
         public static bool Send(this Peer peer, ChannelID channel, byte[] data,
                                 bool reliable = true, bool unsequenced = false)
         {
-            var packet = new ENet.Packet();
-            var flags = PacketFlags.None;
-            if(reliable)
+            var flags = PacketFlags.NONE;
+            if (reliable)
             {
-                flags |= PacketFlags.Reliable;
+                flags |= PacketFlags.RELIABLE;
             }
-            if(unsequenced)
+            if (unsequenced)
             {
-                flags |= PacketFlags.Unsequenced;
+                flags |= PacketFlags.UNSEQUENCED;
             }
-            packet.Create(data, 0, data.Length, flags);
-            return peer.Send((byte)channel, packet);
+            var packet = new Packet(data, flags);
+            return peer.Send((byte)channel, packet) != 0;
         }
     }
 
@@ -109,9 +108,8 @@ namespace ExampleServer
 
         public LeagueServer(Address address, byte[] key, List<uint> cids)
         {
-            _host = new Host();
+            _host = new Host(LENet.Version.Seasson12, address, 32, 8);
             _blowfish = new BlowFish(key);
-            _host.Create(address,32, 8, 0, 0);
             foreach(var cid in cids)
             {
                 _peers[cid] = null;
@@ -166,17 +164,18 @@ namespace ExampleServer
 
         public void RunOnce()
         {
-            while (_host.Service(0, out Event eevent) != 0)
+            var eevent = new Event();
+            while (_host.HostService(eevent, 0) != 0)
             {
                 switch (eevent.Type)
                 {
-                    case EventType.None:
+                    case EventType.NONE:
                         break;
-                    case EventType.Connect:
+                    case EventType.CONNECT:
                         eevent.Peer.UserData = (IntPtr)0;
-                        eevent.Peer.Mtu = 996;
+                        eevent.Peer.MTU = 996;
                         break;
-                    case EventType.Disconnect:
+                    case EventType.DISCONNECT:
                         if((uint)eevent.Peer.UserData != 0)
                         {
                             var cid = (uint)eevent.Peer.UserData;
@@ -184,7 +183,7 @@ namespace ExampleServer
                             OnDisconnected(this, new LeagueDisconnectedEventArgs(cid));
                         }
                         break;
-                    case EventType.Receive:
+                    case EventType.RECEIVE:
                         if((uint)eevent.Peer.UserData == 0)
                         {
                             if(eevent.ChannelID != (byte)ChannelID.Default)
@@ -208,7 +207,7 @@ namespace ExampleServer
         private void HandlePacketParse(ChannelID channel, Peer peer, Packet rawPacket)
         {
             var cid = (uint)peer.UserData;
-            var rawData = rawPacket.GetBytes();
+            var rawData = rawPacket.Data;
             rawData = _blowfish.Decrypt(rawData);
             try
             {
@@ -228,7 +227,7 @@ namespace ExampleServer
 
         private void HandleAuth(Peer peer, Packet rawPacket)
         {
-            var rawData = rawPacket.GetBytes();
+            var rawData = rawPacket.Data;
             try
             {
                 var clientAuthPacket = new KeyCheckPacket(rawData);

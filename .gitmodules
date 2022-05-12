@@ -1,0 +1,3 @@
+[submodule "LENet"]
+	path = LENet
+	url = https://github.com/moonshadow565/LENet

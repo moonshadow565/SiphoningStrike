@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using ENet;
+using LENet;
 using SiphoningStrike;
 using Newtonsoft.Json;
 using System.Numerics;
@@ -20,7 +20,7 @@ namespace ExampleServer
     {
         public static void Main(string[] args)
         {
-            var address = new Address(Address.IPv4HostAny, 5119);
+            var address = new Address(Address.Any, 5119);
             var key = Encoding.ASCII.GetBytes("GLzvuWtyCfHyGhF2");
             var cids = new List<uint> { 1 };
             var server = new LeagueServer(address, key, cids);

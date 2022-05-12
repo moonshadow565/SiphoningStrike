@@ -1,13 +1,14 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32421.90
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiphoningStrike", "SiphoningStrike\SiphoningStrike.csproj", "{0C68D4DB-45BD-4069-9CB4-7FC41EE48313}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PacketDumper", "PacketDumper\PacketDumper.csproj", "{22E080A2-E779-4974-9815-5B76A1591ABB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENetCS", "ENetCS\ENetCS.csproj", "{4490AD19-2B7D-41C9-A809-A608973A42E0}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleServer", "ExampleServer\ExampleServer.csproj", "{E77C6962-4D0D-4DE2-A14C-29221BBA0B2D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LENet", "LENet\LENet\LENet.csproj", "{E745DE03-74A3-4577-B049-4220CC2284F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,25 +24,30 @@ Global
 		{22E080A2-E779-4974-9815-5B76A1591ABB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22E080A2-E779-4974-9815-5B76A1591ABB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22E080A2-E779-4974-9815-5B76A1591ABB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4490AD19-2B7D-41C9-A809-A608973A42E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4490AD19-2B7D-41C9-A809-A608973A42E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4490AD19-2B7D-41C9-A809-A608973A42E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4490AD19-2B7D-41C9-A809-A608973A42E0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E77C6962-4D0D-4DE2-A14C-29221BBA0B2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E77C6962-4D0D-4DE2-A14C-29221BBA0B2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E77C6962-4D0D-4DE2-A14C-29221BBA0B2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E77C6962-4D0D-4DE2-A14C-29221BBA0B2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E745DE03-74A3-4577-B049-4220CC2284F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E745DE03-74A3-4577-B049-4220CC2284F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E745DE03-74A3-4577-B049-4220CC2284F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E745DE03-74A3-4577-B049-4220CC2284F0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {448B02C9-9935-4488-94FA-BC8CB2A1873C}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0
 		$0.DotNetNamingPolicy = $1
 		$1.DirectoryNamespaceAssociation = PrefixedHierarchical
-		$0.TextStylePolicy = $2
+		$0.TextStylePolicy = $4
 		$2.inheritsSet = null
 		$2.scope = text/x-csharp
 		$0.CSharpFormattingPolicy = $3
 		$3.scope = text/x-csharp
-		$0.TextStylePolicy = $4
 		$4.FileWidth = 80
 		$4.TabsToSpaces = True
 		$4.scope = text/plain

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -7,7 +7,8 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>ExampleServer</RootNamespace>
     <AssemblyName>ExampleServer</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,12 +43,13 @@
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ENetCS\ENetCS.csproj">
-      <Project>{4490AD19-2B7D-41C9-A809-A608973A42E0}</Project>
-      <Name>ENetCS</Name>
+    <ProjectReference Include="..\LENet\LENet\LENet.csproj">
+      <Project>{e745de03-74a3-4577-b049-4220cc2284f0}</Project>
+      <Name>LENet</Name>
     </ProjectReference>
     <ProjectReference Include="..\SiphoningStrike\SiphoningStrike.csproj">
       <Project>{0C68D4DB-45BD-4069-9CB4-7FC41EE48313}</Project>
