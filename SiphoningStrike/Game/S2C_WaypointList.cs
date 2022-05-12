@@ -1,0 +1,36 @@
+using System;
+using System.IO;
+using System.Text;
+using System.Numerics;
+using System.Linq;
+using System.Collections.Generic;
+using SiphoningStrike.Game.Common;
+
+namespace SiphoningStrike.Game
+{
+    public sealed class S2C_WaypointList : GamePacket // 0x0C1
+    {
+        public override GamePacketID ID => GamePacketID.S2C_WaypointList;
+
+        public int SyncID { get; set; }
+        public List<Vector2> Waypoints { get; set; } = new List<Vector2>();
+
+        internal override void ReadBody(ByteReader reader)
+        {
+            this.SyncID = reader.ReadInt32();
+            //FIXME: is this correct?
+            while(reader.BytesLeft != 0)
+            {
+                this.Waypoints.Add(reader.ReadVector2());
+            }
+        }
+        internal override void WriteBody(ByteWriter writer)
+        {
+            writer.WriteInt32(this.SyncID);
+            foreach(var waypoint in this.Waypoints)
+            {
+                writer.WriteVector2(waypoint);
+            }
+        }
+    }
+}

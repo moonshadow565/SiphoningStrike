@@ -92,9 +92,9 @@ namespace ExampleServer
                     answer.ConnectionInfo.PlayerID = cid;
                     server.SendEncrypted(cid, ChannelID.Broadcast, answer);
                 }
-                else if (packet is SynchVersionC2S syncReq)
+                else if (packet is C2S_SynchVersion syncReq)
                 {
-                    var answer = new SynchVersionS2C();
+                    var answer = new S2C_SynchVersion();
                     answer.IsVersionOK = true;
                     answer.VersionString = syncReq.VersionString;
                     answer.MapToLoad = mapNum;
@@ -134,7 +134,7 @@ namespace ExampleServer
                     startGame.TournamentPauseEnabled = true;
                     server.SendEncrypted(cid, ChannelID.Broadcast, startGame);
 
-                    var entervision = new OnEnterVisiblityClient();
+                    var entervision = new S2C_OnEnterVisiblityClient();
                     entervision.SenderNetID = 0x40000001;
                     entervision.MovementData = new MovementDataStop
                     {
@@ -144,11 +144,11 @@ namespace ExampleServer
                     };
                     server.SendEncrypted(cid, ChannelID.Broadcast, entervision);
                 }
-                else if(packet is World_SendCamera_Server reqCamerPosition)
+                else if(packet is C2S_World_SendCamera_Server reqCamerPosition)
                 {
                     
                 }
-                else if(packet is World_LockCamera_Server reqLockCameraServer)
+                else if(packet is C2S_World_LockCamera_Server reqLockCameraServer)
                 {
                     
                 }
@@ -179,9 +179,9 @@ namespace ExampleServer
                 else
                 {
                     Console.WriteLine(JsonConvert.SerializeObject(e, jSettings));
-                    if(packet is NPC_IssueOrderReq movReq && movReq.OrderType == 2)
+                    if(packet is C2S_NPC_IssueOrderReq movReq && movReq.OrderType == 2)
                     {
-                        var resWaypoints = new WaypointGroup();
+                        var resWaypoints = new S2C_WaypointGroup();
                         resWaypoints.SenderNetID = 0x40000001;
                         resWaypoints.SyncID = Environment.TickCount;
                         resWaypoints.Movements.Add(movReq.MovementData);

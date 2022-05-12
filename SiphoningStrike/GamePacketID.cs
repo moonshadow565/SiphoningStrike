@@ -3,7 +3,7 @@ namespace SiphoningStrike
 {
     /*
     * Game packet IDs
-    * Aligned so that packet 0x0000 starts on line 10
+    * BID = bi-directional, C2S = client to server, S2C = server to cliet, UNK = unknown yet
     */
     public enum GamePacketID
     {
@@ -127,7 +127,7 @@ namespace SiphoningStrike
         C2S_NPC_IssueOrderReq                    = 0x075, // Done
         S2C_CameraBehavior                       = 0x076, // Done
         S2C_AnimatedBuildingSetCurrentSkin       = 0x077, // Done
-        UNK_Connected                            = 0x078, // Done
+        S2C_Connected                            = 0x078, // Done
         S2C_SyncSimTimeFinal                     = 0x079, // Done
         C2S_Waypoint_Acc                         = 0x07A, // Done
         S2C_AddPosPerceptionBubble               = 0x07B, // Done
@@ -249,7 +249,7 @@ namespace SiphoningStrike
         S2C_OnLeaveTeamVisiblity                 = 0x0EF, // Done
         S2C_FX_OnEnterTeamVisiblity              = 0x0F0, // Done
         S2C_FX_OnLeaveTeamVisiblity              = 0x0F1, // Done
-        S2C_AntiBotReplayOnly_GoldEarned         = 0x0F2, // Done
+        S2C_ReplayOnly_GoldEarned                = 0x0F2, // Done
 
         ExtendedPacket                           = 0x0FE, //
         Batch                                    = 0x0FF, //
