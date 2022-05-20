@@ -110,14 +110,9 @@ namespace SiphoningStrike
 
         public string ReadSizedStringWithZero()
         {
-            var count = ReadInt32();
-            if (count <= 0)
-            {
-                return "";
-            }
-            var data = ReadBytes(count - 1);
+            var result = ReadSizedString();
             ReadPad(1);
-            return Encoding.UTF8.GetString(data);
+            return result;
         }
 
         public string ReadSizedString()

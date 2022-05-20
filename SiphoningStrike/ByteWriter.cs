@@ -68,10 +68,7 @@ namespace SiphoningStrike
 
         public void WriteSizedStringWithZero(string str)
         {
-            var data = string.IsNullOrEmpty(str) ? new byte[0] : Encoding.UTF8.GetBytes(str);
-            var count = data.Length + 1;
-            WriteInt32(count);
-            WriteBytes(data);
+            WriteSizedString(str);
             WritePad(1);
         }
 
