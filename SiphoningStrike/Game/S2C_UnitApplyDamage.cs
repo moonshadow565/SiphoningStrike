@@ -31,7 +31,7 @@ namespace SiphoningStrike.Game
         internal override void WriteBody(ByteWriter writer)
         {
             byte bitfield = 0;
-            bitfield |= (byte)(bitfield & 0x7F);
+            bitfield |= (byte)(this.DamageResultType & 0x7F);
             if (this.HasAttackSound)
                 bitfield |= 0x80;
             writer.WriteByte(bitfield);
